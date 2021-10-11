@@ -28,7 +28,7 @@ class UserController extends Controller
     }
 
     public function test(Request $request) {
-        var_dump($request->user());die;
+        return response()->json([User::all()]);
     }
 
 }

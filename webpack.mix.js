@@ -11,10 +11,22 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
+mix.js('resources/admin/main.js', 'public/js')
+    .sass('resources/admin/assets/scss/style.scss', 'public/css')
+    .sourceMaps()
     .version()
     .vue();
+
+mix.extract(['vue', 'lodash'], 'public/js/vendor-utils-1.js');
+mix.extract(['jquery', 'axios'], 'public/js/vendor-utils-2.js');
+mix.extract();
+
+mix.copyDirectory('resources/images', 'public/images');
+
+// mix.js('resources/js/app.js', 'public/js')
+//     .sass('resources/sass/app.scss', 'public/css')
+//     .version()
+//     .vue();
 
 // if (mix.inProduction()) {
 //     mix.version();
