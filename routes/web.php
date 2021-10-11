@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/{any}', 'index')->where('any', '.*');
+Route::view('/{any}', 'admin.index')->where('any', '.*');
+// Route::view('/{any}', 'index')->where('any', '.*');
 
 // Route::any('/{any}',function(){
 //         return view('index');
