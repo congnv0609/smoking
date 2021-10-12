@@ -53,3 +53,9 @@ for dir in $(find $directory_to_update -maxdepth 4 -type d -name .git | xargs -n
 done
 
 echo "$count local git repos have been updated!"
+
+echo "Copy files from git local to host site"
+
+source_directory="/var/www/html/ema-git/"
+des_directory="/var/www/html/ema-smoking"
+rsync -av --exclude="/var/www/html/ema-git/deploy.sh" $dir $source_directory $des_directory
