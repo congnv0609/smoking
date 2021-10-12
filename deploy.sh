@@ -14,29 +14,33 @@ updateRepo() {
     echo "Updating Repo: $dir with url: $repo_url"
     echo "Starting update in $PWD"
 
-    main_branch="master" 
-    if [ "$repo_url" == "https://github.com/Z1ZAC/smoking_CMS.git" ]; then # if you have a repo where the primary branch isnt master
-        $main_branch="trunk"
-    fi
+    git fetch origin
 
-    # update the repo, then stash any local changes
-    echo -e "\ncalling: git fetch --all && git stash"
-    (git fetch --all && git stash)
-    current_branch=$(git rev-parse --abbrev-ref HEAD)
+    git reset --hard origin/test
 
-    # switch to master/trunk branch and rebase it, then switch back to original branch
-    if [ $current_branch != $main_branch ]; then
-        echo -e "\ncalling: git checkout $main_branch && git rebase && git checkout $current_branch"
-        (git checkout $main_branch && git rebase && git checkout $current_branch)
-    fi
+    # main_branch="master" 
+    # if [ "$repo_url" == "https://github.com/Z1ZAC/smoking_CMS.git" ]; then # if you have a repo where the primary branch isnt master
+    #     $main_branch="trunk"
+    # fi
 
-    # rebase the original branch and then stash pop back to original state
-    echo -e "\ncalling: git rebase && git stash pop on branch: $current_branch"
-    (git rebase && git stash pop ) 
+    # # update the repo, then stash any local changes
+    # echo -e "\ncalling: git fetch --all && git stash"
+    # (git fetch --all && git stash)
+    # current_branch=$(git rev-parse --abbrev-ref HEAD)
 
-    #switch back to the starting directory
-    cd $original_dir
-    echo ""
+    # # switch to master/trunk branch and rebase it, then switch back to original branch
+    # if [ $current_branch != $main_branch ]; then
+    #     echo -e "\ncalling: git checkout $main_branch && git rebase && git checkout $current_branch"
+    #     (git checkout $main_branch && git rebase && git checkout $current_branch)
+    # fi
+
+    # # rebase the original branch and then stash pop back to original state
+    # echo -e "\ncalling: git rebase && git stash pop on branch: $current_branch"
+    # (git rebase && git stash pop ) 
+
+    # #switch back to the starting directory
+    # cd $original_dir
+    # echo ""
 }
 
 directory_to_update=${1}
