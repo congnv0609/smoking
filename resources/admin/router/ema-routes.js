@@ -5,7 +5,7 @@ import Router from 'vue-router'
 const TheContainer = () => import('../containers/TheContainer')
 
 // Views
-const Dashboard = () => import('../views/Dashboard')
+const Dashboard = () => import('../ema-views/Dashboard')
 
 // Pages
 const Page404 = () => import('../ema-views/pages/Page404')
