@@ -27,7 +27,7 @@ function configRoutes() {
   return [
     {
       path: '/',
-      redirect: '/dashboard',
+      redirect: 'dashboard',
       name: 'Home',
       component: TheContainer,
       children: [
