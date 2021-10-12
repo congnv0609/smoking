@@ -15,12 +15,12 @@
     </CHeaderBrand>
     <CHeaderNav class="d-md-down-none mr-auto">
       <CHeaderNavItem class="px-3">
-        <CHeaderNavLink to="/admin/dashboard">
+        <CHeaderNavLink to="/dashboard">
           Dashboard
         </CHeaderNavLink>
       </CHeaderNavItem>
       <CHeaderNavItem class="px-3">
-        <CHeaderNavLink to="/admin/users" exact>
+        <CHeaderNavLink to="/users" exact>
           Users
         </CHeaderNavLink>
       </CHeaderNavItem>

@@ -5,7 +5,7 @@
     :show="show"
     @update:show="(value) => $store.commit('set', ['sidebarShow', value])"
   >
-    <CSidebarBrand class="d-md-down-none" to="/admin">
+    <CSidebarBrand class="d-md-down-none" to="/">
       <CIcon 
         class="c-sidebar-brand-full" 
         name="logo" 
