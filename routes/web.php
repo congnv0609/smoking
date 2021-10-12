@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/{any}', 'admin.index')->where('any', '.*');
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::view('/{any}', 'admin.index')->where('any', '.*');
+});
+
+// Route::view('/{any}', 'admin.index')->where('any', '.*');
 // Route::view('/{any}', 'index')->where('any', '.*');
 
 // Route::any('/{any}',function(){
