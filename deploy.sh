@@ -67,6 +67,6 @@ rsync -av --exclude={'/var/www/html/ema-git/deploy.sh', '.git', '/var/www/html/e
 
 cd $des_directory
 
-composer install
+# composer install
 
 npm run production
