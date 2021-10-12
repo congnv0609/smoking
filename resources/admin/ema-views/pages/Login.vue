@@ -9,7 +9,11 @@
                 <CForm>
                   <h1>Login</h1>
                   <p class="text-muted">Sign In to your account</p>
-                  <CInput placeholder="Email" autocomplete="username email" :value="email">
+                  <CInput
+                    placeholder="Email"
+                    autocomplete="username email"
+                    :value="email"
+                  >
                     <template #prepend-content
                       ><CIcon name="cil-user"
                     /></template>
@@ -25,7 +29,9 @@
                   </CInput>
                   <CRow>
                     <CCol col="6" class="text-left">
-                      <CButton color="primary" class="px-4" @click="login">Login</CButton>
+                      <CButton color="primary" class="px-4" @click="login"
+                        >Login</CButton
+                      >
                     </CCol>
                     <CCol col="6" class="text-right">
                       <CButton color="link" class="px-0"
@@ -53,22 +59,29 @@ export default {
     return {
       loading: true,
       errored: false,
-      email: '',
-      name: '',
+      email: "",
+      name: "",
     };
   },
+  mounted: function () {
+    axios.get("/sanctum/csrf-cookie").then((response) => {
+      // console.log(response);
+    });
+  },
   methods: {
-    login: function(){
-      axios.get('/backend/test')
-      .then(response=>{
-        this.email = response.data[0].email
-        this.name = response.data[0].name
-      }).catch(error => {
-        console.log(error)
-        this.errored = true
-      })
-      .finally(() => this.loading = false)
-    }
-  }
+    login: function () {
+      axios
+        .get("/backend/test")
+        .then((response) => {
+          this.email = response.data[0].email;
+          this.name = response.data[0].name;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
+  },
 };
 </script>

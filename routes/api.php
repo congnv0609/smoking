@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SmokerController;
+use App\Http\Controllers\LoginController;
 
 
 /*
@@ -16,7 +16,7 @@ use App\Http\Controllers\SmokerController;
 |
 */
 
-Route::post('/login', [SmokerController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login1']);
 
 Route::get('/me', [App\Http\Controllers\UserController::class, 'index'])->middleware('auth:sanctum');
 
