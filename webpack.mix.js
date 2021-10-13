@@ -18,7 +18,6 @@ mix.js('resources/admin/main.js', 'public/js')
         },
     })
     .sourceMaps()
-    .version()
     .vue();
 
 mix.extract(['vue', 'lodash'], 'public/js/vendor-utils-1.js');
@@ -32,6 +31,6 @@ mix.copyDirectory('resources/images', 'public/images');
 //     .version()
 //     .vue();
 
-// if (mix.inProduction()) {
-//     mix.version();
-// }
+if (mix.inProduction()) {
+    mix.version();
+}

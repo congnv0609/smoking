@@ -69,8 +69,8 @@ export default new Router({
 function configRoutes () {
   return [
     {
-      path: '/admin',
-      redirect: '/admin/dashboard',
+      path: '/',
+      redirect: 'dashboard',
       name: 'Home',
       component: TheContainer,
       children: [

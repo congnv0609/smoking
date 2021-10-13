@@ -18,3 +18,4 @@ yarn-error.log
 /public/js
 /public/images
 mix-manifest.json
+public/mix-manifest.json
