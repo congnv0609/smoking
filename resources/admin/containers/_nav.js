@@ -205,19 +205,19 @@ export default [
         items: [
           {
             name: 'Login',
-            to: '/admin/pages/login'
+            to: '/pages/login'
           },
           {
             name: 'Register',
-            to: '/admin/pages/register'
+            to: '/pages/register'
           },
           {
             name: 'Error 404',
-            to: '/admin/pages/404'
+            to: '/pages/404'
           },
           {
             name: 'Error 500',
-            to: '/admin/pages/500'
+            to: '/pages/500'
           }
         ]
       },
