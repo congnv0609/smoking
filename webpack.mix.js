@@ -12,7 +12,11 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/admin/main.js', 'public/js')
-    .sass('resources/admin/assets/scss/style.scss', 'public/css')
+    .sass('resources/admin/assets/scss/style.scss', 'public/css', {
+        sassOptions: {
+            quietDeps: true,
+        },
+    })
     .sourceMaps()
     .version()
     .vue();
