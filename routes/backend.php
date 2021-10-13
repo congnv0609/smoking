@@ -10,7 +10,7 @@ Route::post('/login', [LoginController::class, 'login']);
 //     Route::get('/user', [App\Http\Controllers\UserController::class, 'index']);
 // });
 
-Route::get('/test', [UserController::class, 'test'])->middleware('auth:sanctum');
+Route::get('/test', [App\Http\Controllers\UserController::class, 'test'])->middleware('auth:sanctum');
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     $user = User::where('email', 'leonard@bvcreation.com')->first();

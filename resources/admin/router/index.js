@@ -308,8 +308,8 @@ function configRoutes () {
       ]
     },
     {
-      path: '/admin/pages',
-      redirect: '/admin/pages/404',
+      path: '/pages',
+      redirect: '/pages/404',
       name: 'Pages',
       component: {
         render (c) { return c('router-view') }
