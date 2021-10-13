@@ -69,10 +69,10 @@ cd $des_directory
 
 composer install --optimize-autoloader --no-dev
 
-composer install
-
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
+
+echo "Strarting build SPAs in $PWD"
 
 npm run production
