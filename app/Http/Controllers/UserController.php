@@ -27,8 +27,8 @@ class UserController extends Controller
         return ['token' => $user->plainTextToken($request->email), 'token_type' => 'Bearer'];
     }
 
-    public function test(Request $request) {
+    public function test(Request $request)
+    {
         return response()->json([User::all()]);
     }
-
 }

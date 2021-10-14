@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-
+use App\Http\Controllers\SmokerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +15,9 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::post('/login', [LoginController::class, 'login1']);
+Route::post('/login', [LoginController::class, 'login1'])->withoutMiddleware('smoking');
 
-Route::get('/test', [App\Http\Controllers\UserController::class, 'test'])->middleware('auth:sanctum');
+Route::get('/test', [SmokerController::class, 'test']);
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();

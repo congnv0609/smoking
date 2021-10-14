@@ -2,31 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\Smoking;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Smoker;
+use PhpOption\Some;
 
 class LoginController extends Controller
 {
 
-    public function login(Request $request)
+    /**
+     * Create a new AuthController instance.
+     *
+     * @return void
+     */
+    public function __construct()
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([]);
-        }
-
-        return response()->json(['token' => $user->createToken($request->email)->plainTextToken, 'type' => 'Bearer']);
+        // $this->middleware('auth', ['except' => ['login']]);
     }
 
+
+    /**
+     * @bodyParam email string required email use to login
+     * @queryParam password required password use to login
+     */
+    public function login(Request $request)
+    {
+        $credentials = request(['email', 'password']);
+
+        if (!$token = auth('backend')->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return $this->respondWithToken($token);
+    }
+
+    /**
+     * @bodyParam account number required 5 digits number use to login
+     */
     public function login1(Request $request)
     {
         $request->validate([
@@ -35,14 +51,61 @@ class LoginController extends Controller
 
         $account = $request->account;
 
-        $smoker = Smoker::where('account', $account)->first();
+        $term = Smoker::where('account', $account)->max('term');
 
-        if (!$smoker) {
-            throw ValidationException::withMessages([
-                'account' => ['The provided credentials are incorrect.'],
-            ]);
-        }
+        $smoker = new Smoker();
+        $smoker->account = $account;
+        $smoker->term = $term + 1;
+        $smoker->save();
 
-        return response()->json(['token' => $smoker->createToken($request->account)->plainTextToken, 'type' => 'Bearer']);
+        return response()->json(['data' => $smoker], 200);
+    }
+
+    /**
+     * Get the authenticated User.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
+    /**
+     * Log the user out (Invalidate the token).
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    /**
+     * Refresh a token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
+
+    /**
+     * Get the token array structure.
+     *
+     * @param  string $token
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
     }
 }

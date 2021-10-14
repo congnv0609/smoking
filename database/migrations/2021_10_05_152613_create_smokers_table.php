@@ -17,8 +17,8 @@ class CreateSmokersTable extends Migration
             $table->id();
             $table->integer('account');
             $table->integer('term');
-            $table->datetime('startDate');
-            $table->datetime('endDate');
+            $table->datetime('startDate')->nullable();
+            $table->datetime('endDate')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
