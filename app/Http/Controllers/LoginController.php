@@ -62,6 +62,8 @@ class LoginController extends Controller
     }
 
     /**
+     * @queryParam token required 5 digits use to login, add to header
+     * 
      * Get the authenticated User.
      *
      * @return \Illuminate\Http\JsonResponse
