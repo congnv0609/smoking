@@ -27,7 +27,7 @@ class LoginController extends Controller
 
     /**
      * @bodyParam email string required email use to login
-     * @queryParam password required password use to login
+     * @bodyParam password string required password use to login
      */
     public function login(Request $request)
     {
@@ -62,7 +62,7 @@ class LoginController extends Controller
     }
 
     /**
-     * @queryParam token required token use to login, add to header(bearer)
+     * @bodyParam token string required token use to login, add to header(bearer)
      * 
      * Get the authenticated User.
      *
@@ -74,7 +74,7 @@ class LoginController extends Controller
     }
 
     /**
-     * @queryParam token required
+     * @bodyParam token string required
      * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
