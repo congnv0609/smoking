@@ -41,7 +41,7 @@ class LoginController extends Controller
     }
 
     /**
-     * @bodyParam account number required 5 digits number use to login
+     * @bodyParam account integer required 5 digits number use to login
      */
     public function login1(Request $request)
     {
@@ -62,7 +62,7 @@ class LoginController extends Controller
     }
 
     /**
-     * @queryParam token required 5 digits use to login, add to header
+     * @queryParam token required token use to login, add to header(bearer)
      * 
      * Get the authenticated User.
      *
@@ -74,6 +74,7 @@ class LoginController extends Controller
     }
 
     /**
+     * @queryParam token required
      * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse

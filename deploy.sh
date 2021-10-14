@@ -69,7 +69,7 @@ rsync -av --exclude={'/var/www/html/ema-git/deploy.sh','.git','/var/www/html/ema
 
 cd $des_directory
 
-composer install --optimize-autoloader --no-dev
+#composer install --optimize-autoloader --no-dev
 
 php artisan config:cache
 php artisan route:cache

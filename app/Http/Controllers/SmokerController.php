@@ -10,7 +10,7 @@ class SmokerController extends Controller
 {
 
     /**
-     * @queryParam token required 5 digits use to login, add to header
+     * @bodyParam account integer required 5 digits use to login, add to header[account=12345]
      */
     public function test() {
         return response()->json(['message'=> 'already login'], 200);
