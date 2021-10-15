@@ -16,7 +16,7 @@ class Smoking
      */
     public function handle(Request $request, Closure $next)
     {
-        if(empty($request->header('account'))) {
+        if(empty($request->header('accountId'))) {
             return response()->json(['message'=>'Unauthenticate'], 401);
         }
         return $next($request);
