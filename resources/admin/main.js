@@ -3,11 +3,14 @@ require('../js/bootstrap');
 import 'core-js/stable'
 import Vue from 'vue'
 import App from './App'
-// import router from './router'
-import router from './router/ema-routes'
+import router from './router'
+// import router from './router/ema-routes'
 import CoreuiVue from '@coreui/vue'
 import { iconsSet as icons } from './assets/icons/icons.js'
 import store from './store'
+import { initialize } from "./helpers/general"
+
+initialize(store, router)
 
 Vue.config.performance = true
 Vue.use(CoreuiVue)

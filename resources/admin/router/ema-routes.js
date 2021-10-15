@@ -30,6 +30,7 @@ function configRoutes() {
       redirect: 'dashboard',
       name: 'Home',
       component: TheContainer,
+      meta: { requiresAuth: true },
       children: [
         {
           path: 'dashboard',

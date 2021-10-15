@@ -50,12 +50,15 @@ const Modals = () => import('../views/notifications/Modals')
 // Views - Pages
 const Page404 = () => import('../views/pages/Page404')
 const Page500 = () => import('../views/pages/Page500')
-const Login = () => import('../views/pages/Login')
+// const Login = () => import('../views/pages/Login')
 const Register = () => import('../views/pages/Register')
 
 // Users
 const Users = () => import('../views/users/Users')
 const User = () => import('../views/users/User')
+
+// Ema view
+const Login = () => import('../ema-views/pages/Login')
 
 Vue.use(Router)
 

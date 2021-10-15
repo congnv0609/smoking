@@ -3,16 +3,27 @@
     <CContainer>
       <CRow class="justify-content-center">
         <CCol md="8">
+          <!-- <CAlert
+            color="danger"
+            :visible="alert"
+            dismissible
+            @close="
+              () => {
+                alert = false;
+              }
+            "
+            >Email or Password is not correct!</CAlert
+          > -->
           <CCardGroup>
             <CCard class="p-4">
               <CCardBody>
-                <CForm>
+                <CForm @submit.prevent="submit">
                   <h1>Login</h1>
                   <p class="text-muted">Sign In to your account</p>
                   <CInput
                     placeholder="Email"
                     autocomplete="username email"
-                    :value="email"
+                    v-model="form.email"
                   >
                     <template #prepend-content
                       ><CIcon name="cil-user"
@@ -22,6 +33,7 @@
                     placeholder="Password"
                     type="password"
                     autocomplete="curent-password"
+                    v-model="form.password"
                   >
                     <template #prepend-content
                       ><CIcon name="cil-lock-locked"
@@ -29,16 +41,13 @@
                   </CInput>
                   <CRow>
                     <CCol col="6" class="text-left">
-                      <CButton color="primary" class="px-4" @click="login"
+                      <CButton color="primary" class="px-4" type="submit"
                         >Login</CButton
                       >
                     </CCol>
                     <CCol col="6" class="text-right">
                       <CButton color="link" class="px-0"
                         >Forgot password?</CButton
-                      >
-                      <CButton color="link" class="d-lg-none"
-                        >Register now!</CButton
                       >
                     </CCol>
                   </CRow>
@@ -53,34 +62,37 @@
 </template>
 
 <script>
+import { login } from "../../helpers/auth";
 export default {
   name: "Login",
   data() {
     return {
-      loading: true,
-      errored: false,
-      email: "",
-      name: "",
+      alert: false,
+      form: {
+        email: "",
+        password: "",
+      },
     };
   },
-  mounted: function () {
-    axios.get("/sanctum/csrf-cookie").then((response) => {
-      // console.log(response);
-    });
+  mounted: function () {},
+  computed: {
+    authError() {
+      return this.$store.getters.AUTH_ERROR;
+    },
   },
   methods: {
-    login: function () {
-      axios
-        .get("/backend/test")
-        .then((response) => {
-          this.email = response.data[0].email;
-          this.name = response.data[0].name;
+    submit: function () {
+      // console.log("submit", this.form);
+      this.$store.dispatch("LOGIN");
+      login(this.form)
+        .then((res) => {
+          this.$store.commit("LOGIN_SUCCESS", res);
+          this.$router.push({ path: "/" });
         })
-        .catch((error) => {
-          console.log(error);
-          this.errored = true;
-        })
-        .finally(() => (this.loading = false));
+        .catch((err) => {
+          this.$store.commit("LOGIN_FAILED", { err });
+          this.alert = true;
+        });
     },
   },
 };

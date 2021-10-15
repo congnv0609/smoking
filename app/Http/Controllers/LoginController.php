@@ -74,14 +74,14 @@ class LoginController extends Controller
     }
 
     /**
-     * @bodyParam token string required
+     *
      * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse
      */
     public function logout()
     {
-        auth()->logout();
+        auth('backend')->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
     }
