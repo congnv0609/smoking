@@ -24,3 +24,4 @@ export function initialize(store, router) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${store.getters.CURRENT_USER.token}`;
     }
 }
+

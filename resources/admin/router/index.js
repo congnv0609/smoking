@@ -60,6 +60,8 @@ const User = () => import('../views/users/User')
 // Ema view
 const Login = () => import('../ema-views/pages/Login')
 
+
+
 Vue.use(Router)
 
 export default new Router({

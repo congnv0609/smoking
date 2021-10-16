@@ -3,17 +3,13 @@
     <CContainer>
       <CRow class="justify-content-center">
         <CCol md="8">
-          <!-- <CAlert
+          <CAlert
             color="danger"
-            :visible="alert"
             dismissible
-            @close="
-              () => {
-                alert = false;
-              }
-            "
-            >Email or Password is not correct!</CAlert
-          > -->
+            closeButton
+            :show.sync="alert"
+            >Email or Password is incorrect!</CAlert
+          >
           <CCardGroup>
             <CCard class="p-4">
               <CCardBody>
