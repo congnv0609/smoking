@@ -18,6 +18,7 @@ use App\Http\Controllers\SmokerController;
 Route::post('/login', [LoginController::class, 'login1'])->withoutMiddleware('smoking');
 
 Route::get('/test', [SmokerController::class, 'test']);
+Route::get('/test1', [SmokerController::class, 'test']);
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
