@@ -5,7 +5,7 @@ export function login(credential) {
                 resolve(result.data);
             })
             .catch(err => {
-                reject("Wrong email or password");
+                reject(err)
             })
     })
 }
@@ -17,7 +17,7 @@ export function logout() {
                 resolve(result.data);
             })
             .catch(err => {
-                reject("Wrong email or password");
+                reject(err)
             })
     })
 }

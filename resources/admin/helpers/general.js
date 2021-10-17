@@ -7,6 +7,7 @@ export function initialize(store, router) {
         } else if (to.path === '/pages/login' && currentUser) {
             next('/');
         } else {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${store.getters.CURRENT_USER.token}`;
             next();
         }
     });
@@ -20,8 +21,8 @@ export function initialize(store, router) {
         return Promise.reject(error);
     });
 
-    if (store.getters.CURRENT_USER) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${store.getters.CURRENT_USER.token}`;
-    }
+    // if (store.getters.CURRENT_USER) {
+    //     axios.defaults.headers.common['Authorization'] = `Bearer ${store.getters.CURRENT_USER.token}`;
+    // }
 }
 
