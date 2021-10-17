@@ -8,10 +8,7 @@
     <template #toggler>
       <CHeaderNavLink>
         <div class="c-avatar">
-          <img
-            src="/images/img/avatars/6.jpg"
-            class="c-avatar-img "
-          />
+          <img src="/images/img/avatars/6.jpg" class="c-avatar-img" />
         </div>
       </CHeaderNavLink>
     </template>
@@ -19,7 +16,7 @@
       <strong>Account</strong>
     </CDropdownHeader>
     <CDropdownItem>
-      <CIcon name="cil-bell"/> Updates
+      <CIcon name="cil-bell" /> Updates
       <CBadge color="info" class="mfs-auto">{{ itemsCount }}</CBadge>
     </CDropdownItem>
     <CDropdownItem>
@@ -34,19 +31,11 @@
       <CIcon name="cil-comment-square" /> Comments
       <CBadge color="warning" class="mfs-auto">{{ itemsCount }}</CBadge>
     </CDropdownItem>
-    <CDropdownHeader
-      tag="div"
-      class="text-center"
-      color="light"
-    >
+    <CDropdownHeader tag="div" class="text-center" color="light">
       <strong>Settings</strong>
     </CDropdownHeader>
-    <CDropdownItem>
-      <CIcon name="cil-user" /> Profile
-    </CDropdownItem>
-    <CDropdownItem>
-      <CIcon name="cil-settings" /> Settings
-    </CDropdownItem>
+    <CDropdownItem> <CIcon name="cil-user" /> Profile </CDropdownItem>
+    <CDropdownItem> <CIcon name="cil-settings" /> Settings </CDropdownItem>
     <CDropdownItem>
       <CIcon name="cil-dollar" /> Payments
       <CBadge color="secondary" class="mfs-auto">{{ itemsCount }}</CBadge>
@@ -55,7 +44,7 @@
       <CIcon name="cil-file" /> Projects
       <CBadge color="primary" class="mfs-auto">{{ itemsCount }}</CBadge>
     </CDropdownItem>
-    <CDropdownDivider/>
+    <CDropdownDivider />
     <CDropdownItem>
       <CIcon name="cil-shield-alt" /> Lock Account
     </CDropdownItem>
@@ -66,24 +55,31 @@
 </template>
 
 <script>
+import { logout } from "../helpers/auth";
 export default {
-  name: 'TheHeaderDropdownAccnt',
-  data () {
-    return { 
-      itemsCount: 42
-    }
+  name: "TheHeaderDropdownAccnt",
+  data() {
+    return {
+      itemsCount: 42,
+    };
   },
   methods: {
-    logout: function(){
-      this.$store.commit("LOGOUT");
-      this.$router.push({ path: "/pages/login" });
-    }
-  }
-}
+    logout: function () {
+      logout()
+        .then((res) => {
+          this.$store.commit("LOGOUT");
+          this.$router.push({ path: "/pages/login" });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>
-  .c-icon {
-    margin-right: 0.3rem;
-  }
+.c-icon {
+  margin-right: 0.3rem;
+}
 </style>

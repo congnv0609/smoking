@@ -78,7 +78,6 @@ export default {
   },
   methods: {
     submit: function () {
-      // console.log("submit", this.form);
       this.$store.dispatch("LOGIN");
       login(this.form)
         .then((res) => {

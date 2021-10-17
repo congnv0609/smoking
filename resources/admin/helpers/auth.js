@@ -10,6 +10,18 @@ export function login(credential) {
     })
 }
 
+export function logout() {
+    return new Promise((resolve, reject) => {
+        axios.get('/backend/logout')
+            .then(result => {
+                resolve(result.data);
+            })
+            .catch(err => {
+                reject("Wrong email or password");
+            })
+    })
+}
+
 export function currentUser() {
     const user = localStorage.getItem('user');
 
