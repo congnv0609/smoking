@@ -1,10 +1,9 @@
 #!/bin/bash
 
-
 # Usage:
 #   ./deploy.sh [parent_directory] 
 #   example usage:
-#       ./deploy.sh C:/GitProjects/ [MAKE SURE YOU USE / SLASHES]
+#       ./deploy.sh /var/www/html/ema-git [MAKE SURE YOU USE / SLASHES]
 
 updateRepo() {
     local dir="$1"

@@ -62,19 +62,7 @@ class LoginController extends Controller
     }
 
     /**
-     * @bodyParam token string required token use to login, add to header(bearer)
-     * 
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function me()
-    {
-        return response()->json(auth()->user());
-    }
-
-    /**
-     *
+     * @authenticated
      * Log the user out (Invalidate the token).
      *
      * @return \Illuminate\Http\JsonResponse

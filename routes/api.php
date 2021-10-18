@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\SmokerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +16,11 @@ use App\Http\Controllers\SmokerController;
 
 Route::post('/login', [LoginController::class, 'login1'])->withoutMiddleware('smoking');
 
-Route::get('/test', [SmokerController::class, 'test']);
-Route::get('/test1', [SmokerController::class, 'test']);
+Route::get('/ios/1.0/smoker/schedule', [App\Http\Controllers\Ios\SmokerController::class, 'getSchedule']);
+Route::post('/ios/1.0/smoker/schedule', [App\Http\Controllers\Ios\SmokerController::class, 'postSchedule']);
+
+Route::get('/android/1.0/smoker/schedule', [App\Http\Controllers\Android\SmokerController::class, 'getSchedule']);
+Route::post('/android/1.0/smoker/schedule', [App\Http\Controllers\Android\SmokerController::class, 'postSchedule']);
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
