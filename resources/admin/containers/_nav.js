@@ -13,6 +13,12 @@ export default [
         }
       },
       {
+        _name: 'CSidebarNavItem',
+        name: 'Smokers',
+        to: '/smokers',
+        icon: 'cil-smoke'
+      },
+      {
         _name: 'CSidebarNavTitle',
         _children: ['Theme']
       },

@@ -6,13 +6,21 @@
     @update:show="(value) => $store.commit('set', ['sidebarShow', value])"
   >
     <CSidebarBrand class="d-md-down-none" to="/">
-      <CIcon 
+      <!-- <CIcon 
         class="c-sidebar-brand-full" 
         name="logo" 
         size="custom-size" 
         :height="35" 
         viewBox="0 0 556 134"
+      /> -->
+      <CIcon 
+        class="c-sidebar-brand-full" 
+        name="logo" 
+        size="custom-size" 
+        :height="35" 
+        viewBox="0 0 50 35"
       />
+      <h3 style="margin-top:8px;font-weight:bold">EMA CMS</h3>
       <CIcon 
         class="c-sidebar-brand-minimized" 
         name="logo" 
@@ -21,7 +29,6 @@
         viewBox="0 0 110 134"
       />
     </CSidebarBrand>
-
     <CRenderFunction flat :content-to-render="$options.nav"/>
     <CSidebarMinimizer
       class="d-md-down-none"

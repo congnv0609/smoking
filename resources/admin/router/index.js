@@ -59,6 +59,7 @@ const User = () => import('../views/users/User')
 
 // Ema view
 const Login = () => import('../ema-views/pages/Login')
+const Smoker = () => import('../ema-views/smokers/List')
 
 
 
@@ -84,6 +85,11 @@ function configRoutes () {
           path: 'dashboard',
           name: 'Dashboard',
           component: Dashboard
+        },
+        {
+          path: 'smokers',
+          name: 'Smokers',
+          component: Smoker
         },
         {
           path: 'theme',

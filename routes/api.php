@@ -16,9 +16,11 @@ use App\Http\Controllers\LoginController;
 
 Route::post('/login', [LoginController::class, 'login1'])->withoutMiddleware('smoking');
 
+//IOS API
 Route::get('/ios/1.0/smoker/schedule', [App\Http\Controllers\Ios\SmokerController::class, 'getSchedule']);
 Route::post('/ios/1.0/smoker/schedule', [App\Http\Controllers\Ios\SmokerController::class, 'postSchedule']);
 
+//Android
 Route::get('/android/1.0/smoker/schedule', [App\Http\Controllers\Android\SmokerController::class, 'getSchedule']);
 Route::post('/android/1.0/smoker/schedule', [App\Http\Controllers\Android\SmokerController::class, 'postSchedule']);
 

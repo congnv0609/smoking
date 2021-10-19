@@ -28,7 +28,7 @@ class SmokerController extends Controller
     {
         $smoker = Smoker::where('id', $this->accountId)->first();
 
-        return response()->json(['data' => $smoker], 200);
+        return response()->json($smoker, 200);
     }
 
     /**
@@ -58,4 +58,14 @@ class SmokerController extends Controller
         $smoker->save();
         return response()->json(['data' => $smoker], 200);
     }
+
+    /**
+     * List of smokers
+     */
+    public function list() {
+        $size = request()->input('size');
+        $list = Smoker::paginate($size)->withQueryString();
+        return response()->json($list, 200);
+    }
+
 }
