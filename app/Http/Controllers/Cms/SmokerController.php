@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Cms;
-
 use App\Http\Controllers\Controller;
 use App\Models\Smoker;
+
 
 class SmokerController extends Controller
 {
@@ -66,6 +66,18 @@ class SmokerController extends Controller
         $size = request()->input('size');
         $list = Smoker::paginate($size)->withQueryString();
         return response()->json($list, 200);
+    }
+
+    /**
+     * Detail of smoker
+     * @queryParam id integer required id of account
+     * @authenticated
+     */
+    public function detail($id)
+    {
+        # code...
+        $smoker = Smoker::find($id);
+        return response()->json($smoker, 200);
     }
 
 }

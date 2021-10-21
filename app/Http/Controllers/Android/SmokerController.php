@@ -58,4 +58,32 @@ class SmokerController extends Controller
         $smoker->save();
         return response()->json(['data' => $smoker], 200);
     }
+
+    /**
+     * Update schedule for an account
+     * 
+     * @header Content-Type application/json
+     * @header Accept application/json
+     * @header accountId integer
+     * @authenticated
+     * 
+     * @bodyParam startDate string required YYYY-MM-DD
+     * @bodyParam startTime string required hh:ii
+     */
+    public function updateSchedule()
+    {
+        $smoker = Smoker::where('id', $this->accountId)->first();
+
+        $date = request()->input('startDate');
+        $time = request()->input('startTime');
+        $strDateTime = sprintf("%s %s", $date, $time);
+        $strDateTime = date_create($strDateTime);
+        $startDateTime = date_format($strDateTime, "Y-m-d h:i");
+        $endTime = date_add($strDateTime, date_interval_create_from_date_string("7 days"));
+        $endDateTime = date_format($endTime, "Y-m-d h:i");
+        $smoker->startDate = $startDateTime;
+        $smoker->endDate = $endDateTime;
+        $smoker->save();
+        return response()->json(['data' => $smoker], 200);
+    }
 }

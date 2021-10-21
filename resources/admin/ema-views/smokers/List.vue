@@ -2,12 +2,12 @@
   <div>
     <CRow>
       <CCol sm="12">
-        <CTableWrapper :items="items" :fields="fields">
-          <template #header>
-            <CIcon name="cil-grid" /> Smokers
+        <CCard>
+          <CCardHeader>
+            <CIcon name="cil-grid" /> {{ caption }}
             <div class="card-header-actions">
               <a
-                href="https://coreui.io/vue/docs/components/nav"
+                href="#"
                 class="card-header-action"
                 rel="noreferrer noopener"
                 target="_blank"
@@ -15,26 +15,40 @@
                 <small class="text-muted">Export</small>
               </a>
             </div>
-          </template>
-        </CTableWrapper>
+          </CCardHeader>
+          <CCardBody>
+            <CDataTable
+              :striped="true"
+              :small="false"
+              :items="items"
+              :fields="fields"
+            >
+              <template #action="{ item }">
+                <td>
+                  <span @click="editRow(item.id)" role="button">
+                    <CIcon name="cil-pencil" />
+                  </span>
+                  <span  @click="deleteRow(item.id)" role="button">
+                    <CIcon name="cil-trash" />
+                  </span>
+                </td>
+              </template>
+            </CDataTable>
+          </CCardBody>
+        </CCard>
       </CCol>
     </CRow>
     <CRow>
       <CCol sm="12">
-        <CPagination
-          :active-page.sync="query.page"
-          :pages="last_page"
-        />
+        <CPagination :active-page.sync="query.page" :pages="last_page" />
       </CCol>
     </CRow>
   </div>
 </template>
 <script>
-import CTableWrapper from "../customization/Table.vue";
 import { smokers } from "../../helpers/smoker";
 export default {
   name: "Smokers",
-  components: { CTableWrapper },
   data() {
     return {
       last_page: 1,
@@ -42,7 +56,8 @@ export default {
         page: 1,
         size: 20,
       },
-      fields: ["id", "account", "term", "startDate", "endDate"],
+      caption: "Smokers",
+      fields: ["id", "account", "term", "startDate", "endDate", "action"],
       items: [],
     };
   },
@@ -50,9 +65,9 @@ export default {
     this.getList();
   },
   watch: {
-    'query.page': function(val, oldVal){
+    "query.page": function (val, oldVal) {
       return this.getList();
-    }
+    },
   },
   methods: {
     getList() {
@@ -64,6 +79,12 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    editRow(id) {
+      this.$router.push({path: `/smokers/edit/${id}`})
+    },
+    deleteRow(id) {
+      console.log("delete", id);
     },
   },
 };

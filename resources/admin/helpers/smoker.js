@@ -9,3 +9,14 @@ export function smokers(query) {
             })
     })
 }
+export function get(query) {
+    return new Promise((resolve, reject) => {
+        axios.get(`/backend/smokers/detail/${query.id}`)
+            .then(result => {
+                resolve(result.data);
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}

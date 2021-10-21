@@ -18,6 +18,7 @@
                   <p class="text-muted">Sign In to your account</p>
                   <CInput
                     placeholder="Email"
+                    type="email"
                     autocomplete="username email"
                     v-model="form.email"
                   >

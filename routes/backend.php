@@ -8,3 +8,4 @@ Route::post('/login', [LoginController::class, 'login'])->withoutMiddleware('aut
 Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::get('/smokers/list', [SmokerController::class, 'list']);
+Route::get('/smokers/detail/{id}', [SmokerController::class, 'detail']);
