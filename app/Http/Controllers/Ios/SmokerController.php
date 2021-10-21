@@ -26,7 +26,7 @@ class SmokerController extends Controller
     {
         $smoker = Smoker::where('id', $this->accountId)->first();
 
-        return response()->json(['data' => $smoker], 200);
+        return response()->json($smoker, 200);
     }
 
     /**
@@ -54,7 +54,7 @@ class SmokerController extends Controller
         $smoker->startDate = $startDateTime;
         $smoker->endDate = $endDateTime;
         $smoker->save();
-        return response()->json(['data' => $smoker], 200);
+        return response()->json($smoker, 200);
     }
 
     /**
@@ -82,6 +82,6 @@ class SmokerController extends Controller
         $smoker->startDate = $startDateTime;
         $smoker->endDate = $endDateTime;
         $smoker->save();
-        return response()->json(['data' => $smoker], 200);
+        return response()->json($smoker, 200);
     }
 }

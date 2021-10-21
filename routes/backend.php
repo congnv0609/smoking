@@ -9,3 +9,4 @@ Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::get('/smokers/list', [SmokerController::class, 'list']);
 Route::get('/smokers/detail/{id}', [SmokerController::class, 'detail']);
+Route::put('/smokers/update/{id}', [SmokerController::class, 'updateSchedule']);

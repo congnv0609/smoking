@@ -73,6 +73,7 @@ export default {
     getList() {
       smokers(this.query)
         .then((res) => {
+          console.log("list", res)
           this.items = res.data;
           this.last_page = res.last_page;
         })

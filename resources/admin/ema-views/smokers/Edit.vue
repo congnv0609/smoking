@@ -4,7 +4,7 @@
       <CCol sm="6">
         <CCard>
           <CCardHeader> <strong>Update</strong></CCardHeader>
-          <CForm novalidate>
+          <CForm novalidate @submit.prevent="submit">
             <CCardBody>
               <CInput
                 label="Account"
@@ -19,24 +19,24 @@
                 horizontal
                 disabled
               />
-              <CInput label="Start Date" type="date" v-model="form.startdate" horizontal />
-              <!-- <div role="group" class="form-group form-row">
-                <label class="col-form-label col-sm-3"> Start Date </label>
-                <div class="col-sm-9" data-provide="datepicker">
-                  <input
-                    type="datepicker"
-                    class="form-control datepicker"
-                    data-date-format="yyyy-mm-dd"
-                    v-model="form.startDate"
-                  />
-                </div>
-              </div> -->
+              <CInput
+                label="Start Date"
+                type="date"
+                v-model="form.startDate"
+                horizontal
+              />
               <CInput
                 label="Start Time"
                 type="time"
                 v-model="form.startTime"
                 horizontal
               />
+              <CAlert color="danger" closeButton :show.sync="alertError">
+                Error!
+              </CAlert>
+              <CAlert color="success" closeButton :show.sync="alertSuccess">
+                Success saved!
+              </CAlert>
             </CCardBody>
             <CCardFooter>
               <CButton type="submit" size="sm" color="primary"
@@ -53,15 +53,18 @@
   </div>
 </template>
 <script>
-import { get } from "../../helpers/smoker";
+import { get, update } from "../../helpers/smoker";
 import moment from "moment";
 export default {
   data() {
     return {
+      alertError: false,
+      alertSuccess: false,
       query: {
         id: undefined,
       },
       form: {
+        id: undefined,
         account: undefined,
         term: undefined,
         startDate: "",
@@ -78,15 +81,29 @@ export default {
     detail() {
       get(this.query)
         .then((res) => {
-          this.form.account = res.account;
-          this.form.term = res.term;
-          this.form.startDate = moment(res.startDate).format("DD-MM-YYYY");
-          this.form.startTime = moment(res.startDate).format("hh:mm");
-          console.log(this.form);
+          this.setData(res);
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+    submit() {
+      this.form.id = this.query.id;
+      update(this.form)
+        .then((res) => {
+          this.alertSuccess = true;
+          this.setData(res);
+        })
+        .catch((err) => {
+          this.alertError = true;
+          console.log(err);
+        });
+    },
+    setData(res) {
+      this.form.account = res.account;
+      this.form.term = res.term;
+      this.form.startDate = moment(res.startDate).format("YYYY-MM-DD");
+      this.form.startTime = moment(res.startDate).format("hh:mm");
     },
   },
 };
