@@ -22,6 +22,7 @@
               :small="false"
               :items="items"
               :fields="fields"
+              :items-per-page="query.size"
             >
               <template #action="{ item }">
                 <td>
@@ -54,7 +55,7 @@ export default {
       last_page: 1,
       query: {
         page: 1,
-        size: 20,
+        size: 15,
       },
       caption: "Smokers",
       fields: ["id", "account", "term", "startDate", "endDate", "action"],
