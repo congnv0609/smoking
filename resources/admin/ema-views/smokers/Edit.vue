@@ -103,7 +103,7 @@ export default {
       this.form.account = res.account;
       this.form.term = res.term;
       this.form.startDate = moment(res.startDate).format("YYYY-MM-DD");
-      this.form.startTime = moment(res.startDate).format("hh:mm");
+      this.form.startTime = moment(res.startDate).format("HH:mm");
     },
   },
 };

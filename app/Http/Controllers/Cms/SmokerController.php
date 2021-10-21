@@ -42,9 +42,9 @@ class SmokerController extends Controller
         $time = request()->input('startTime');
         $strDateTime = sprintf("%s %s", $date, $time);
         $strDateTime = date_create($strDateTime);
-        $startDateTime = date_format($strDateTime, "Y-m-d h:i");
+        $startDateTime = date_format($strDateTime, "Y-m-d H:i");
         $endTime = date_add($strDateTime, date_interval_create_from_date_string("7 days"));
-        $endDateTime = date_format($endTime, "Y-m-d h:i");
+        $endDateTime = date_format($endTime, "Y-m-d H:i");
         $smoker->startDate = $startDateTime;
         $smoker->endDate = $endDateTime;
         $smoker->save();
@@ -89,9 +89,9 @@ class SmokerController extends Controller
         $time = request()->input('startTime');
         $strDateTime = sprintf("%s %s", $date, $time);
         $strDateTime = date_create($strDateTime);
-        $startDateTime = date_format($strDateTime, "Y-m-d h:i");
+        $startDateTime = date_format($strDateTime, "Y-m-d H:i");
         $endTime = date_add($strDateTime, date_interval_create_from_date_string("7 days"));
-        $endDateTime = date_format($endTime, "Y-m-d h:i");
+        $endDateTime = date_format($endTime, "Y-m-d H:i");
         $smoker->startDate = $startDateTime;
         $smoker->endDate = $endDateTime;
         $smoker->save();
