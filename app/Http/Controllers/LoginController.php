@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\Smoking;
+use App\Http\Traits\ValidTrait;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,7 @@ use PhpOption\Some;
 
 class LoginController extends Controller
 {
+    use ValidTrait;
 
     /**
      * Create a new AuthController instance.
@@ -23,7 +25,6 @@ class LoginController extends Controller
     {
         // $this->middleware('auth', ['except' => ['login']]);
     }
-
 
     /**
      * @bodyParam email string required email use to login
@@ -51,6 +52,12 @@ class LoginController extends Controller
 
         $account = $request->account;
 
+        $check = $this->checkValidAccount($account);
+
+        if(!$check) {
+            return response()->json(['message' => 'Invalid account. Please give last 5 digits of phone number'], 400);
+        }
+
         $term = Smoker::where('account', $account)->max('term');
 
         $smoker = new Smoker();
@@ -58,7 +65,7 @@ class LoginController extends Controller
         $smoker->term = $term + 1;
         $smoker->save();
 
-        return response()->json(['data' => $smoker], 200);
+        return response()->json($smoker, 200);
     }
 
     /**
