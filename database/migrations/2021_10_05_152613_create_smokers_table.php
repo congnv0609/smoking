@@ -17,8 +17,8 @@ class CreateSmokersTable extends Migration
             $table->id();
             $table->integer('account');
             $table->integer('term');
-            $table->datetime('startDate')->nullable();
-            $table->datetime('endDate')->nullable();
+            $table->timestamp('startDate')->nullable();
+            $table->timestamp('endDate')->nullable();
             $table->integer('nth_day_current')->default(0);
             $table->integer('ema_completed_nth_day')->default(0);
             $table->integer('incentive_nth_day')->default(0);

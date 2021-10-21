@@ -24,12 +24,21 @@
               :fields="fields"
               :items-per-page="query.size"
             >
+              <template #startDate="{ item }">
+                <td>{{ item.startDate | moment("YYYY-MM-DD HH:mm") }}</td>
+              </template>
+              <template #endDate="{ item }">
+                <td>{{ item.endDate | moment("YYYY-MM-DD HH:mm") }}</td>
+              </template>
+              <template #updated_at="{ item }">
+                <td>{{ item.updated_at | moment("YYYY-MM-DD HH:mm") }}</td>
+              </template>
               <template #action="{ item }">
                 <td>
                   <span @click="editRow(item.id)" role="button">
                     <CIcon name="cil-pencil" />
                   </span>
-                  <span  @click="deleteRow(item.id)" role="button">
+                  <span @click="deleteRow(item.id)" role="button">
                     <CIcon name="cil-trash" />
                   </span>
                 </td>
@@ -58,7 +67,15 @@ export default {
         size: 15,
       },
       caption: "Smokers",
-      fields: ["id", "account", "term", "startDate", "endDate", "action"],
+      fields: [
+        "id",
+        "account",
+        "term",
+        "startDate",
+        "endDate",
+        "updated_at",
+        "action",
+      ],
       items: [],
     };
   },
@@ -82,7 +99,7 @@ export default {
         });
     },
     editRow(id) {
-      this.$router.push({path: `/smokers/edit/${id}`})
+      this.$router.push({ path: `/smokers/edit/${id}` });
     },
     deleteRow(id) {
       console.log("delete", id);

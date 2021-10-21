@@ -8,12 +8,14 @@ import CoreuiVue from '@coreui/vue'
 import { iconsSet as icons } from './assets/icons/icons.js'
 import store from './store'
 import { initialize } from "./helpers/general"
+import VueMoment from 'vue-moment';
 
 initialize(store, router)
 
 Vue.config.performance = true
 Vue.use(CoreuiVue)
 Vue.prototype.$log = console.log.bind(console)
+Vue.use(VueMoment)
 
 new Vue({
   el: '#app',

@@ -10,7 +10,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Smoker extends Authenticatable implements JWTSubject
 {
     use Notifiable;
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -31,6 +31,16 @@ class Smoker extends Authenticatable implements JWTSubject
      */
     protected $hidden = [
         // 'remember_token',
+    ];
+
+    // protected function serializeDate(\DateTimeInterface $date)
+    // {
+    //     return $date->format('Y-m-d H:i:s');
+    // }
+
+    protected $casts = [
+        'startDate' => 'datetime:Y-m-d H:i:s',
+        'endDate' => 'datetime:Y-m-d H:i:s',
     ];
 
     /**
