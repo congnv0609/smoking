@@ -90,6 +90,7 @@ class SmokerController extends Controller
      * 
      * @bodyParam startDate string required YYYY-MM-DD
      * @bodyParam startTime string required hh:ii
+     * @bodyParam notification integer default 1
      */
     public function updateSchedule($id)
     {
