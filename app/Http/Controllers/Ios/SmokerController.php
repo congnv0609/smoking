@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ios;
 
 use App\Http\Controllers\Controller;
 use App\Models\Smoker;
+use App\Models\WakeTime;
 
 class SmokerController extends Controller
 {
@@ -25,7 +26,9 @@ class SmokerController extends Controller
     public function getSchedule()
     {
         $smoker = Smoker::where('id', $this->accountId)->first();
-
+        if (empty($smoker)) {
+            return response()->json($smoker, 404);
+        }
         return response()->json($smoker, 200);
     }
 
@@ -43,10 +46,14 @@ class SmokerController extends Controller
      */
     public function postSchedule()
     {
-        $data = $this->getPrams();
-        $smoker = Smoker::where('id', $this->accountId)->first();
-
-        $smoker->update($data);
+        $data = $this->getParams();
+        $smoker = Smoker::where("id", $this->accountId)->first();
+        if (empty($smoker)) {
+            return response()->json($smoker, 404);
+        }
+        $smoker->startDate = $data["startDate"];
+        $smoker->endDate = $data["endDate"];
+        $smoker->save();
         return response()->json($smoker, 200);
     }
 
@@ -64,15 +71,29 @@ class SmokerController extends Controller
      */
     public function updateSchedule()
     {
-        $data = $this->getPrams();
+        $data = $this->getParams();
         $smoker = Smoker::where('id', $this->accountId)->first();
-
+        if (empty($smoker)) {
+            return response()->json($smoker, 404);
+        }
+        $this->logChange($smoker, $data);
         $smoker->update($data);
 
         return response()->json($smoker, 200);
     }
 
-    private function getPrams()
+    private function logChange($old, $new)
+    {
+        $data = [
+            'account_id' => $old->id,
+            'data_of_change' => !empty($old->startDate) ? date_format($old->startDate, "Y-m-d") : null,
+            'old_wake' => !empty($old->startDate) ? date_format($old->startDate, "H:i") : null,
+            'new_wake' => date_format(date_create($new["startDate"]), "H:i"),
+        ];
+        $wakeLog = WakeTime::create($data);
+    }
+
+    private function getParams()
     {
         $data = [];
         $date = request()->input('startDate');

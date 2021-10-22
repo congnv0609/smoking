@@ -63,6 +63,9 @@ class SmokerController extends Controller
 
     /**
      * List of smokers
+     * @authenticated
+     * @queryParam page integer page number
+     * @queryParam size integer number of row per page
      */
     public function list() {
         $size = request()->input('size');
