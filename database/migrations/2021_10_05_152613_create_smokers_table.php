@@ -23,6 +23,7 @@ class CreateSmokersTable extends Migration
             $table->integer('ema_completed_nth_day')->default(0);
             $table->integer('incentive_nth_day')->default(0);
             $table->integer('incentive_total')->default(0);
+            $table->integer('notification')->default(1);
             $table->timestamps();
         });
     }

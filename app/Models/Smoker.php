@@ -21,6 +21,7 @@ class Smoker extends Authenticatable implements JWTSubject
         'term',
         'startDate',
         'endDate',
+        'notification',
         'remember_token',
     ];
 
@@ -32,11 +33,6 @@ class Smoker extends Authenticatable implements JWTSubject
     protected $hidden = [
         // 'remember_token',
     ];
-
-    // protected function serializeDate(\DateTimeInterface $date)
-    // {
-    //     return $date->format('Y-m-d H:i:s');
-    // }
 
     protected $casts = [
         'startDate' => 'datetime:Y-m-d H:i:s',

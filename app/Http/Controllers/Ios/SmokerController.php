@@ -39,21 +39,14 @@ class SmokerController extends Controller
      * 
      * @bodyParam startDate string required YYYY-MM-DD
      * @bodyParam startTime string required hh:ii
+     * @bodyParam notification integer default 1
      */
     public function postSchedule()
     {
+        $data = $this->getPrams();
         $smoker = Smoker::where('id', $this->accountId)->first();
 
-        $date = request()->input('startDate');
-        $time = request()->input('startTime');
-        $strDateTime = sprintf("%s %s", $date, $time);
-        $strDateTime = date_create($strDateTime);
-        $startDateTime = date_format($strDateTime, "Y-m-d H:i");
-        $endTime = date_add($strDateTime, date_interval_create_from_date_string("7 days"));
-        $endDateTime = date_format($endTime, "Y-m-d H:i");
-        $smoker->startDate = $startDateTime;
-        $smoker->endDate = $endDateTime;
-        $smoker->save();
+        $smoker->update($data);
         return response()->json($smoker, 200);
     }
 
@@ -67,21 +60,32 @@ class SmokerController extends Controller
      * 
      * @bodyParam startDate string required YYYY-MM-DD
      * @bodyParam startTime string required hh:ii
+     * @bodyParam notification integer default 1
      */
     public function updateSchedule()
     {
+        $data = $this->getPrams();
         $smoker = Smoker::where('id', $this->accountId)->first();
 
+        $smoker->update($data);
+
+        return response()->json($smoker, 200);
+    }
+
+    private function getPrams()
+    {
+        $data = [];
         $date = request()->input('startDate');
         $time = request()->input('startTime');
+        $notification = request()->input('notification');
         $strDateTime = sprintf("%s %s", $date, $time);
         $strDateTime = date_create($strDateTime);
         $startDateTime = date_format($strDateTime, "Y-m-d H:i");
         $endTime = date_add($strDateTime, date_interval_create_from_date_string("7 days"));
         $endDateTime = date_format($endTime, "Y-m-d H:i");
-        $smoker->startDate = $startDateTime;
-        $smoker->endDate = $endDateTime;
-        $smoker->save();
-        return response()->json($smoker, 200);
+        $data['startDate'] = $startDateTime;
+        $data['endDate'] = $endDateTime;
+        $data['notification'] = $notification;
+        return $data;
     }
 }

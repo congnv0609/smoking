@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Smoker;
-use PhpOption\Some;
 
 class LoginController extends Controller
 {
@@ -88,7 +87,7 @@ class LoginController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(auth('backend')->refresh());
     }
 
     /**
@@ -103,7 +102,7 @@ class LoginController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth('backend')->factory()->getTTL() * 60
         ]);
     }
 }
