@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 
 Route::post('/login', [LoginController::class, 'login'])->withoutMiddleware('auth');
 Route::get('/logout', [LoginController::class, 'logout']);
+Route::get('/refresh', [LoginController::class, 'refresh']);
 
 Route::get('/smokers/list', [SmokerController::class, 'list']);
 Route::get('/smokers/detail/{id}', [SmokerController::class, 'detail']);
