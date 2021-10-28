@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Android;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Smoker;
+use App\Models\WakeTime;
+use Illuminate\Http\Request;
 
 class SmokerController extends Controller
 {
-
     private $accountId;
 
     public function __construct()
@@ -22,12 +23,13 @@ class SmokerController extends Controller
      * @header Accept application/json
      * @header accountId integer
      * @authenticated
-     * 
      */
     public function getSchedule()
     {
         $smoker = Smoker::where('id', $this->accountId)->first();
-
+        if (empty($smoker)) {
+            return response()->json($smoker, 404);
+        }
         return response()->json($smoker, 200);
     }
 
@@ -46,9 +48,16 @@ class SmokerController extends Controller
     public function postSchedule()
     {
         $data = $this->getParams();
-        $smoker = Smoker::where('id', $this->accountId)->first();
-
-        $smoker->update($data);
+        $smoker = Smoker::where("id", $this->accountId)->first();
+        if (empty($smoker)) {
+            return response()->json($smoker, 404);
+        }
+        if (empty($data)) {
+            return response()->json(['msg' => 'Nothing to update'], 200);
+        }
+        $smoker->startDate = $data["startDate"];
+        $smoker->endDate = $data["endDate"];
+        $smoker->save();
         return response()->json($smoker, 200);
     }
 
@@ -64,15 +73,19 @@ class SmokerController extends Controller
      * @bodyParam startTime string required hh:ii
      * @bodyParam notification integer default 1
      */
-    public function updateSchedule()
+    public function updateSchedule(Request $request)
     {
         $data = $this->getParams();
         $smoker = Smoker::where('id', $this->accountId)->first();
         if (empty($smoker)) {
             return response()->json($smoker, 404);
         }
+        if(empty($data)) {
+            return response()->json(['msg'=>'Nothing to update'], 200);    
+        }
         $this->logChange($smoker, $data);
         $smoker->update($data);
+
         return response()->json($smoker, 200);
     }
 
@@ -92,15 +105,23 @@ class SmokerController extends Controller
         $data = [];
         $date = request()->input('startDate');
         $time = request()->input('startTime');
+        dd(request());
         $notification = request()->input('notification');
         $strDateTime = sprintf("%s %s", $date, $time);
         $strDateTime = date_create($strDateTime);
         $startDateTime = date_format($strDateTime, "Y-m-d H:i");
         $endTime = date_add($strDateTime, date_interval_create_from_date_string("7 days"));
         $endDateTime = date_format($endTime, "Y-m-d H:i");
-        $data['startDate'] = $startDateTime;
-        $data['endDate'] = $endDateTime;
-        $data['notification'] = $notification;
+        if(!empty($startDateTime)) {
+            $data['startDate'] = $startDateTime;
+        }
+        if(!empty($endDateTime)) {
+            $data['endDate'] = $endDateTime;    
+        }
+        if(!empty($notification)) {
+            $data['notification'] = $notification;
+        }
+        
         return $data;
     }
 }

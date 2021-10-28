@@ -37,14 +37,14 @@ class SmokerController extends Controller
      */
     public function postSchedule()
     {
-        $data = $this->getPrams();
+        $data = $this->getParams();
         $smoker = Smoker::where('id', $this->accountId)->first();
 
         $smoker->update($data);
         return response()->json($smoker, 200);
     }
 
-    private function getPrams()
+    private function getParams()
     {
         $data = [];
         $date = request()->input('startDate');

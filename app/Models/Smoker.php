@@ -35,8 +35,8 @@ class Smoker extends Authenticatable implements JWTSubject
     ];
 
     protected $casts = [
-        'startDate' => 'datetime:Y-m-d H:i:s',
-        'endDate' => 'datetime:Y-m-d H:i:s',
+        'startDate' => 'datetime',
+        'endDate' => 'datetime',
     ];
 
     /**

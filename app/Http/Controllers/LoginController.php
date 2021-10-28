@@ -41,6 +41,8 @@ class LoginController extends Controller
     }
 
     /**
+     * @header Content-Type multipart/form-data
+     * @header Accept application/json
      * @bodyParam account integer required 5 digits number use to login
      */
     public function login1(Request $request)

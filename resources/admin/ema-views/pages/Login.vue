@@ -15,7 +15,7 @@
               <CCardBody>
                 <CForm @submit.prevent="submit">
                   <h1>Login</h1>
-                  <p class="text-muted">Sign In to your account</p>
+                  <p class="text-muted">Sign in to your account</p>
                   <CInput
                     placeholder="Email"
                     type="email"
@@ -42,11 +42,11 @@
                         >Login</CButton
                       >
                     </CCol>
-                    <CCol col="6" class="text-right">
+                    <!-- <CCol col="6" class="text-right">
                       <CButton color="link" class="px-0"
                         >Forgot password?</CButton
                       >
-                    </CCol>
+                    </CCol> -->
                   </CRow>
                 </CForm>
               </CCardBody>

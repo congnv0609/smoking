@@ -16,15 +16,11 @@ use App\Http\Controllers\LoginController;
 
 Route::post('/login', [LoginController::class, 'login1'])->withoutMiddleware('smoking');
 
-//IOS API
-Route::get('/ios/1.0/smoker/schedule', [App\Http\Controllers\Ios\SmokerController::class, 'getSchedule']);
-Route::post('/ios/1.0/smoker/schedule', [App\Http\Controllers\Ios\SmokerController::class, 'postSchedule']);
-Route::put('/ios/1.0/smoker/schedule', [App\Http\Controllers\Ios\SmokerController::class, 'updateSchedule']);
+//Api
+Route::get('/1.0/smoker/schedule', [App\Http\Controllers\Api\SmokerController::class, 'getSchedule']);
+Route::post('/1.0/smoker/schedule', [App\Http\Controllers\Api\SmokerController::class, 'postSchedule']);
+Route::put('/1.0/smoker/schedule', [App\Http\Controllers\Api\SmokerController::class, 'updateSchedule']);
 
-//Android
-Route::get('/android/1.0/smoker/schedule', [App\Http\Controllers\Android\SmokerController::class, 'getSchedule']);
-Route::post('/android/1.0/smoker/schedule', [App\Http\Controllers\Android\SmokerController::class, 'postSchedule']);
-Route::put('/android/1.0/smoker/schedule', [App\Http\Controllers\Android\SmokerController::class, 'updateSchedule']);
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
