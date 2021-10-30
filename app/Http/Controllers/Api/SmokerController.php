@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Incentive;
 use App\Models\Smoker;
 use App\Models\WakeTime;
 use Illuminate\Http\Request;
@@ -48,17 +50,24 @@ class SmokerController extends Controller
     public function postSchedule()
     {
         $data = $this->getParams();
-        $smoker = Smoker::where("id", $this->accountId)->first();
-        if (empty($smoker)) {
-            return response()->json($smoker, 404);
-        }
-        if (empty($data)) {
-            return response()->json(['msg' => 'Nothing to update'], 200);
-        }
-        $smoker->startDate = $data["startDate"];
-        $smoker->endDate = $data["endDate"];
-        $smoker->save();
-        return response()->json($smoker, 200);
+        // DB::transaction(
+        //     function () {
+                $smoker = Smoker::where("id", $this->accountId)->first();
+                if (empty($smoker)) {
+                    return response()->json($smoker, 404);
+                }
+                if (empty($data)) {
+                    return response()->json(['msg' => 'Nothing to update'], 200);
+                }
+                $smoker->startDate = $data["startDate"];
+                $smoker->endDate = $data["endDate"];
+                $smoker->save();
+                $smokerData = $this->makeDateArray($data['startDate']);
+                $this->createData($smokerData);
+                return response()->json($smoker, 200);
+        //     }
+        // );
+        // return response()->json($data, 400);
     }
 
     /**
@@ -76,17 +85,23 @@ class SmokerController extends Controller
     public function updateSchedule(Request $request)
     {
         $data = $this->getParams();
+        // DB::transaction(
+        //     function () {
         $smoker = Smoker::where('id', $this->accountId)->first();
         if (empty($smoker)) {
             return response()->json($smoker, 404);
         }
-        if(empty($data)) {
-            return response()->json(['msg'=>'Nothing to update'], 200);    
+        if (empty($data)) {
+            return response()->json(['msg' => 'Nothing to update'], 200);
         }
         $this->logChange($smoker, $data);
         $smoker->update($data);
-
+        $smokerData = $this->makeDateArray($data['startDate']);
+        $this->updateData($smokerData);
         return response()->json($smoker, 200);
+        //     }
+        // );
+        // return response()->json($data, 400);
     }
 
     private function logChange($old, $new)
@@ -105,23 +120,54 @@ class SmokerController extends Controller
         $data = [];
         $date = request()->input('startDate');
         $time = request()->input('startTime');
-        dd(request());
         $notification = request()->input('notification');
         $strDateTime = sprintf("%s %s", $date, $time);
         $strDateTime = date_create($strDateTime);
         $startDateTime = date_format($strDateTime, "Y-m-d H:i");
         $endTime = date_add($strDateTime, date_interval_create_from_date_string("7 days"));
         $endDateTime = date_format($endTime, "Y-m-d H:i");
-        if(!empty($startDateTime)) {
+        if (!empty($startDateTime)) {
             $data['startDate'] = $startDateTime;
         }
-        if(!empty($endDateTime)) {
-            $data['endDate'] = $endDateTime;    
+        if (!empty($endDateTime)) {
+            $data['endDate'] = $endDateTime;
         }
-        if(!empty($notification)) {
+        if (!empty($notification)) {
             $data['notification'] = $notification;
         }
-        
+
         return $data;
+    }
+
+    private function makeDateArray($startDate)
+    {
+        $data = [];
+        $dateString = date_create($startDate);
+        for ($i = 0; $i < 7; $i++) {
+            $record = [];
+            $record['account_id'] = $this->accountId;
+            $record['date'] = $i > 0 ? date_format(date_add($dateString, date_interval_create_from_date_string("1 days")), 'Y-m-d') : date_format($dateString, 'Y-m-d');
+            $data[] = $record;
+        }
+        return $data;
+    }
+
+    private function createData($data)
+    {
+        if (!empty($data)) {
+            foreach ($data as $item) {
+                Incentive::create($item);
+            }
+        }
+    }
+
+    private function updateData($data)
+    {
+        if (!empty($data)) {
+            $oldData = Incentive::where('account_id', $this->accountId)->get();
+            foreach($oldData as $key => $item) {
+                $item->update($data[$key]);
+            }
+        }
     }
 }
