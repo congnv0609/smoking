@@ -9,8 +9,6 @@ class WakeTime extends Model
 {
     use HasFactory;
 
-    protected $table = 'wake_time';
-
     protected $fillable = [
         'account_id',
         'data_of_change',

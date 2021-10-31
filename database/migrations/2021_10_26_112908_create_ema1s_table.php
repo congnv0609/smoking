@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEma1Table extends Migration
+class CreateEma1sTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEma1Table extends Migration
      */
     public function up()
     {
-        Schema::create('ema1', function (Blueprint $table) {
+        Schema::create('ema1s', function (Blueprint $table) {
             $table->id();
             $table->integer('account_id');
             $table->date('date');
@@ -368,6 +368,6 @@ class CreateEma1Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ema1');
+        Schema::dropIfExists('ema1s');
     }
 }

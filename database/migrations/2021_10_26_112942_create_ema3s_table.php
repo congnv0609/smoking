@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEma4Table extends Migration
+class CreateEma3sTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateEma4Table extends Migration
      */
     public function up()
     {
-        Schema::create('ema4', function (Blueprint $table) {
+        Schema::create('ema3s', function (Blueprint $table) {
             $table->id();
             $table->integer('account_id');
             $table->date('date');
             $table->integer('nth_day');
-            $table->integer('nth_ema');
-            $table->timestamp('popup_time');
-            $table->timestamp('attempt_time');
-            $table->timestamp('submit_time');
-            $table->timestamp('time_taken');
+            $table->integer('nth_ema')->default(3);
+            $table->timestamp('popup_time')->nullable();
+            $table->timestamp('attempt_time')->nullable();
+            $table->timestamp('submit_time')->nullable();
+            $table->timestamp('time_taken')->nullable();
             $table->boolean('completed')->default(false);
             $table->boolean('postponded_1')->default(false);
             $table->boolean('postponded_2')->default(false);
@@ -363,6 +363,6 @@ class CreateEma4Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ema4');
+        Schema::dropIfExists('ema3s');
     }
 }

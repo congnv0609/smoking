@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class WakeTime extends Migration
+class WakeTimesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class WakeTime extends Migration
     public function up()
     {
         //
-        Schema::create('wake_time', function (Blueprint $table) {
+        Schema::create('wake_times', function (Blueprint $table) {
             $table->id();
             $table->integer('account_id');
             $table->date('data_of_change')->nullable();
@@ -32,6 +32,6 @@ class WakeTime extends Migration
     public function down()
     {
         //
-        Schema::dropIfExists('wake_time');
+        Schema::dropIfExists('wake_times');
     }
 }

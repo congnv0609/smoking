@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEma3Table extends Migration
+class CreateEma5sTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,44 @@ class CreateEma3Table extends Migration
      */
     public function up()
     {
-        Schema::create('ema3', function (Blueprint $table) {
+        Schema::create('ema5s', function (Blueprint $table) {
             $table->id();
             $table->integer('account_id');
             $table->date('date');
             $table->integer('nth_day');
-            $table->integer('nth_ema');
-            $table->timestamp('popup_time');
-            $table->timestamp('attempt_time');
-            $table->timestamp('submit_time');
-            $table->timestamp('time_taken');
+            $table->integer('nth_ema')->default(5);
+            $table->timestamp('popup_time')->nullable();
+            $table->timestamp('attempt_time')->nullable();
+            $table->timestamp('submit_time')->nullable();
+            $table->timestamp('time_taken')->nullable();
             $table->boolean('completed')->default(false);
             $table->boolean('postponded_1')->default(false);
             $table->boolean('postponded_2')->default(false);
             $table->boolean('postponded_3')->default(false);
+
+            $table->boolean('d1_a')->default(false);
+            $table->unsignedFloat('d1_a_num')->nullable();
+            $table->string('d1a_range')->nullable();
+            $table->boolean('d1_b')->default(false);
+            $table->unsignedFloat('d1_b1_num')->nullable();
+            $table->string('d1b1_range')->nullable();
+            $table->integer('d1_b2')->nullable();
+            $table->boolean('d1_c')->default(false);
+            $table->unsignedFloat('d1_c_num')->nullable();
+            $table->string('d1c_range')->nullable();
+
+            $table->boolean('p1_a')->default(false);
+            $table->boolean('p1_b')->default(false);
+            $table->boolean('p1_c')->default(false);
+            $table->boolean('p1_d')->default(false);
+
+            $table->boolean('p2_a')->default(false);
+            $table->boolean('p2_b')->default(false);
+            $table->boolean('p2_c')->default(false);
+            $table->boolean('p2_d')->default(false);
+
+            $table->integer('p3')->nullable();
+            $table->integer('p4')->nullable();
 
             $table->boolean('c1_a')->default(false);
             $table->boolean('c1_b')->default(false);
@@ -363,6 +387,6 @@ class CreateEma3Table extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ema3');
+        Schema::dropIfExists('ema5s');
     }
 }
