@@ -19,10 +19,10 @@ class CreateEma1sTable extends Migration
             $table->date('date');
             $table->integer('nth_day');
             $table->integer('nth_ema')->default(1);
-            $table->timestamp('popup_time');
+            $table->timestamp('popup_time')->nullable();
             $table->timestamp('attempt_time')->nullable();
             $table->timestamp('submit_time')->nullable();
-            $table->timestamp('time_taken')->nullable();
+            $table->integer('time_taken')->nullable();
             $table->boolean('completed')->default(false);
             $table->boolean('postponded_1')->default(false);
             $table->boolean('postponded_2')->default(false);
