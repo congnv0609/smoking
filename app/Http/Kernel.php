@@ -56,6 +56,7 @@ class Kernel extends HttpKernel
 
         'backend' => [
             \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+            // 'jwt.refresh',
             // \App\Http\Middleware\Authenticate::class,
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             // 'throttle:api',
@@ -81,7 +82,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+        'jwt.auth' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+        'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
         'smoking' => \App\Http\Middleware\Smoking::class,
     ];
 }
