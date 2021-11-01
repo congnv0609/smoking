@@ -23,7 +23,7 @@ class EmaController extends Controller
 
     /**
      * update an EMA and date values, use form url encoded
-     * @header accountId
+     * @header accountId integer required
      * @bodyParam date YYYY-MM-DD required 
      * @bodyParam completed integer [1=completed, default 0 incompleted]
      * @authenticated
@@ -34,6 +34,7 @@ class EmaController extends Controller
     {
         $data = request()->all();
         // $data['attempt_time'] = new DateTime();
+        $data['submit_time'] = new DateTime();
         // $data['submit_time'] = (new DateTime())->add(new DateInterval('PT5M'));
         // $data['time_taken'] = 5;
         switch ($id) {
