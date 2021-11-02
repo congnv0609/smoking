@@ -8,6 +8,7 @@ use App\Models\Ema2;
 use App\Models\Ema3;
 use App\Models\Ema4;
 use App\Models\Ema5;
+use App\Models\Incentive;
 use DateInterval;
 use DateTime;
 
@@ -23,12 +24,12 @@ class EmaController extends Controller
 
     /**
      * update an EMA and date values, use form url encoded
+     * id [1=EMA1, 2=EMA2, 3=EMA3, 4=EMA4, 5=EMA5]
      * @header accountId integer required
      * @bodyParam date YYYY-MM-DD required 
      * @bodyParam completed integer [1=completed, default 0 incompleted]
      * @authenticated
      * 
-     * id [1=EMA1, 2=EMA2, 3=EMA3, 4=EMA4, 5=EMA5]
      */
     public function update($id)
     {
@@ -59,5 +60,17 @@ class EmaController extends Controller
                 $ema->update($data);
                 break;
         }
+        $this->updateIncentive($id, $data);
+        return response()->json($ema,200);
+    }
+
+    private function updateIncentive(int $emaId, array $data) {
+        $ret = [];
+        $incentive = Incentive::where(['account_id' => $this->accountId, 'date' => $data['date']])->first();
+        $validEma = $incentive->valid_ema + ($data['completed'] > 0 ? 1 : -1);
+        $ret["valid_ema"] = $validEma;
+        $ret["incentive"] = $validEma * 5;
+        $ret["ema_$emaId"] = $data["completed"];
+        return $incentive->update($ret);
     }
 }
