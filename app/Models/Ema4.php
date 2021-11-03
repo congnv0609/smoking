@@ -10,4 +10,16 @@ class Ema4 extends Model
     use HasFactory;
     
     protected $guarded = [];
+
+    protected $casts = [
+        'attempt_time' => 'datetime',
+        'submit_time' => 'datetime',
+    ];
+
+    public function setSubmitTimeAttribute($submit_time)
+    {
+        $this->attributes['submit_time'] = $submit_time;
+        $this->attributes['time_taken'] =
+        date_diff($submit_time, $this->attempt_time)->format('%i');
+    }
 }

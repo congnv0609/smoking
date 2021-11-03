@@ -88,11 +88,11 @@ class EmaController extends Controller
         $ret = [];
         $data['completed'] = !empty($data['completed']) ? $data['completed'] : 0;
         $incentive = Incentive::where(['account_id' => $this->accountId, 'date' => $data['date']])->first();
-        $validEma = $incentive->valid_ema + ($data['completed'] > 0 ? 1 : -1);
-        $ret["valid_ema"] = $validEma;
-        $ret["incentive"] = $validEma * 5;
-        $ret["ema_$emaId"] = $data["completed"];
-        return $incentive->update($ret);
+        $ema = "ema_$emaId";
+        $incentive->{$ema} = $data["completed"];
+        $incentive->valid_ema = $incentive->ema_1+ $incentive->ema_2+ $incentive->ema_3+ $incentive->ema_4+ $incentive->ema_5;
+        $incentive->incentive = $incentive->valid_ema*5;
+        return $incentive->save();
     }
 
     private function checkValidTime($ema)
