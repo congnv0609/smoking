@@ -17,11 +17,12 @@ class Ema1 extends Model
         'submit_time' => 'datetime',
     ];
 
-    // public function setTimeTakenAttribute($submit_time)
-    // {
-    //     $this->attributes['time_taken'] =
-    //     date_diff($submit_time, $this->attempt_time);
-    // }
+    public function setSubmitTimeAttribute($submit_time)
+    {
+        $this->attributes['submit_time'] = $submit_time;
+        $this->attributes['time_taken'] =
+        date_diff($submit_time, $this->attempt_time)->format('%i');
+    }
 
     // public function getTimeTakenAttribute()
     // {

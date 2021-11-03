@@ -34,37 +34,55 @@ class EmaController extends Controller
     public function update($id)
     {
         $data = request()->all();
-        // $data['attempt_time'] = new DateTime();
         $data['submit_time'] = new DateTime();
-        // $data['submit_time'] = (new DateTime())->add(new DateInterval('PT5M'));
-        // $data['time_taken'] = 5;
         switch ($id) {
             case 1:
                 $ema = Ema1::where(['account_id' => $this->accountId, 'date' => $data['date']])->first();
+                $check = $this->checkValidTime($ema);
+                if ($check) {
+                    return response()->json(['msg' => 'Overdue'], 412);
+                }
                 $ema->update($data);
                 break;
             case 2:
                 $ema = Ema2::where(['account_id' => $this->accountId, 'date' => $data['date']])->first();
+                $check = $this->checkValidTime($ema);
+                if ($check) {
+                    return response()->json(['msg' => 'Overdue'], 412);
+                }
                 $ema->update($data);
                 break;
             case 3:
                 $ema = Ema3::where(['account_id' => $this->accountId, 'date' => $data['date']])->first();
+                $check = $this->checkValidTime($ema);
+                if ($check) {
+                    return response()->json(['msg' => 'Overdue'], 412);
+                }
                 $ema->update($data);
                 break;
             case 4:
                 $ema = Ema4::where(['account_id' => $this->accountId, 'date' => $data['date']])->first();
+                $check = $this->checkValidTime($ema);
+                if ($check) {
+                    return response()->json(['msg' => 'Overdue'], 412);
+                }
                 $ema->update($data);
                 break;
             case 5:
                 $ema = Ema5::where(['account_id' => $this->accountId, 'date' => $data['date']])->first();
+                $check = $this->checkValidTime($ema);
+                if ($check) {
+                    return response()->json(['msg' => 'Overdue'], 412);
+                }
                 $ema->update($data);
                 break;
         }
         $this->updateIncentive($id, $data);
-        return response()->json($ema,200);
+        return response()->json($ema, 200);
     }
 
-    private function updateIncentive(int $emaId, array $data) {
+    private function updateIncentive(int $emaId, array $data)
+    {
         $ret = [];
         $incentive = Incentive::where(['account_id' => $this->accountId, 'date' => $data['date']])->first();
         $validEma = $incentive->valid_ema + ($data['completed'] > 0 ? 1 : -1);
@@ -72,5 +90,14 @@ class EmaController extends Controller
         $ret["incentive"] = $validEma * 5;
         $ret["ema_$emaId"] = $data["completed"];
         return $incentive->update($ret);
+    }
+
+    private function checkValidTime($ema)
+    {
+        $takenTime = date_diff(new DateTime(), $ema->attempt_time)->format('%i');
+        if ($takenTime > 15) {
+            return true;
+        }
+        return false;
     }
 }
