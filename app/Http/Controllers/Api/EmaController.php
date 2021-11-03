@@ -36,10 +36,10 @@ class EmaController extends Controller
         $data = request()->all();
         $data['submit_time'] = new DateTime();
         $ema = $this->getEma($id, $data);
-        $check = $this->checkValidTime($ema);
-        if ($check) {
-            return response()->json(['msg' => 'Overdue'], 412);
-        }
+        // $check = $this->checkValidTime($ema);
+        // if ($check) {
+        //     return response()->json(['msg' => 'Overdue'], 412);
+        // }
         $ema->update($data);
         $this->updateIncentive($id, $data);
         return response()->json($ema, 200);
