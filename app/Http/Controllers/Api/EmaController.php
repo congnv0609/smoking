@@ -37,6 +37,9 @@ class EmaController extends Controller
         $data = request()->all();
         $data['submit_time'] = new DateTime();
         $ema = $this->getEma($id, $data);
+        if(empty($ema)) {
+            return response()->json(['msg'=> 'Ema not found'], 404);
+        }
         // $check = $this->checkValidTime($ema);
         // if ($check) {
         //     return response()->json(['msg' => 'Overdue'], 412);

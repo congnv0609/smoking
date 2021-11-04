@@ -12,6 +12,7 @@ use App\Models\Ema5;
 use App\Models\Incentive;
 use App\Models\Smoker;
 use App\Models\WakeTime;
+use DateTime;
 use Illuminate\Http\Request;
 
 class SmokerController extends Controller
@@ -188,6 +189,7 @@ class SmokerController extends Controller
             $record['account_id'] = $this->accountId;
             $record['date'] = $i > 0 ? date_format(date_add($dateString, date_interval_create_from_date_string("1 days")), 'Y-m-d') : date_format($dateString, 'Y-m-d');
             $record['nth_day'] = $i+1;
+            $record['submit_time'] = new DateTime();
             switch ($ema) {
                 case 1:
                     $record['popup_time'] = date_format($dateString, 'Y-m-d H:i:s');
