@@ -11,6 +11,7 @@ use App\Models\Ema5;
 use App\Models\Incentive;
 use DateInterval;
 use DateTime;
+use Illuminate\Support\Facades\DB;
 
 class EmaController extends Controller
 {
@@ -65,6 +66,61 @@ class EmaController extends Controller
         return response()->json($ema, 200);
     }
 
+    /**
+     * get next survey
+     * @header accountId integer required
+     * @authenticated
+     */
+    public function getNextSurvey() {
+        $data = [];
+        $data[] = $this->getPopupTimeEma1();
+        $data[] = $this->getPopupTimeEma2();
+        $data[] = $this->getPopupTimeEma3();
+        $data[] = $this->getPopupTimeEma4();
+        $data[] = $this->getPopupTimeEma5();
+        foreach($data as $value) {
+            if(!empty($value)) {
+                return response()->json(['next_survey_time'=>$value->popup_time], 200);
+            }
+        }
+        return response()->json(['msg'=>'Not found next survey time'], 404);
+    }
+
+    private function getPopupTimeEma1(){
+        return Ema1::select('popup_time')->where('account_id', $this->accountId)
+        ->where('date', date_format(new DateTime(), 'Y-m-d'))
+        ->where('popup_time', '>=', new DateTime())
+        ->first();
+    }
+    private function getPopupTimeEma2()
+    {
+        return Ema2::select('popup_time')->where('account_id', $this->accountId)
+            ->where('date', date_format(new DateTime(), 'Y-m-d'))
+            ->where('popup_time', '>=', new DateTime())
+            ->first();
+    }
+    private function getPopupTimeEma3()
+    {
+        return Ema3::select('popup_time')->where('account_id', $this->accountId)
+            ->where('date', date_format(new DateTime(), 'Y-m-d'))
+            ->where('popup_time', '>=', new DateTime())
+            ->first();
+    }
+    private function getPopupTimeEma4()
+    {
+        return Ema4::select('popup_time')->where('account_id', $this->accountId)
+            ->where('date', date_format(new DateTime(), 'Y-m-d'))
+            ->where('popup_time', '>=', new DateTime())
+            ->first();
+    }
+    private function getPopupTimeEma5()
+    {
+        return Ema5::select('popup_time')->where('account_id', $this->accountId)
+            ->where('date', date_format(new DateTime(), 'Y-m-d'))
+            ->where('popup_time', '>=', new DateTime())
+            ->first();
+    }
+
     private function getEma(int $id, array $data) {
         switch ($id) {
             case 1:
@@ -98,12 +154,12 @@ class EmaController extends Controller
         return $incentive->save();
     }
 
-    private function checkValidTime($ema)
-    {
-        $takenTime = date_diff(new DateTime(), $ema->attempt_time)->format('%i');
-        if ($takenTime > 15) {
-            return true;
-        }
-        return false;
-    }
+    // private function checkValidTime($ema)
+    // {
+    //     $takenTime = date_diff(new DateTime(), $ema->attempt_time)->format('%i');
+    //     if ($takenTime > 15) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
 }
