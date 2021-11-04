@@ -75,6 +75,10 @@ class CreateEma5sTable extends Migration
             $table->boolean('c2_k')->default(false);
             $table->boolean('c2_l')->default(false);
             $table->boolean('c2_m')->default(false);
+            $table->boolean('c2_n')->default(false);
+            $table->boolean('c2_o')->default(false);
+            $table->boolean('c2_p')->default(false);
+            $table->boolean('c2_q')->default(false);
 
             $table->boolean('c3_a')->default(false);
             $table->boolean('c3_b')->default(false);
@@ -118,6 +122,10 @@ class CreateEma5sTable extends Migration
             $table->integer('b2_c2j')->nullable();
             $table->integer('b2_c2k')->nullable();
             $table->integer('b2_c2l')->nullable();
+            $table->integer('b2_c2m')->nullable();
+            $table->integer('b2_c2n')->nullable();
+            $table->integer('b2_c2o')->nullable();
+            $table->integer('b2_c2p')->nullable();
 
             $table->integer('b2_c3a')->nullable();
             $table->integer('b2_c3b')->nullable();
@@ -147,6 +155,10 @@ class CreateEma5sTable extends Migration
             $table->integer('b3_c2j')->nullable();
             $table->integer('b3_c2k')->nullable();
             $table->integer('b3_c2l')->nullable();
+            $table->integer('b3_c2m')->nullable();
+            $table->integer('b3_c2n')->nullable();
+            $table->integer('b3_c2o')->nullable();
+            $table->integer('b3_c2p')->nullable();
 
             $table->integer('b3_c3a')->nullable();
             $table->integer('b3_c3b')->nullable();
@@ -176,6 +188,10 @@ class CreateEma5sTable extends Migration
             $table->integer('b4_c2j')->nullable();
             $table->integer('b4_c2k')->nullable();
             $table->integer('b4_c2l')->nullable();
+            $table->integer('b4_c2m')->nullable();
+            $table->integer('b4_c2n')->nullable();
+            $table->integer('b4_c2o')->nullable();
+            $table->integer('b4_c2p')->nullable();
 
             $table->integer('b4_c3a')->nullable();
             $table->integer('b4_c3b')->nullable();
@@ -211,6 +227,10 @@ class CreateEma5sTable extends Migration
             $table->integer('b7_c2j')->nullable();
             $table->integer('b7_c2k')->nullable();
             $table->integer('b7_c2l')->nullable();
+            $table->integer('b7_c2m')->nullable();
+            $table->integer('b7_c2n')->nullable();
+            $table->integer('b7_c2o')->nullable();
+            $table->integer('b7_c2p')->nullable();
 
             $table->integer('b7_c3a')->nullable();
             $table->integer('b7_c3b')->nullable();
@@ -246,6 +266,10 @@ class CreateEma5sTable extends Migration
             $table->integer('b10_c2j')->nullable();
             $table->integer('b10_c2k')->nullable();
             $table->integer('b10_c2l')->nullable();
+            $table->integer('b10_c2m')->nullable();
+            $table->integer('b10_c2n')->nullable();
+            $table->integer('b10_c2o')->nullable();
+            $table->integer('b10_c2p')->nullable();
 
             $table->integer('b10_c3a')->nullable();
             $table->integer('b10_c3b')->nullable();
@@ -281,6 +305,10 @@ class CreateEma5sTable extends Migration
             $table->integer('b13_c2j')->nullable();
             $table->integer('b13_c2k')->nullable();
             $table->integer('b13_c2l')->nullable();
+            $table->integer('b13_c2m')->nullable();
+            $table->integer('b13_c2n')->nullable();
+            $table->integer('b13_c2o')->nullable();
+            $table->integer('b13_c2p')->nullable();
 
             $table->integer('b13_c3a')->nullable();
             $table->integer('b13_c3b')->nullable();
@@ -310,6 +338,10 @@ class CreateEma5sTable extends Migration
             $table->integer('b14_c2j')->nullable();
             $table->integer('b14_c2k')->nullable();
             $table->integer('b14_c2l')->nullable();
+            $table->integer('b14_c2m')->nullable();
+            $table->integer('b14_c2n')->nullable();
+            $table->integer('b14_c2o')->nullable();
+            $table->integer('b14_c2p')->nullable();
 
             $table->integer('b14_c3a')->nullable();
             $table->integer('b14_c3b')->nullable();
@@ -339,6 +371,10 @@ class CreateEma5sTable extends Migration
             $table->integer('b15_c2j')->nullable();
             $table->integer('b15_c2k')->nullable();
             $table->integer('b15_c2l')->nullable();
+            $table->integer('b15_c2m')->nullable();
+            $table->integer('b15_c2n')->nullable();
+            $table->integer('b15_c2o')->nullable();
+            $table->integer('b15_c2p')->nullable();
 
             $table->integer('b15_c3a')->nullable();
             $table->integer('b15_c3b')->nullable();
@@ -368,6 +404,10 @@ class CreateEma5sTable extends Migration
             $table->integer('b16_c2j')->nullable();
             $table->integer('b16_c2k')->nullable();
             $table->integer('b16_c2l')->nullable();
+            $table->integer('b16_c2m')->nullable();
+            $table->integer('b16_c2n')->nullable();
+            $table->integer('b16_c2o')->nullable();
+            $table->integer('b16_c2p')->nullable();
 
             $table->integer('b16_c3a')->nullable();
             $table->integer('b16_c3b')->nullable();
