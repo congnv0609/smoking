@@ -88,7 +88,7 @@ class EmaController extends Controller
                 $end_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string("$endMinutes minutes"));
                 $current_ema = (new DateTime() > new DateTime($value->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
                 if ($end_time > (new DateTime())) {
-                    return response()->json(['survey_time' => date_format($popup_time, 'Y-m-d H:i'), 'current_ema'=>$current_ema, 'ema'=>$key+1, 'popup_time' => $value->popup_time, 'postponded_1' => $value->postponded_1, 'postponded_2' => $value->postponded_2, 'postponded_3' => $value->postponded_3], 200);
+                    return response()->json(['survey_time' => date_format($popup_time, 'Y-m-d H:i'), 'current_ema'=>$current_ema, 'ema'=>$key+1, 'popup_time' => $value->popup_time, 'nth_day'=>$value->nth_day, 'postponded_1' => $value->postponded_1, 'postponded_2' => $value->postponded_2, 'postponded_3' => $value->postponded_3], 200);
                 }
             }
         }
@@ -97,32 +97,32 @@ class EmaController extends Controller
 
     private function getPopupTimeEma1()
     {
-        return Ema1::select('popup_time', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
-            ->where('date', date_format(new DateTime(), 'Y-m-d'))
+        return Ema1::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
+            ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
     private function getPopupTimeEma2()
     {
-        return Ema2::select('popup_time', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
-            ->where('date', date_format(new DateTime(), 'Y-m-d'))
+        return Ema2::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
+            ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
     private function getPopupTimeEma3()
     {
-        return Ema3::select('popup_time', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
-            ->where('date', date_format(new DateTime(), 'Y-m-d'))
+        return Ema3::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
+            ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
     private function getPopupTimeEma4()
     {
-        return Ema4::select('popup_time', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
-            ->where('date', date_format(new DateTime(), 'Y-m-d'))
+        return Ema4::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
+            ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
     private function getPopupTimeEma5()
     {
-        return Ema5::select('popup_time', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
-            ->where('date', date_format(new DateTime(), 'Y-m-d'))
+        return Ema5::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
+            ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
 
