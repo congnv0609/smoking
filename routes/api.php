@@ -23,7 +23,7 @@ Route::put('/1.0/smoker/schedule', [App\Http\Controllers\Api\SmokerController::c
 
 Route::put('/1.0/ema/{id}/update', [App\Http\Controllers\Api\EmaController::class, 'update']);
 Route::put('/1.0/ema/{id}/set-attempt', [App\Http\Controllers\Api\EmaController::class, 'setAttemptTime']);
-Route::get('/1.0/ema/get-next-survey', [App\Http\Controllers\Api\EmaController::class, 'getNextSurvey']);
+Route::get('/1.0/ema/get-next-survey', [App\Http\Controllers\Api\EmaController::class, 'getSurvey']);
 
 Route::get('/1.0/incentive/finished', [App\Http\Controllers\Api\IncentiveController::class, 'finished']);
 Route::get('/1.0/incentive/progress', [App\Http\Controllers\Api\IncentiveController::class, 'progress']);

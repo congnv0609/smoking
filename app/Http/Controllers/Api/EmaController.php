@@ -72,7 +72,7 @@ class EmaController extends Controller
      * @header accountId integer required
      * @authenticated
      */
-    public function getNextSurvey()
+    public function getSurvey()
     {
         $data = [];
         $data[] = $this->getPopupTimeEma1();
@@ -83,9 +83,12 @@ class EmaController extends Controller
         foreach ($data as $key => $value) {
             if (!empty($value)) {
                 $delayMinutes = $this->getMinuteDelay($value);
-                $next_popup_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string("$delayMinutes minutes"));
-                if ($next_popup_time > (new DateTime())) {
-                    return response()->json(['next_survey_time' => date_format($next_popup_time, 'Y-m-d H:i'), 'ema'=>$key+1, 'popup_time' => $value->popup_time, 'postponded_1' => $value->postponded_1, 'postponded_2' => $value->postponded_2, 'postponded_3' => $value->postponded_3], 200);
+                $endMinutes = $delayMinutes+15;
+                $popup_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string("$delayMinutes minutes"));
+                $end_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string("$endMinutes minutes"));
+                $current_ema = (new DateTime() > new DateTime($value->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
+                if ($end_time > (new DateTime())) {
+                    return response()->json(['survey_time' => date_format($popup_time, 'Y-m-d H:i'), 'current_ema'=>$current_ema, 'ema'=>$key+1, 'popup_time' => $value->popup_time, 'postponded_1' => $value->postponded_1, 'postponded_2' => $value->postponded_2, 'postponded_3' => $value->postponded_3], 200);
                 }
             }
         }
