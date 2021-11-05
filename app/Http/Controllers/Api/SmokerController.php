@@ -187,7 +187,7 @@ class SmokerController extends Controller
         for ($i = 0; $i < 7; $i++) {
             $record = [];
             $record['account_id'] = $this->accountId;
-            $record['date'] = $i > 0 ? date_format(date_add($dateString, date_interval_create_from_date_string("1 days")), 'Y-m-d') : date_format($dateString, 'Y-m-d');
+            $record['date'] = $i > 0 ? date_format(date_add($dateString, date_interval_create_from_date_string("1 days")), 'Y-m-d') : date_format(date_add($dateString, date_interval_create_from_date_string("12 hours")), 'Y-m-d');
             $record['nth_day'] = $i+1;
             $record['submit_time'] = new DateTime();
             switch ($ema) {
