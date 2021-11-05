@@ -80,12 +80,12 @@ class EmaController extends Controller
         $data[] = $this->getPopupTimeEma3();
         $data[] = $this->getPopupTimeEma4();
         $data[] = $this->getPopupTimeEma5();
-        foreach ($data as $value) {
+        foreach ($data as $key => $value) {
             if (!empty($value)) {
                 $delayMinutes = $this->getMinuteDelay($value);
                 $next_popup_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string("$delayMinutes minutes"));
                 if ($next_popup_time > (new DateTime())) {
-                    return response()->json(['next_survey_time' => date_format($next_popup_time, 'Y-m-d H:i'), 'popup_time' => $value->popup_time, 'postponded_1' => $value->postponded_1, 'postponded_2' => $value->postponded_2, 'postponded_3' => $value->postponded_3], 200);
+                    return response()->json(['next_survey_time' => date_format($next_popup_time, 'Y-m-d H:i'), 'ema'=>$key, 'popup_time' => $value->popup_time, 'postponded_1' => $value->postponded_1, 'postponded_2' => $value->postponded_2, 'postponded_3' => $value->postponded_3], 200);
                 }
             }
         }
