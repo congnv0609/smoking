@@ -2,25 +2,25 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\User;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 
-class CreateUsers extends Command
+class UpdateUser extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'user:create';
+    protected $signature = 'user:update';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create an admin account';
+    protected $description = 'Command description';
 
     /**
      * Create a new command instance.
@@ -39,22 +39,11 @@ class CreateUsers extends Command
      */
     public function handle()
     {
-        $name = $this->ask('What is your name?');
+        // return Command::SUCCESS;
         $email = $this->ask('What is your email?');
         $password = $this->secret('What is the password?');
-        $user = User::where('email', $email)->first();
-        if (empty($user)) {
-            $user = User::create([
-                'name' => $name,
-                'email' => $email,
-                'password' => Hash::make($password)
-            ]);
-        } else {
-            $user->name = $name;
-            $user->password = Hash::make($password);
-        }
+        $user = User::firstOrNew(['email'=> $email]);
+        $user->password = Hash::make($password);
         $user->save();
-        $this->info('The user created successful!');
-        return 0;
     }
 }

@@ -336,4 +336,58 @@ class SmokerController extends Controller
         }
     }
 
+    /**
+     * Saving device token to push message
+     * @bodyParam token string required token use to push notification
+     */
+    public function saveDeviceToken(Request $request)
+    {
+        // auth('api')->user()->update(['device_token' => $request->token]);
+        $smoker = Smoker::where('id', $this->accountId)->first();
+        $smoker->update(['device_token' => $request->token]);
+        return response()->json(['Token stored.']);
+    }
+
+    public function sendNotification(Request $request)
+    {
+        $url = 'https://fcm.googleapis.com/fcm/send';
+        $DeviceToken = Smoker::whereNotNull('device_token')->pluck('device_token')->all();
+
+        $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
+
+        $data = [
+            "registration_ids" => $DeviceToken,
+            "notification" => [
+                "title" => $request->title,
+                "body" => $request->body,
+            ]
+        ];
+
+        $RESPONSE = json_encode($data);
+
+        $headers = [
+            'Authorization:key=' . $FcmKey,
+            'Content-Type: application/json',
+        ];
+
+        // CURL
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $RESPONSE);
+
+        $output = curl_exec($ch);
+        if ($output === FALSE) {
+            die('Curl error: ' . curl_error($ch));
+        }
+        curl_close($ch);
+        dd($output);
+    }
+
+
 }

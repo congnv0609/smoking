@@ -2,8 +2,11 @@
 
 namespace App\Console;
 
+use App\Jobs\SendNotification;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use DateTime;
+use Illuminate\Support\Facades\Cache;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,6 +28,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('ema:get-schedule')->daily();
+        $data = Cache::get('ema:schedule');
+        if(!empty($data)) {
+            foreach ($data as $key => $value) {
+                $time = date_format(new DateTime($value["popup_time"]), 'H:i');
+                $schedule->job(new SendNotification)->at($time);
+            }
+        }
+        
     }
 
     /**
