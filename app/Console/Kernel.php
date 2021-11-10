@@ -29,11 +29,13 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('ema:get-schedule')->daily();
+        // $schedule->command('ema:get-schedule');
         $data = Cache::get('ema:schedule');
         if(!empty($data)) {
             foreach ($data as $key => $value) {
                 $time = date_format(new DateTime($value["popup_time"]), 'H:i');
-                $schedule->job(new SendNotification)->at($time);
+                $schedule->job(new SendNotification($value))->daily()->at($time);
+                // $schedule->job(new SendNotification($value))->everyMinute();
             }
         }
         
