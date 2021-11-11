@@ -23,7 +23,7 @@ Route::put('/1.0/smoker/schedule', [App\Http\Controllers\Api\SmokerController::c
 
 //push notification
 Route::post('/1.0/smoker/save-device-token', [App\Http\Controllers\Api\SmokerController::class, 'saveDeviceToken']);
-Route::post('/send-notification', [App\Http\Controllers\Api\SmokerController::class, 'sendNotification'])->name('send.notification');
+Route::post('/1.0/smoker/send-notification', [App\Http\Controllers\Api\SmokerController::class, 'sendNotification'])->name('send.notification');
 
 Route::put('/1.0/ema/{id}/update', [App\Http\Controllers\Api\EmaController::class, 'update']);
 Route::put('/1.0/ema/{id}/set-attempt', [App\Http\Controllers\Api\EmaController::class, 'setAttemptTime']);

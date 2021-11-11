@@ -348,15 +348,22 @@ class SmokerController extends Controller
         return response()->json(['Token stored.']);
     }
 
+    /**
+     * test send notification
+     * @authenticated
+     * @header accountId integer required
+     * @bodyParam title string required
+     * @bodyParam body string required
+     */
     public function sendNotification(Request $request)
     {
         $url = 'https://fcm.googleapis.com/fcm/send';
-        $DeviceToken = Smoker::whereNotNull('device_token')->pluck('device_token')->all();
-
-        $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
-
+        // $DeviceToken = Smoker::whereNotNull('device_token')->pluck('device_token')->all();
+        $smoker = Smoker::whereNotNull('device_token')->where('id', $this->accountId)->first();
+        // $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
+        $FcmKey = env('FCM');
         $data = [
-            "registration_ids" => $DeviceToken,
+            "registration_ids" => [$smoker->device_token],
             "notification" => [
                 "title" => $request->title,
                 "body" => $request->body,
