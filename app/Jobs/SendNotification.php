@@ -35,22 +35,24 @@ class SendNotification implements ShouldQueue
     public function handle()
     {
         //
-        $smoker = Smoker::whereNotNull('device_token')->where('id',$this->_ema['account_id'])->first();
-        if(!empty($smoker)) {
+        $smoker = Smoker::whereNotNull('device_token')->where('id', $this->_ema['account_id'])->first();
+        if (!empty($smoker)) {
             $this->push($smoker);
         }
     }
 
-    private function push($smoker){
+    private function push($smoker)
+    {
         $url = 'https://fcm.googleapis.com/fcm/send';
         // $DeviceToken = Smoker::whereNotNull('device_token')->pluck('device_token')->all();
         $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
         // $FcmKey = env('FCM');
+        $info = $this->getPromptMessage();
         $data = [
             "registration_ids" => [$smoker->device_token],
             "notification" => [
-                "title" => "test title",
-                "body" => "test body",
+                "title" => $info["title"],
+                "body" => $info["body"],
             ]
         ];
 
@@ -78,5 +80,58 @@ class SendNotification implements ShouldQueue
         }
         curl_close($ch);
         // dd($output);
+    }
+
+    private function getPromptMessage()
+    {
+        $postponded_1 = $this->_ema['postponded_1'];
+        $postponded_2 = $this->_ema['postponded_2'];
+        if ($postponded_1 > 0) {
+            switch ($postponded_1) {
+                case 1: {
+                        $title = "1st Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+                case 2: {
+                        $title = "1st Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+                case 3: {
+                        $title = "1st Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+            }
+        } else {
+            $title = "1st Reminder alert";
+            $msg = "吸煙雷達邀請你做問卷了";
+            return ['title' => $title, 'body' => $msg];
+        }
+        if ($postponded_2 > 0) {
+            switch ($postponded_2) {
+                case 1: {
+                        $title = "2nd Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+                case 2: {
+                        $title = "2nd Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+                case 3: {
+                        $title = "2nd Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+            }
+        } else {
+            $title = "2nd Reminder alert";
+            $msg = "最後一次機會做這份問卷！放棄填寫會損失是次現金禮券!";
+            return ['title' => $title, 'body' => $msg];
+        }
+        return ['title' => $title, 'body' => $msg];
     }
 }
