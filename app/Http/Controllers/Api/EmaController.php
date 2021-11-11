@@ -18,6 +18,8 @@ class EmaController extends Controller
 
     private $accountId;
 
+    const DO_TIME = 15;
+
     public function __construct()
     {
         $this->accountId = request()->header('accountId');
@@ -41,10 +43,8 @@ class EmaController extends Controller
         if (empty($ema)) {
             return response()->json(['msg' => 'Ema not found'], 404);
         }
-        // $check = $this->checkValidTime($ema);
-        // if ($check) {
-        //     return response()->json(['msg' => 'Overdue'], 412);
-        // }
+        $data['popup_time'] = $ema->popup_time;
+        $this->updatePopupTime($data);
         $ema->update($data);
         $this->updateIncentive($id, $data);
         return response()->json($ema, 200);
@@ -82,13 +82,15 @@ class EmaController extends Controller
         $data[] = $this->getPopupTimeEma5();
         foreach ($data as $key => $value) {
             if (!empty($value)) {
-                $delayMinutes = $this->getMinuteDelay($value);
-                $endMinutes = $delayMinutes+15;
-                $popup_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string("$delayMinutes minutes"));
-                $end_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string("$endMinutes minutes"));
+                // $delayMinutes = $this->getMinuteDelay($value);
+                // $endMinutes = $delayMinutes+15;
+                // $popup_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string("$delayMinutes minutes"));
+                $popup_time = new Datetime($value->popup_time);
+                // $end_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string("$endMinutes minutes"));
+                $end_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string(self::DO_TIME . "minutes"));
                 $current_ema = (new DateTime() > new DateTime($value->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
                 if ($end_time > (new DateTime())) {
-                    return response()->json(['survey_time' => date_format($popup_time, 'Y-m-d H:i'), 'current_ema'=>$current_ema, 'ema'=>$key+1, 'popup_time' => $value->popup_time, 'nth_day'=>$value->nth_day, 'postponded_1' => $value->postponded_1, 'postponded_2' => $value->postponded_2, 'postponded_3' => $value->postponded_3], 200);
+                    return response()->json(['survey_time' => date_format($popup_time, 'Y-m-d H:i'), 'current_ema' => $current_ema, 'ema' => $key + 1, 'popup_time' => $value->popup_time, 'nth_day' => $value->nth_day, 'postponded_1' => $value->postponded_1, 'postponded_2' => $value->postponded_2, 'postponded_3' => $value->postponded_3], 200);
                 }
             }
         }
@@ -160,16 +162,38 @@ class EmaController extends Controller
         return $incentive->save();
     }
 
-    private function getMinuteDelay($ema)
+    private function getMinuteDelay($postponded)
     {
-        if ($ema->postponded_3) {
+        if ($postponded) {
             return 30;
-        } elseif ($ema->postponded_2) {
+        } elseif ($postponded) {
             return 15;
-        } elseif ($ema->postponded_1) {
+        } elseif ($postponded) {
             return 5;
         }
         return 0;
+    }
+
+    private function updatePopupTime(&$data)
+    {
+        if (isset($data['postponded_1'])) {
+            $delayMinutes = $this->getMinuteDelay($data['postponded_1']);
+            if ($delayMinutes > 0) {
+                $data['popup_time'] = date_format(date_add(date_create($data['popup_time']), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
+            }
+        }
+        if (isset($data['postponded_2'])) {
+            $delayMinutes = $this->getMinuteDelay($data['postponded_2']);
+            if ($delayMinutes > 0) {
+                $data['popup_time'] = date_format(date_add(date_create($data['popup_time']), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
+            }
+        }
+        if (isset($data['postponded_3'])) {
+            $delayMinutes = $this->getMinuteDelay($data['postponded_3']);
+            if ($delayMinutes > 0) {
+                $data['popup_time'] = date_format(date_add(date_create($data['popup_time']), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
+            }
+        }
     }
 
     // private function checkValidTime($ema)
