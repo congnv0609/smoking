@@ -11,6 +11,8 @@ use App\Models\Ema5;
 use App\Models\Incentive;
 use DateInterval;
 use DateTime;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class EmaController extends Controller
@@ -46,6 +48,8 @@ class EmaController extends Controller
         $data['popup_time'] = $ema->popup_time;
         $this->updatePopupTime($data);
         $ema->update($data);
+        Cache::forget('ema:schedule');
+        Artisan::call('ema:get-schedule');
         $this->updateIncentive($id, $data);
         return response()->json($ema, 200);
     }
