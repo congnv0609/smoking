@@ -362,7 +362,7 @@ class SmokerController extends Controller
         $smoker = Smoker::whereNotNull('device_token')->where('id', $this->accountId)->first();
         // $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
         $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
-        $FcmKey = env('FCM');
+        // $FcmKey = env('FCM');
         $data = [
             "registration_ids" => [$smoker->device_token],
             "notification" => [
