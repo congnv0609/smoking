@@ -67,7 +67,9 @@ class EmaController extends Controller
         $data['date'] = request()->input('date');
         $data['attempt_time'] = new DateTime();
         $ema = $this->getEma($id, $data);
-        $ema->update($data);
+        if (!empty($ema)) {
+            $ema->update($data);
+        }
         return response()->json($ema, 200);
     }
 

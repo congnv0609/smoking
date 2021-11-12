@@ -28,12 +28,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('ema:get-schedule')->daily();
+        // $schedule->command('ema:get-schedule')->daily();
         // $schedule->command('ema:get-schedule');
         // $data = Cache::get('ema:schedule');
         $value = [
             "id" => 134,
-            "account_id" => 30,
+            "account_id" => 34,
             "date" => "2021-11-12",
             "popup_time" => "2021-11-12 21:30:00",
             "postponded_1" => 0,
