@@ -86,29 +86,6 @@ class SendNotification implements ShouldQueue
     {
         $postponded_1 = $this->_ema['postponded_1'];
         $postponded_2 = $this->_ema['postponded_2'];
-        if ($postponded_1 > 0) {
-            switch ($postponded_1) {
-                case 1: {
-                        $title = "1st Reminder alert";
-                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
-                        break;
-                    }
-                case 2: {
-                        $title = "1st Reminder alert";
-                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
-                        break;
-                    }
-                case 3: {
-                        $title = "1st Reminder alert";
-                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
-                        break;
-                    }
-            }
-        } else {
-            $title = "1st Reminder alert";
-            $msg = "吸煙雷達邀請你做問卷了";
-            return ['title' => $title, 'body' => $msg];
-        }
         if ($postponded_2 > 0) {
             switch ($postponded_2) {
                 case 1: {
@@ -127,10 +104,33 @@ class SendNotification implements ShouldQueue
                         break;
                     }
             }
+            return ['title' => $title, 'body' => $msg];
         } else {
             $title = "2nd Reminder alert";
             $msg = "最後一次機會做這份問卷！放棄填寫會損失是次現金禮券!";
+        }
+        if ($postponded_1 > 0) {
+            switch ($postponded_1) {
+                case 1: {
+                        $title = "1st Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+                case 2: {
+                        $title = "1st Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+                case 3: {
+                        $title = "1st Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+            }
             return ['title' => $title, 'body' => $msg];
+        } else {
+            $title = "1st Reminder alert";
+            $msg = "吸煙雷達邀請你做問卷了";
         }
         return ['title' => $title, 'body' => $msg];
     }
