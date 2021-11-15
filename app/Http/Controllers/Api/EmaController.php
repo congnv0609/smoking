@@ -81,7 +81,7 @@ class EmaController extends Controller
      */
     public function getSurvey()
     {
-        $currentEma = $this->getPopupTime();
+        $currentEma = $this->getPopupTime($this->accountId);
         if (empty($currentEma)) {
             return response()->json(['msg' => 'Not found next survey time'], 404);
         }
