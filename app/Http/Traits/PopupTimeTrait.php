@@ -12,13 +12,13 @@ use stdClass;
 
 trait PopupTimeTrait {
 
-    public function getPopupTime(){
+    public function getPopupTime($accountId){
         $data = [];
-        $data[] = $this->getPopupTimeEma1();
-        $data[] = $this->getPopupTimeEma2();
-        $data[] = $this->getPopupTimeEma3();
-        $data[] = $this->getPopupTimeEma4();
-        $data[] = $this->getPopupTimeEma5();
+        $data[] = $this->getPopupTimeEma1($accountId);
+        $data[] = $this->getPopupTimeEma2($accountId);
+        $data[] = $this->getPopupTimeEma3($accountId);
+        $data[] = $this->getPopupTimeEma4($accountId);
+        $data[] = $this->getPopupTimeEma5($accountId);
         $curEma = new stdClass();
         foreach ($data as $key => $value) {
             if (!empty($value)) {
@@ -88,33 +88,33 @@ trait PopupTimeTrait {
         return ['title' => $title, 'body' => $msg];
     }
 
-    private function getPopupTimeEma1()
+    private function getPopupTimeEma1($accountId)
     {
-        return Ema1::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
+        return Ema1::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
             ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
-    private function getPopupTimeEma2()
+    private function getPopupTimeEma2($accountId)
     {
-        return Ema2::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
+        return Ema2::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
             ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
-    private function getPopupTimeEma3()
+    private function getPopupTimeEma3($accountId)
     {
-        return Ema3::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
+        return Ema3::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
             ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
-    private function getPopupTimeEma4()
+    private function getPopupTimeEma4($accountId)
     {
-        return Ema4::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
+        return Ema4::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
             ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
-    private function getPopupTimeEma5()
+    private function getPopupTimeEma5($accountId)
     {
-        return Ema5::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $this->accountId)
+        return Ema5::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
             ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
