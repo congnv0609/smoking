@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\PopupTimeTrait;
 use App\Models\Ema1;
 use App\Models\Ema2;
 use App\Models\Ema3;
@@ -18,9 +19,9 @@ use Illuminate\Support\Facades\DB;
 class EmaController extends Controller
 {
 
-    private $accountId;
+    use PopupTimeTrait;
 
-    const DO_TIME = 15;
+    private $accountId;
 
     public function __construct()
     {
@@ -80,59 +81,14 @@ class EmaController extends Controller
      */
     public function getSurvey()
     {
-        $data = [];
-        $data[] = $this->getPopupTimeEma1();
-        $data[] = $this->getPopupTimeEma2();
-        $data[] = $this->getPopupTimeEma3();
-        $data[] = $this->getPopupTimeEma4();
-        $data[] = $this->getPopupTimeEma5();
-        foreach ($data as $key => $value) {
-            if (!empty($value)) {
-                // $delayMinutes = $this->getMinuteDelay($value);
-                // $endMinutes = $delayMinutes+15;
-                // $popup_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string("$delayMinutes minutes"));
-                $popup_time = new Datetime($value->popup_time);
-                // $end_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string("$endMinutes minutes"));
-                $end_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string(self::DO_TIME . "minutes"));
-                $current_ema = (new DateTime() > new DateTime($value->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
-                if ($end_time > (new DateTime())) {
-                    return response()->json(['survey_time' => date_format($popup_time, 'Y-m-d H:i'), 'current_ema' => $current_ema, 'ema' => $key + 1, 'popup_time' => $value->popup_time, 'nth_day' => $value->nth_day, 'postponded_1' => $value->postponded_1, 'postponded_2' => $value->postponded_2, 'postponded_3' => $value->postponded_3], 200);
-                }
-            }
+        $currentEma = $this->getPopupTime();
+        if (empty($currentEma)) {
+            return response()->json(['msg' => 'Not found next survey time'], 404);
         }
-        return response()->json(['msg' => 'Not found next survey time'], 404);
+        return response()->json(['survey_time' => date_format(new Datetime($currentEma->popup_time), 'Y-m-d H:i:s'), 'current_ema' => $currentEma->current_ema, 'ema' => $currentEma->ema, 'popup_time' => $currentEma->popup_time, 'nth_day' => $currentEma->nth_day, 'postponded_1' => $currentEma->postponded_1, 'postponded_2' => $currentEma->postponded_2, 'postponded_3' => $currentEma->postponded_3], 200);
     }
 
-    private function getPopupTimeEma1()
-    {
-        return Ema1::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2')->where('account_id', $this->accountId)
-            ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
-            ->first();
-    }
-    private function getPopupTimeEma2()
-    {
-        return Ema2::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2')->where('account_id', $this->accountId)
-            ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
-            ->first();
-    }
-    private function getPopupTimeEma3()
-    {
-        return Ema3::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2')->where('account_id', $this->accountId)
-            ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
-            ->first();
-    }
-    private function getPopupTimeEma4()
-    {
-        return Ema4::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2')->where('account_id', $this->accountId)
-            ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
-            ->first();
-    }
-    private function getPopupTimeEma5()
-    {
-        return Ema5::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2')->where('account_id', $this->accountId)
-            ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
-            ->first();
-    }
+
 
     private function getEma(int $id, array $data)
     {
@@ -194,20 +150,11 @@ class EmaController extends Controller
                 $data['popup_time'] = date_format(date_add(date_create($data['popup_time']), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
             }
         }
-        // if (isset($data['postponded_3'])) {
-        //     $delayMinutes = $this->getMinuteDelay($data['postponded_3']);
-        //     if ($delayMinutes > 0) {
-        //         $data['popup_time'] = date_format(date_add(date_create($data['popup_time']), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
-        //     }
-        // }
+        if (isset($data['postponded_3'])) {
+            $delayMinutes = $this->getMinuteDelay($data['postponded_3']);
+            if ($delayMinutes > 0) {
+                $data['popup_time'] = date_format(date_add(date_create($data['popup_time']), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
+            }
+        }
     }
-
-    // private function checkValidTime($ema)
-    // {
-    //     $takenTime = date_diff(new DateTime(), $ema->attempt_time)->format('%i');
-    //     if ($takenTime > 15) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
 }

@@ -13,7 +13,7 @@ class CreateUsers extends Command
      *
      * @var string
      */
-    protected $signature = 'user:create';
+    protected $signature = 'ema:create-user';
 
     /**
      * The console command description.
