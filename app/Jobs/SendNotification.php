@@ -55,7 +55,7 @@ class SendNotification implements ShouldQueue
             "notification" => [
                 "title" => $info["title"],
                 "body" => $info["body"],
-                'sound' => $smoker->notification == 1 ? "default" : "vibrate",
+                'sound' => $smoker->notification == 1 ? "default" : "",
             ],
             "data" => ["current_ema" => $ema->current_ema, "ema"=>$ema->ema],
         ];
