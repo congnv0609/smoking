@@ -10,11 +10,9 @@ use App\Models\Ema3;
 use App\Models\Ema4;
 use App\Models\Ema5;
 use App\Models\Incentive;
-use DateInterval;
 use DateTime;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class EmaController extends Controller
 {
