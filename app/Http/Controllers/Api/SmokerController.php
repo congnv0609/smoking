@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\PopupTimeTrait;
 use App\Models\Ema1;
 use App\Models\Ema2;
 use App\Models\Ema3;
@@ -17,6 +18,8 @@ use Illuminate\Http\Request;
 
 class SmokerController extends Controller
 {
+    use PopupTimeTrait;
+
     private $accountId;
 
     public function __construct()
@@ -366,12 +369,16 @@ class SmokerController extends Controller
         $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
         // $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
         // $FcmKey = env('FCM');
+        $ema = $this->getPopupTime();
+        $info = $this->getPromptMessage($ema);
         $data = [
             "registration_ids" => [$smoker->device_token],
             "notification" => [
-                "title" => $request->title,
-                "body" => $request->body,
-            ]
+                "title" => $info["title"],
+                "body" => $info["body"],
+                'sound' => $smoker->notification == 1 ? "default" : "",
+            ],
+            "data" => ["current_ema" => $ema->current_ema, "ema" => $ema->ema],
         ];
 
         $RESPONSE = json_encode($data);
