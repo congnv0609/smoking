@@ -37,8 +37,8 @@ trait PopupTimeTrait {
 
     public function getPromptMessage($ema)
     {
-        $postponded_1 = $ema['postponded_1'];
-        $postponded_2 = $ema['postponded_2'];
+        $postponded_1 = $ema->postponded_1;
+        $postponded_2 = $ema->postponded_2;
         if ($postponded_2 > 0) {
             switch ($postponded_2) {
                 case 1: {
