@@ -57,6 +57,7 @@ class EmaController extends Controller
         $data['popup_time'] = $ema->popup_time;
         $this->updatePopupTime($data);
         $ema->update($data);
+        Artisan::call('ema:get-schedule');
         return response()->json($ema, 200);
      }
 
