@@ -15,6 +15,8 @@ use App\Models\Smoker;
 use App\Models\WakeTime;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 
 class SmokerController extends Controller
 {
@@ -71,6 +73,8 @@ class SmokerController extends Controller
         $smoker->startDate = $data["startDate"];
         $smoker->endDate = $data["endDate"];
         $smoker->save();
+        Cache::forget('ema:schedule');
+        Artisan::call('ema:get-schedule');
         $smokerData = $this->makeDateArray($data['startDate']);
         $this->createIncentive($smokerData);
         //create ema data 
