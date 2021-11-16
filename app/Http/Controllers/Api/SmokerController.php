@@ -73,8 +73,6 @@ class SmokerController extends Controller
         $smoker->startDate = $data["startDate"];
         $smoker->endDate = $data["endDate"];
         $smoker->save();
-        Cache::forget('ema:schedule');
-        Artisan::call('ema:get-schedule');
         $smokerData = $this->makeDateArray($data['startDate']);
         $this->createIncentive($smokerData);
         //create ema data 
@@ -133,6 +131,8 @@ class SmokerController extends Controller
         $this->updateEma3($ema_arr3);
         $this->updateEma4($ema_arr4);
         $this->updateEma5($ema_arr5);
+        Cache::forget('ema:schedule');
+        Artisan::call('ema:get-schedule');
         return response()->json($smoker, 200);
         //     }
         // );
