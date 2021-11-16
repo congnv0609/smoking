@@ -44,7 +44,7 @@ class GetEmaSchedule extends Command
         $data = [];
         $data = $this->getEmaSchedule();
         if(!empty($data)) {
-            Cache::put('ema:schedule', $data, 60 * 60 * 24);
+            Cache::put('ema:schedule', $data, 60 * 24);
         }
     }
 
