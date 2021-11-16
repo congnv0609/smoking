@@ -86,6 +86,7 @@ class SmokerController extends Controller
         $this->createEma3($ema_arr3);
         $this->createEma4($ema_arr4);
         $this->createEma5($ema_arr5);
+        Artisan::call('ema:get-schedule');
         return response()->json($smoker, 200);
         //     }
         // );
@@ -131,7 +132,7 @@ class SmokerController extends Controller
         $this->updateEma3($ema_arr3);
         $this->updateEma4($ema_arr4);
         $this->updateEma5($ema_arr5);
-        Cache::forget('ema:schedule');
+        // Cache::forget('ema:schedule');
         Artisan::call('ema:get-schedule');
         return response()->json($smoker, 200);
         //     }
