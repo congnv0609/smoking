@@ -28,6 +28,7 @@ Route::post('/1.0/smoker/send-notification', [App\Http\Controllers\Api\SmokerCon
 Route::put('/1.0/ema/{id}/update', [App\Http\Controllers\Api\EmaController::class, 'update']);
 Route::put('/1.0/ema/{id}/set-attempt', [App\Http\Controllers\Api\EmaController::class, 'setAttemptTime']);
 Route::get('/1.0/ema/get-next-survey', [App\Http\Controllers\Api\EmaController::class, 'getSurvey']);
+Route::put('/1.0/ema/{id}/delay', [App\Http\Controllers\Api\EmaController::class, 'delay']);
 
 Route::get('/1.0/incentive/finished', [App\Http\Controllers\Api\IncentiveController::class, 'finished']);
 Route::get('/1.0/incentive/progress', [App\Http\Controllers\Api\IncentiveController::class, 'progress']);

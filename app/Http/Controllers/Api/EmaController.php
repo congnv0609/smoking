@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\EmaTrait;
 use App\Http\Traits\PopupTimeTrait;
 use App\Models\Ema1;
 use App\Models\Ema2;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Artisan;
 class EmaController extends Controller
 {
 
-    use PopupTimeTrait;
+    use PopupTimeTrait, EmaTrait;
 
     private $accountId;
 
@@ -24,6 +25,40 @@ class EmaController extends Controller
     {
         $this->accountId = request()->header('accountId');
     }
+
+    /**
+     * Delay survey
+     * emaId, postponded value
+     * @authenticated
+     * @header accountId integer required
+     * @bodyParam postponded_1 integer 1,2,3
+     * @bodyParam postponded_2 integer 1,2,3
+     * @bodyParam postponded_3 integer 1,2,3
+     * 
+     */
+
+     public function delay($emaId) {
+        $data = [];
+         $pp1 = request()->input('postponded_1');
+         $pp2 = request()->input('postponded_2');
+         $pp3 = request()->input('postponded_3');
+         if(!empty($pp1)) {
+            $data['postponded_1'] = $pp1;
+         }
+        if (!empty($pp2)) {
+            $data['postponded_2'] = $pp2;
+        }
+        if (!empty($pp3)) {
+            $data['postponded_3'] = $pp3;
+        }
+        $data['date'] = date_format(new DateTime(),'Y-m-d');
+        $data['account_id'] = $this->accountId;
+        $ema = $this->getEma($emaId, $data);
+        $data['popup_time'] = $ema->popup_time;
+        $this->updatePopupTime($data);
+        $ema->update($data);
+        return response()->json($ema, 200);
+     }
 
     /**
      * update an EMA and date values, use form url encoded
@@ -64,6 +99,7 @@ class EmaController extends Controller
     {
         $data['date'] = request()->input('date');
         $data['attempt_time'] = new DateTime();
+        $data['account_id'] = $this->accountId;
         $ema = $this->getEma($id, $data);
         if (!empty($ema)) {
             $ema->update($data);
@@ -85,30 +121,6 @@ class EmaController extends Controller
         return response()->json(['survey_time' => date_format(new Datetime($currentEma->popup_time), 'Y-m-d H:i:s'), 'current_ema' => $currentEma->current_ema, 'ema' => $currentEma->ema, 'popup_time' => $currentEma->popup_time, 'nth_day' => $currentEma->nth_day, 'postponded_1' => $currentEma->postponded_1, 'postponded_2' => $currentEma->postponded_2, 'postponded_3' => $currentEma->postponded_3], 200);
     }
 
-
-
-    private function getEma(int $id, array $data)
-    {
-        switch ($id) {
-            case 1:
-                $ema = Ema1::where(['account_id' => $this->accountId, 'date' => $data['date']])->first();
-                break;
-            case 2:
-                $ema = Ema2::where(['account_id' => $this->accountId, 'date' => $data['date']])->first();
-                break;
-            case 3:
-                $ema = Ema3::where(['account_id' => $this->accountId, 'date' => $data['date']])->first();
-                break;
-            case 4:
-                $ema = Ema4::where(['account_id' => $this->accountId, 'date' => $data['date']])->first();
-                break;
-            case 5:
-                $ema = Ema5::where(['account_id' => $this->accountId, 'date' => $data['date']])->first();
-                break;
-        }
-        return $ema;
-    }
-
     private function updateIncentive(int $emaId, array $data)
     {
         $ret = [];
@@ -123,14 +135,19 @@ class EmaController extends Controller
 
     private function getMinuteDelay($postponded)
     {
-        if ($postponded) {
-            return 30;
-        } elseif ($postponded) {
-            return 15;
-        } elseif ($postponded) {
-            return 5;
+        switch($postponded) {
+            case 1: return 5;
+            case 2: return 30;
+            default: return 0;
         }
-        return 0;
+        // if ($postponded) {
+        //     return 30;
+        // } elseif ($postponded) {
+        //     return 15;
+        // } elseif ($postponded) {
+        //     return 5;
+        // }
+        // return 0;
     }
 
     private function updatePopupTime(&$data)

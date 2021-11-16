@@ -63,4 +63,26 @@ trait EmaTrait {
         return $data;
     }
 
+    private function getEma(int $id, array $data)
+    {
+        switch ($id) {
+            case 1:
+                $ema = Ema1::where(['account_id' => $data['account_id'], 'date' => $data['date']])->first();
+                break;
+            case 2:
+                $ema = Ema2::where(['account_id' => $data['account_id'], 'date' => $data['date']])->first();
+                break;
+            case 3:
+                $ema = Ema3::where(['account_id' => $data['account_id'], 'date' => $data['date']])->first();
+                break;
+            case 4:
+                $ema = Ema4::where(['account_id' => $data['account_id'], 'date' => $data['date']])->first();
+                break;
+            case 5:
+                $ema = Ema5::where(['account_id' => $data['account_id'], 'date' => $data['date']])->first();
+                break;
+        }
+        return $ema;
+    }
+
 }
