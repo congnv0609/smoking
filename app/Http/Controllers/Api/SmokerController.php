@@ -213,7 +213,8 @@ class SmokerController extends Controller
                     break;
                 case 5:
                     $record['popup_time'] = $i > 0 ? date_format($dateString, 'Y-m-d H:i:s') : date_format(date_add($dateString, date_interval_create_from_date_string("12 hours")), 'Y-m-d H:i:s');
-                    $record['date'] = $i > 0 ? date_format(date_add($dateString, date_interval_create_from_date_string("1 days")), 'Y-m-d') : date_format($dateString, 'Y-m-d');
+                    $record['date'] = date_format($dateString, 'Y-m-d');
+                    // $record['date'] = $i > 0 ? date_format(date_add($dateString, date_interval_create_from_date_string("1 days")), 'Y-m-d') : date_format($dateString, 'Y-m-d');
                     break;
                 default:
                     $record['popup_time'] = null;
