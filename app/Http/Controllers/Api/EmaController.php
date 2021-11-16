@@ -31,9 +31,9 @@ class EmaController extends Controller
      * emaId, postponded value
      * @authenticated
      * @header accountId integer required
-     * @bodyParam postponded_1 integer 1,2,3
-     * @bodyParam postponded_2 integer 1,2,3
-     * @bodyParam postponded_3 integer 1,2,3
+     * @bodyParam postponded_1 integer 0,1,2
+     * @bodyParam postponded_2 integer 0,1,2
+     * @bodyParam postponded_3 integer 0,1,2
      * 
      */
 
@@ -42,13 +42,13 @@ class EmaController extends Controller
          $pp1 = request()->input('postponded_1');
          $pp2 = request()->input('postponded_2');
          $pp3 = request()->input('postponded_3');
-         if(!empty($pp1)) {
+         if(isset($pp1)) {
             $data['postponded_1'] = $pp1;
          }
-        if (!empty($pp2)) {
+        if (isset($pp2)) {
             $data['postponded_2'] = $pp2;
         }
-        if (!empty($pp3)) {
+        if (isset($pp3)) {
             $data['postponded_3'] = $pp3;
         }
         $data['date'] = date_format(new DateTime(),'Y-m-d');
