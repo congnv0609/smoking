@@ -5,11 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\EmaTrait;
 use App\Http\Traits\PopupTimeTrait;
-use App\Models\Ema1;
-use App\Models\Ema2;
-use App\Models\Ema3;
-use App\Models\Ema4;
-use App\Models\Ema5;
 use App\Models\Incentive;
 use DateTime;
 use Illuminate\Support\Facades\Artisan;
@@ -75,14 +70,14 @@ class EmaController extends Controller
     {
         $data = request()->all();
         $data['submit_time'] = new DateTime();
+        unset($data['postponded_1'], $data['postponded_2'], $data['postponded_3']);
         $ema = $this->getEma($id, $data);
         if (empty($ema)) {
             return response()->json(['msg' => 'Ema not found'], 404);
         }
-        $data['popup_time'] = $ema->popup_time;
-        $this->updatePopupTime($data);
+        // $data['popup_time'] = $ema->popup_time;
+        // $this->updatePopupTime($data);
         $ema->update($data);
-        // Cache::forget('ema:schedule');
         Artisan::call('ema:get-schedule');
         $this->updateIncentive($id, $data);
         return response()->json($ema, 200);
@@ -156,19 +151,19 @@ class EmaController extends Controller
         if (isset($data['postponded_1'])) {
             $delayMinutes = $this->getMinuteDelay($data['postponded_1']);
             if ($delayMinutes > 0) {
-                $data['popup_time'] = date_format(date_add(date_create($data['popup_time']), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
+                $data['popup_time'] = $data['popup_time'] < new DateTime() ? date_format(date_add(new DateTime(), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s') : $data['popup_time'];
             }
         }
         if (isset($data['postponded_2'])) {
             $delayMinutes = $this->getMinuteDelay($data['postponded_2']);
             if ($delayMinutes > 0) {
-                $data['popup_time'] = date_format(date_add(date_create($data['popup_time']), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
+                $data['popup_time'] = $data['popup_time'] < new DateTime() ? date_format(date_add(new DateTime(), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s') : $data['popup_time'];
             }
         }
         if (isset($data['postponded_3'])) {
             $delayMinutes = $this->getMinuteDelay($data['postponded_3']);
             if ($delayMinutes > 0) {
-                $data['popup_time'] = date_format(date_add(date_create($data['popup_time']), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
+                $data['popup_time'] = $data['popup_time'] < new DateTime() ? date_format(date_add(new DateTime(), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s') : $data['popup_time'];
             }
         }
     }

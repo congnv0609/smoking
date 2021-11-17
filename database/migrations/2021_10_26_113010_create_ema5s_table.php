@@ -24,9 +24,9 @@ class CreateEma5sTable extends Migration
             $table->timestamp('submit_time')->nullable();
             $table->integer('time_taken')->nullable();
             $table->boolean('completed')->default(false);
-            $table->boolean('postponded_1')->default(false);
-            $table->boolean('postponded_2')->default(false);
-            $table->boolean('postponded_3')->default(false);
+            $table->boolean('postponded_1')->nullable();
+            $table->boolean('postponded_2')->nullable();
+            $table->boolean('postponded_3')->nullable();
 
             $table->boolean('d1_a')->default(false);
             $table->unsignedFloat('d1_a_num')->nullable();
