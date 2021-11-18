@@ -19,7 +19,10 @@ class CreateEma5sTable extends Migration
             $table->date('date');
             $table->integer('nth_day');
             $table->integer('nth_ema')->default(5);
+            $table->integer('nth_popup')->default(1);
             $table->timestamp('popup_time')->nullable();
+            $table->timestamp('popup_time1')->nullable();
+            $table->timestamp('popup_time2')->nullable();
             $table->timestamp('attempt_time')->nullable();
             $table->timestamp('submit_time')->nullable();
             $table->integer('time_taken')->nullable();

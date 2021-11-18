@@ -191,28 +191,38 @@ class SmokerController extends Controller
     private function makeEmaArray($startDate, $ema)
     {
         $data = [];
-        $dateString = date_create($startDate);
         for ($i = 0; $i < 7; $i++) {
             $record = [];
+            $dateString = date_create($startDate);
             $record['account_id'] = $this->accountId;
-            $record['date'] = $i > 0 ? date_format(date_add($dateString, date_interval_create_from_date_string("1 days")), 'Y-m-d') : date_format($dateString, 'Y-m-d');
+            $record['date'] = date_format(date_add($dateString, date_interval_create_from_date_string("$i days")), 'Y-m-d');
             $record['nth_day'] = $i+1;
             $record['submit_time'] = new DateTime();
             switch ($ema) {
                 case 1:
                     $record['popup_time'] = date_format($dateString, 'Y-m-d H:i:s');
+                    $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
+                    $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     break;
                 case 2:
-                    $record['popup_time'] = $i > 0 ? date_format($dateString, 'Y-m-d H:i:s') : date_format(date_add($dateString, date_interval_create_from_date_string("3 hours")), 'Y-m-d H:i:s');
+                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("3 hours")), 'Y-m-d H:i:s');
+                    $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
+                    $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     break;
                 case 3:
-                    $record['popup_time'] = $i > 0 ? date_format($dateString, 'Y-m-d H:i:s') : date_format(date_add($dateString, date_interval_create_from_date_string("6 hours")), 'Y-m-d H:i:s');
+                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("6 hours")), 'Y-m-d H:i:s');
+                    $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
+                    $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     break;
                 case 4:
-                    $record['popup_time'] = $i > 0 ? date_format($dateString, 'Y-m-d H:i:s') : date_format(date_add($dateString, date_interval_create_from_date_string("9 hours")), 'Y-m-d H:i:s');
+                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("9 hours")), 'Y-m-d H:i:s');
+                    $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
+                    $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     break;
                 case 5:
-                    $record['popup_time'] = $i > 0 ? date_format($dateString, 'Y-m-d H:i:s') : date_format(date_add($dateString, date_interval_create_from_date_string("12 hours")), 'Y-m-d H:i:s');
+                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("12 hours")), 'Y-m-d H:i:s');
+                    $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
+                    $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     $record['date'] = date_format($dateString, 'Y-m-d');
                     // $record['date'] = $i > 0 ? date_format(date_add($dateString, date_interval_create_from_date_string("1 days")), 'Y-m-d') : date_format($dateString, 'Y-m-d');
                     break;
@@ -376,6 +386,7 @@ class SmokerController extends Controller
         // $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
         // $FcmKey = env('FCM');
         $ema = $this->getPopupTime($this->accountId);
+        $this->updateCountPush($ema);
         $info = $this->getPromptMessage($ema);
         $data = [
             "registration_ids" => [$smoker->device_token],

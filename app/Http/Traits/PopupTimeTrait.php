@@ -12,6 +12,11 @@ use stdClass;
 
 trait PopupTimeTrait {
 
+    public function updateCountPush($ema) {
+        $ema->nth_push = $ema->nth_push+1;
+        $ema->save();
+    }
+
     public function getPopupTime($accountId){
         $data = [];
         $data[] = $this->getPopupTimeEma1($accountId);
