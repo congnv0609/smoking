@@ -395,7 +395,7 @@ class SmokerController extends Controller
                 "body" => $info["body"],
                 'sound' => $smoker->notification == 1 ? "default" : "",
             ],
-            "data" => ["current_ema" => $ema->current_ema, "ema" => $ema->ema],
+            "data" => ["current_ema" => $ema->current_ema, "ema" => $ema->ema, "nth_popup"=>$ema->nth_popup],
         ];
         $this->updateCountPush($ema);
         $RESPONSE = json_encode($data);
