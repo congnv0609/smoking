@@ -61,6 +61,7 @@ const User = () => import('../views/users/User')
 const Login = () => import('../ema-views/pages/Login')
 const Smoker = () => import('../ema-views/smokers/List')
 const EditSmoker = () => import('../ema-views/smokers/Edit')
+const Ema = () => import('../ema-views/ema/List')
 
 
 Vue.use(Router)
@@ -103,6 +104,20 @@ function configRoutes () {
               name: 'SmokerEdit',
               component: EditSmoker
             }
+          ]
+        },
+        {
+          path: 'ema',
+          redirect: 'ema/list',
+          component: {
+            render(c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: 'list',
+              name: 'EmaList',
+              component: Ema
+            },
           ]
         },
         {

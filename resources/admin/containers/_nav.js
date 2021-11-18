@@ -19,6 +19,12 @@ export default [
         icon: 'cil-smoke'
       },
       {
+        _name: 'CSidebarNavItem',
+        name: 'ema',
+        to: '/ema',
+        icon: 'cil-align-left'
+      },
+      {
         _name: 'CSidebarNavTitle',
         _children: ['Theme']
       },

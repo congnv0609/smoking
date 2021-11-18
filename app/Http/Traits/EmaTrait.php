@@ -85,4 +85,26 @@ trait EmaTrait {
         return $ema;
     }
 
+    public function getEmaList(int $id, $size)
+    {
+        switch ($id) {
+            case 1:
+                $ema = Ema1::paginate($size)->withQueryString();
+                break;
+            case 2:
+                $ema = Ema2::paginate($size)->withQueryString();
+                break;
+            case 3:
+                $ema = Ema3::paginate($size)->withQueryString();
+                break;
+            case 4:
+                $ema = Ema4::paginate($size)->withQueryString();
+                break;
+            case 5:
+                $ema = Ema5::paginate($size)->withQueryString();
+                break;
+        }
+        return $ema;
+    }
+
 }

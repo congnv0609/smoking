@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Cms\EmaController;
 use App\Http\Controllers\Cms\SmokerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -11,3 +12,6 @@ Route::post('/refresh', [LoginController::class, 'refresh'])->middleware('jwt.re
 Route::get('/smokers/list', [SmokerController::class, 'list']);
 Route::get('/smokers/detail/{id}', [SmokerController::class, 'detail']);
 Route::put('/smokers/update/{id}', [SmokerController::class, 'updateSchedule']);
+
+//ema
+Route::get('/ema/list', [EmaController::class, 'index']);
