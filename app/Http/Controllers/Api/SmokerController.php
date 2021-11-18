@@ -196,7 +196,7 @@ class SmokerController extends Controller
             $dateString = date_create($startDate);
             $record['account_id'] = $this->accountId;
             $record['date'] = date_format(date_add($dateString, date_interval_create_from_date_string("$i days")), 'Y-m-d');
-            $record['nth_day'] = $i+1;
+            $record['nth_day'] = $i + 1;
             $record['submit_time'] = new DateTime();
             switch ($ema) {
                 case 1:
@@ -379,14 +379,14 @@ class SmokerController extends Controller
         $url = 'https://fcm.googleapis.com/fcm/send';
         // $DeviceToken = Smoker::whereNotNull('device_token')->pluck('device_token')->all();
         $smoker = Smoker::whereNotNull('device_token')->where('id', $this->accountId)->first();
-        if(empty($smoker)){
-            return response()->json(['msg'=>'User not found!']);
+        if (empty($smoker)) {
+            return response()->json(['msg' => 'User not found!']);
         }
         $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
         // $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
         // $FcmKey = env('FCM');
         $ema = $this->getPopupTime($this->accountId);
-        
+
         $info = $this->getPromptMessage($ema);
         $data = [
             "registration_ids" => [$smoker->device_token],
@@ -395,7 +395,7 @@ class SmokerController extends Controller
                 "body" => $info["body"],
                 'sound' => $smoker->notification == 1 ? "default" : "",
             ],
-            "data" => ["current_ema" => $ema->current_ema, "ema" => $ema->ema, "nth_popup"=>$ema->nth_popup],
+            "data" => ["current_ema" => $ema->current_ema, "ema" => $ema->ema, "nth_popup" => $ema->nth_popup, "postponded_1" => $ema->postponded_1, "postponded_2" => $ema->postponded_2, "postponded_3" => $ema->postponded_3],
         ];
         $this->updateCountPush($ema);
         $RESPONSE = json_encode($data);
@@ -423,6 +423,4 @@ class SmokerController extends Controller
         curl_close($ch);
         dd($output);
     }
-
-
 }

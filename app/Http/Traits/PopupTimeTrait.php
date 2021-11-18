@@ -96,31 +96,31 @@ trait PopupTimeTrait {
 
     private function getPopupTimeEma1($accountId)
     {
-        return Ema1::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
+        return Ema1::select('popup_time', 'popup_time1', 'popup_time2', 'nth_popup', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
             ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
     private function getPopupTimeEma2($accountId)
     {
-        return Ema2::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
+        return Ema2::select('popup_time', 'popup_time1', 'popup_time2', 'nth_popup', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
             ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
     private function getPopupTimeEma3($accountId)
     {
-        return Ema3::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
+        return Ema3::select('popup_time', 'popup_time1', 'popup_time2', 'nth_popup', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
             ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
     private function getPopupTimeEma4($accountId)
     {
-        return Ema4::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
+        return Ema4::select('popup_time', 'popup_time1', 'popup_time2', 'nth_popup', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
             ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }
     private function getPopupTimeEma5($accountId)
     {
-        return Ema5::select('popup_time', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
+        return Ema5::select('popup_time', 'popup_time1', 'popup_time2', 'nth_popup', 'nth_day', 'postponded_1', 'postponded_2', 'postponded_3')->where('account_id', $accountId)
             ->where('date', '>=', date_format(new DateTime(), 'Y-m-d'))
             ->first();
     }

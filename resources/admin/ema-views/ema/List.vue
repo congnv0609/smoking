@@ -4,6 +4,27 @@
       <CCol sm="12">
         <CCard>
           <CCardHeader>
+            <strong>Filter </strong>
+          </CCardHeader>
+          <CCardBody>
+            <CRow form class="form-group">
+              <CCol sm="3"> Ema </CCol>
+              <CInputRadioGroup
+                class="col-sm-9"
+                :options="options"
+                :custom="key > 1"
+                :checked="1"
+                :inline="true"
+              />
+            </CRow>
+          </CCardBody>
+        </CCard>
+      </CCol>
+    </CRow>
+    <CRow>
+      <CCol sm="12">
+        <CCard>
+          <CCardHeader>
             <CIcon name="cil-grid" /> {{ caption }}
             <div class="card-header-actions">
               <a
