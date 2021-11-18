@@ -67,7 +67,7 @@ export default {
       last_page: 1,
       query: {
         page: 1,
-        size: 15,
+        size: 20,
         ema: 1,
       },
       caption: "Ema List",
