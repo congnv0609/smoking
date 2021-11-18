@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Artisan;
 
 class SendNotification implements ShouldQueue
 {
@@ -60,6 +61,7 @@ class SendNotification implements ShouldQueue
             "data" => ["current_ema" => $ema->current_ema, "ema"=>$ema->ema, "nth_popup"=>$ema->nth_popup],
         ];
         $this->updateCountPush($ema);
+        Artisan::call('ema:get-schedule');
         $RESPONSE = json_encode($data);
 
         $headers = [
