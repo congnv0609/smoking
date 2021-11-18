@@ -14,7 +14,7 @@ trait PopupTimeTrait {
 
     public function updateCountPush($ema) {
         unset($ema->end_time, $ema->current_ema, $ema->ema);
-        $ema->nth_push = $ema->nth_push+1;
+        $ema->nth_popup = $ema->nth_popup+1;
         $ema->save();
     }
 
