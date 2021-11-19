@@ -35,7 +35,7 @@ trait PopupTimeTrait {
                     $curEma->end_time = $end_time;
                     $curEma->current_ema = $current_ema;
                     $curEma->ema = $key+1;
-                    $curEma->nth_popup = (int)$value->nth_popup + 1;
+                    $curEma->nth_popup = $value->nth_popup < 3 ? (int)$value->nth_popup + 1 : 3;
                     return $curEma;
                 }
             }
