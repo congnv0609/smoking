@@ -19,7 +19,7 @@ class CreateEma4sTable extends Migration
             $table->date('date');
             $table->integer('nth_day');
             $table->integer('nth_ema')->default(4);
-            $table->integer('nth_popup')->default(1);
+            $table->integer('nth_popup')->default(0);
             $table->timestamp('popup_time')->nullable();
             $table->timestamp('popup_time1')->nullable();
             $table->timestamp('popup_time2')->nullable();

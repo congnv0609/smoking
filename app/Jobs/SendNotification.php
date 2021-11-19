@@ -49,7 +49,8 @@ class SendNotification implements ShouldQueue
         $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
         // $FcmKey = env('FCM');
         $ema = $this->getPopupTime($this->_ema['account_id']);
-
+        $this->updateCountPush($ema);
+        Artisan::call('ema:get-schedule');
         $info = $this->getPromptMessage($ema);
         $data = [
             "registration_ids" => [$smoker->device_token],
@@ -60,8 +61,7 @@ class SendNotification implements ShouldQueue
             ],
             "data" => ["current_ema" => $ema->current_ema, "ema" => $ema->ema, "nth_popup" => $ema->nth_popup, "postponded_1" => $ema->postponded_1, "postponded_2" => $ema->postponded_2, "postponded_3" => $ema->postponded_3],
         ];
-        $this->updateCountPush($ema);
-        Artisan::call('ema:get-schedule');
+        
         $RESPONSE = json_encode($data);
 
         $headers = [
