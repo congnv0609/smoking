@@ -12,7 +12,7 @@ class clearSchedule extends Command
      *
      * @var string
      */
-    protected $signature = 'ema:clear-schedule';
+    protected $signature = 'ema:schedule-clear';
 
     /**
      * The console command description.

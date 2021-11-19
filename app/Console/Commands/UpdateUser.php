@@ -13,7 +13,7 @@ class UpdateUser extends Command
      *
      * @var string
      */
-    protected $signature = 'ema:update-user';
+    protected $signature = 'ema:user-update';
 
     /**
      * The console command description.

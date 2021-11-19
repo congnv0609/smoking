@@ -14,7 +14,7 @@ class GetEmaSchedule extends Command
      *
      * @var string
      */
-    protected $signature = 'ema:get-schedule';
+    protected $signature = 'ema:schedule-get';
 
     /**
      * The console command description.

@@ -12,7 +12,7 @@ class showSchedule extends Command
      *
      * @var string
      */
-    protected $signature = 'ema:show-schedule';
+    protected $signature = 'ema:schedule-show';
 
     /**
      * The console command description.
