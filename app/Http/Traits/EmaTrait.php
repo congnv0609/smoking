@@ -68,21 +68,21 @@ trait EmaTrait {
         switch ($id) {
             case 1:
                 $ema = Ema1::where(['account_id' => $data['account_id'], 'date' => $data['date']])->first();
-                break;
+                return $ema;
             case 2:
                 $ema = Ema2::where(['account_id' => $data['account_id'], 'date' => $data['date']])->first();
-                break;
+                return $ema;
             case 3:
                 $ema = Ema3::where(['account_id' => $data['account_id'], 'date' => $data['date']])->first();
-                break;
+                return $ema;
             case 4:
                 $ema = Ema4::where(['account_id' => $data['account_id'], 'date' => $data['date']])->first();
-                break;
+                return $ema;
             case 5:
                 $ema = Ema5::where(['account_id' => $data['account_id'], 'date' => $data['date']])->first();
-                break;
+                return $ema;
         }
-        return $ema;
+        return null;
     }
 
     public function getEmaList(int $id, $size)

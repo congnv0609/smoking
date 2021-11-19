@@ -4,38 +4,18 @@
       <CCol sm="12">
         <CCard>
           <CCardHeader>
-            <strong>Filter </strong>
-          </CCardHeader>
-          <CCardBody>
             <CRow form class="form-group">
-              <CCol sm="3"> Ema </CCol>
+              <CCol sm="2"> Select Ema </CCol>
               <CInputRadioGroup
                 class="col-sm-9"
                 :options="options"
-                :custom="key > 1"
-                :checked="1"
+                :value.sync="query.ema"
+                :custom="true"
+                :checked="`Ema 1`"
                 :inline="true"
+                @change="getList()"
               />
             </CRow>
-          </CCardBody>
-        </CCard>
-      </CCol>
-    </CRow>
-    <CRow>
-      <CCol sm="12">
-        <CCard>
-          <CCardHeader>
-            <CIcon name="cil-grid" /> {{ caption }}
-            <div class="card-header-actions">
-              <a
-                href="#"
-                class="card-header-action"
-                rel="noreferrer noopener"
-                target="_blank"
-              >
-                <small class="text-muted">Export</small>
-              </a>
-            </div>
           </CCardHeader>
           <CCardBody>
             <CDataTable
@@ -92,6 +72,28 @@ export default {
         ema: 1,
       },
       caption: "Ema List",
+      options: [
+        {
+          value: 1,
+          label: "Ema 1",
+        },
+        {
+          value: 2,
+          label: "Ema 2",
+        },
+        {
+          value: 3,
+          label: "Ema 3",
+        },
+        {
+          value: 4,
+          label: "Ema 4",
+        },
+        {
+          value: 5,
+          label: "Ema 5",
+        },
+      ],
       fields: [
         "id",
         "account_id",

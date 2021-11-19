@@ -71,6 +71,7 @@ class EmaController extends Controller
         $data = request()->all();
         $data['submit_time'] = new DateTime();
         unset($data['postponded_1'], $data['postponded_2'], $data['postponded_3']);
+        $data['account_id'] = $this->accountId;
         $ema = $this->getEma($id, $data);
         if (empty($ema)) {
             return response()->json(['msg' => 'Ema not found'], 404);
