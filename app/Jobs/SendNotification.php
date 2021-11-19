@@ -50,7 +50,7 @@ class SendNotification implements ShouldQueue
         // $FcmKey = env('FCM');
         $ema = $this->getPopupTime($this->_ema['account_id']);
         $this->updateCountPush($ema);
-        Artisan::call('ema:get-schedule');
+        Artisan::call('ema:schedule-get');
         $info = $this->getPromptMessage($ema);
         $data = [
             "registration_ids" => [$smoker->device_token],

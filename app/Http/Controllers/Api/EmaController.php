@@ -52,7 +52,7 @@ class EmaController extends Controller
         $data['popup_time'] = $ema->popup_time;
         $this->updatePopupTime($data);
         $ema->update($data);
-        Artisan::call('ema:get-schedule');
+        Artisan::call('ema:schedule-get');
         return response()->json($ema, 200);
      }
 
@@ -79,7 +79,7 @@ class EmaController extends Controller
         // $data['popup_time'] = $ema->popup_time;
         // $this->updatePopupTime($data);
         $ema->update($data);
-        Artisan::call('ema:get-schedule');
+        Artisan::call('ema:schedule-get');
         $this->updateIncentive($id, $data);
         return response()->json($ema, 200);
     }
