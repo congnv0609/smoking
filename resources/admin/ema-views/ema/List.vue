@@ -9,11 +9,10 @@
               <CInputRadioGroup
                 class="col-sm-9"
                 :options="options"
-                :value.sync="query.ema"
                 :custom="true"
-                :checked="`Ema 1`"
+                :checked="query.ema"
                 :inline="true"
-                @change="getList()"
+                @update:checked="getList"
               />
             </CRow>
           </CCardHeader>
@@ -99,6 +98,7 @@ export default {
         "account_id",
         "date",
         "nth_day",
+        "nth_ema",
         "nth_popup",
         "popup_time",
         "popup_time1",
@@ -112,15 +112,16 @@ export default {
     };
   },
   mounted() {
-    this.getList();
+    this.getList(this.query.ema);
   },
   watch: {
     "query.page": function (val, oldVal) {
-      return this.getList();
+      return this.getList(this.query.ema);
     },
   },
   methods: {
-    getList() {
+    getList(value) {
+      this.query.ema = value;
       emaList(this.query)
         .then((res) => {
           this.items = res.data;

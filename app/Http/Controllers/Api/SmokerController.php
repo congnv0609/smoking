@@ -397,8 +397,8 @@ class SmokerController extends Controller
             ],
             "data" => ["current_ema" => $ema->current_ema, "ema" => $ema->ema, "nth_popup" => $ema->nth_popup, "postponded_1" => $ema->postponded_1, "postponded_2" => $ema->postponded_2, "postponded_3" => $ema->postponded_3],
         ];
-        // $this->updateCountPush($ema);
-        // Artisan::call('ema:schedule-get');
+        $this->updateCountPush($ema);
+        Artisan::call('ema:schedule-get');
         $RESPONSE = json_encode($data);
 
         $headers = [
