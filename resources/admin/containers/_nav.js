@@ -20,7 +20,7 @@ export default [
       },
       {
         _name: 'CSidebarNavItem',
-        name: 'ema',
+        name: 'Ema',
         to: '/ema',
         icon: 'cil-align-left'
       },
