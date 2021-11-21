@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Artisan;
 class EmaController extends Controller
 {
 
-    use PopupTimeTrait, EmaTrait;
+    use EmaTrait;
 
     private $accountId;
 
