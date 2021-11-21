@@ -44,19 +44,16 @@ class Kernel extends ConsoleKernel
         if (!empty($data)) {
             foreach ($data as $key => $value) {
                 if ($value["nth_popup"] == 1) {
-                    $hour = date_format(new DateTime($value["popup_time"]), 'H');
-                    $min = date_format(new DateTime($value["popup_time"]), 'i');
-                    $schedule->job(new SendNotification($value))->cron("$min $hour * * *");
+                    $time = date_format(new DateTime($value["popup_time"]), 'H:i');
+                    $schedule->job(new SendNotification($value))->at($time);
                 }
                 if ($value["postponded_1"] == null && $value["nth_popup"] == 2) {
-                    $hour = date_format(new DateTime($value["popup_time1"]), 'H');
-                    $min = date_format(new DateTime($value["popup_time1"]), 'i');
-                    $schedule->job(new SendNotification($value))->cron("$min $hour * * *");
+                    $time1 = date_format(new DateTime($value["popup_time1"]), 'H:i');
+                    $schedule->job(new SendNotification($value))->at($time1);
                 }
                 if ($value["postponded_1"] == null && $value["nth_popup"] == 3) {
-                    $hour = date_format(new DateTime($value["popup_time2"]), 'H');
-                    $min = date_format(new DateTime($value["popup_time2"]), 'i');
-                    $schedule->job(new SendNotification($value))->cron("$min $hour * * *");
+                    $time2 = date_format(new DateTime($value["popup_time2"]), 'H:i');
+                    $schedule->job(new SendNotification($value))->at($time2);
                 }
             }
         }
