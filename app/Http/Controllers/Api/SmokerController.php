@@ -377,11 +377,13 @@ class SmokerController extends Controller
     {
         $smoker = Smoker::whereNotNull('device_token')->where('id', $this->accountId)->first();
         if (empty($smoker)) {
-            return response()->json(['msg' => 'User not found!']);
+            return response()->json(['msg' => 'User not found!'], 404);
         }
         $ema = $this->getNextSurvey($this->accountId);
-        if(!empty($ema)) {
-            SendNotification::dispatch($ema);
+        
+        if(empty($ema)) {
+            return response()->json(['msg' => 'Not found Ema'], 404);
         }
+        SendNotification::dispatch($ema);
     }
 }
