@@ -128,8 +128,10 @@ trait EmaTrait
 
     public function getPromptMessage($ema)
     {
+        $nth_popup = $ema['nth_popup'];
         $postponded_1 = $ema['postponded_1'];
         $postponded_2 = $ema['postponded_2'];
+        $postponded_3 = $ema['postponded_3'];
         if ($postponded_2 > 0) {
             switch ($postponded_2) {
                 case 1: {
