@@ -9,10 +9,13 @@ use App\Models\Ema4;
 use App\Models\Ema5;
 use DateTime;
 use Illuminate\Support\Arr;
+use PhpParser\Node\Expr\FuncCall;
 
-trait EmaTrait {
+trait EmaTrait
+{
 
-    public function getEmaSchedule(){
+    public function getEmaSchedule()
+    {
         $data = [];
         $data[] = $this->getEma1()->toArray();
         $data[] = $this->getEma2()->toArray();
@@ -43,7 +46,7 @@ trait EmaTrait {
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema3::select('id', 'account_id','date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
+        $data = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
         return $data;
     }
 
@@ -51,7 +54,7 @@ trait EmaTrait {
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema4::select('id', 'account_id','date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
+        $data = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
         return $data;
     }
 
@@ -59,7 +62,7 @@ trait EmaTrait {
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema5::select('id', 'account_id','date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
+        $data = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
         return $data;
     }
 
@@ -176,4 +179,28 @@ trait EmaTrait {
         return ['title' => $title, 'body' => $msg];
     }
 
+    public function getNextSurvey($accountId)
+    {
+        // $data = $this->getEmaSchedule();
+        $data = [];
+        $date = date_format(new DateTime(), 'Y-m-d');
+        $data[] = Ema1::where('date', '>=', $date)->where('account_id', $accountId)->orderby('date', 'asc')->first();
+        $data[] = Ema2::where('date', '>=', $date)->where('account_id', $accountId)->orderby('date', 'asc')->first();
+        $data[] = Ema3::where('date', '>=', $date)->where('account_id', $accountId)->orderby('date', 'asc')->first();
+        $data[] = Ema4::where('date', '>=', $date)->where('account_id', $accountId)->orderby('date', 'asc')->first();
+        $data[] = Ema5::where('date', '>=', $date)->where('account_id', $accountId)->orderby('date', 'asc')->first();
+        if (!empty($data)) {
+            foreach ($data as $key => $value) {
+                if (!empty($value)) {
+                    $end_time = date_add(new Datetime($value->popup_time), date_interval_create_from_date_string("15 minutes"));
+                    $current_ema = (new DateTime() > new DateTime($value->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
+                    if ($end_time > (new DateTime())) {
+                        $value->current_ema = $current_ema;
+                        return $value->toArray();
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }

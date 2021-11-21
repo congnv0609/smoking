@@ -15,6 +15,7 @@ use App\Models\WakeTime;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use App\Jobs\SendNotification;
 
 class SmokerController extends Controller
 {
@@ -374,50 +375,13 @@ class SmokerController extends Controller
      */
     public function sendNotification(Request $request)
     {
-        $url = 'https://fcm.googleapis.com/fcm/send';
         $smoker = Smoker::whereNotNull('device_token')->where('id', $this->accountId)->first();
         if (empty($smoker)) {
             return response()->json(['msg' => 'User not found!']);
         }
-
-        $FcmKey = env('FCM');
-        $ema = $this->getPopupInfo($this->_ema);
-        $info = $this->getPromptMessage($ema);
-        $data = [
-            "registration_ids" => [$smoker->device_token],
-            "notification" => [
-                "title" => $info["title"],
-                "body" => $info["body"],
-                'sound' => $smoker->notification == 1 ? "default" : "",
-            ],
-            "data" => ["current_ema" => $ema['current_ema'], "ema" => $ema['nth_ema'], "nth_popup" => $ema['nth_popup'], "postponded_1" => $ema['postponded_1'], "postponded_2" => $ema['postponded_2'], "postponded_3" => $ema['postponded_3']],
-        ];
-        $this->updateCountPush($ema);
-        Artisan::call('ema:schedule-get');
-        $RESPONSE = json_encode($data);
-
-        $headers = [
-            'Authorization:key=' . $FcmKey,
-            'Content-Type: application/json',
-        ];
-
-        // CURL
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $RESPONSE);
-
-        $output = curl_exec($ch);
-        if ($output === FALSE) {
-            die('Curl error: ' . curl_error($ch));
+        $ema = $this->getNextSurvey($this->accountId);
+        if(!empty($ema)) {
+            SendNotification::dispatch($ema);
         }
-        curl_close($ch);
-
-        dd($output);
     }
 }
