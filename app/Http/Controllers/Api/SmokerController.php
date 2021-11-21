@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Traits\PopupTimeTrait;
+use App\Http\Traits\EmaTrait;
 use App\Models\Ema1;
 use App\Models\Ema2;
 use App\Models\Ema3;
@@ -16,11 +15,10 @@ use App\Models\WakeTime;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Cache;
 
 class SmokerController extends Controller
 {
-    use PopupTimeTrait;
+    use EmaTrait;
 
     private $accountId;
 
@@ -377,16 +375,13 @@ class SmokerController extends Controller
     public function sendNotification(Request $request)
     {
         $url = 'https://fcm.googleapis.com/fcm/send';
-        // $DeviceToken = Smoker::whereNotNull('device_token')->pluck('device_token')->all();
         $smoker = Smoker::whereNotNull('device_token')->where('id', $this->accountId)->first();
         if (empty($smoker)) {
             return response()->json(['msg' => 'User not found!']);
         }
-        $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
-        // $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
-        // $FcmKey = env('FCM');
-        $ema = $this->getPopupTime($this->accountId);
-        
+
+        $FcmKey = env('FCM');
+        $ema = $this->getPopupInfo($this->_ema);
         $info = $this->getPromptMessage($ema);
         $data = [
             "registration_ids" => [$smoker->device_token],
@@ -395,14 +390,14 @@ class SmokerController extends Controller
                 "body" => $info["body"],
                 'sound' => $smoker->notification == 1 ? "default" : "",
             ],
-            "data" => ["current_ema" => $ema->current_ema, "ema" => $ema->ema, "nth_popup" => $ema->nth_popup, "postponded_1" => $ema->postponded_1, "postponded_2" => $ema->postponded_2, "postponded_3" => $ema->postponded_3],
+            "data" => ["current_ema" => $ema['current_ema'], "ema" => $ema['nth_ema'], "nth_popup" => $ema['nth_popup'], "postponded_1" => $ema['postponded_1'], "postponded_2" => $ema['postponded_2'], "postponded_3" => $ema['postponded_3']],
         ];
         $this->updateCountPush($ema);
         Artisan::call('ema:schedule-get');
         $RESPONSE = json_encode($data);
 
         $headers = [
-            'Authorization: key=' . $FcmKey,
+            'Authorization:key=' . $FcmKey,
             'Content-Type: application/json',
         ];
 
@@ -422,6 +417,7 @@ class SmokerController extends Controller
             die('Curl error: ' . curl_error($ch));
         }
         curl_close($ch);
+
         dd($output);
     }
 }

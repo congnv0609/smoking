@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Http\Traits\PopupTimeTrait;
+use App\Http\Traits\EmaTrait;
 use App\Models\Smoker;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -11,10 +11,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Artisan;
+use DateTime;
 
 class SendNotification implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, PopupTimeTrait;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, EmaTrait;
 
     private $_ema = [];
 
@@ -45,11 +46,9 @@ class SendNotification implements ShouldQueue
     private function push($smoker)
     {
         $url = 'https://fcm.googleapis.com/fcm/send';
-        // $DeviceToken = Smoker::whereNotNull('device_token')->pluck('device_token')->all();
-        $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
-        // $FcmKey = env('FCM');
-        $ema = $this->getPopupTime($this->_ema['account_id']);
-        
+        // $FcmKey = 'AAAAGOcfFW8:APA91bFltHXEGi6__AWHagTK2cv6T3tEbxydQsKKFrQriX14fhx0e5Elerf9CFIu_MerWA6J7e4fQEBtmAi9LMOGijROedN8UWelgeTaf1Mg8U4_kCRnKkYM9eczWYFNKuIEfMA2N8Ya';
+        $FcmKey = env('FCM');
+        $ema = $this->getPopupInfo($this->_ema);
         $info = $this->getPromptMessage($ema);
         $data = [
             "registration_ids" => [$smoker->device_token],
@@ -58,7 +57,7 @@ class SendNotification implements ShouldQueue
                 "body" => $info["body"],
                 'sound' => $smoker->notification == 1 ? "default" : "",
             ],
-            "data" => ["current_ema" => $ema->current_ema, "ema" => $ema->ema, "nth_popup" => $ema->nth_popup, "postponded_1" => $ema->postponded_1, "postponded_2" => $ema->postponded_2, "postponded_3" => $ema->postponded_3],
+            "data" => ["current_ema" => $ema['current_ema'], "ema" => $ema['nth_ema'], "nth_popup" => $ema['nth_popup'], "postponded_1" => $ema['postponded_1'], "postponded_2" => $ema['postponded_2'], "postponded_3" => $ema['postponded_3']],
         ];
         $this->updateCountPush($ema);
         Artisan::call('ema:schedule-get');

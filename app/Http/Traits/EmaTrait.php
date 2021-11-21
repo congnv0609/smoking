@@ -27,7 +27,7 @@ trait EmaTrait {
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema1::select('id', 'account_id', 'date', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
+        $data = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
         return $data;
     }
 
@@ -35,7 +35,7 @@ trait EmaTrait {
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema2::select('id', 'account_id', 'date', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
+        $data = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
         return $data;
     }
 
@@ -43,7 +43,7 @@ trait EmaTrait {
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema3::select('id', 'account_id', 'date', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
+        $data = Ema3::select('id', 'account_id','date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
         return $data;
     }
 
@@ -51,7 +51,7 @@ trait EmaTrait {
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema4::select('id', 'account_id', 'date', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
+        $data = Ema4::select('id', 'account_id','date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
         return $data;
     }
 
@@ -59,7 +59,7 @@ trait EmaTrait {
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema5::select('id', 'account_id', 'date', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
+        $data = Ema5::select('id', 'account_id','date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('date', $date)->get();
         return $data;
     }
 
@@ -105,6 +105,75 @@ trait EmaTrait {
                 break;
         }
         return $ema;
+    }
+
+    public function updateCountPush($data)
+    {
+        unset($data['current_ema'], $data['ema']);
+        $ema = $this->getEma($data['nth_ema'], $data);
+        $ema->update($data);
+    }
+
+    public function getPopupInfo(array $data)
+    {
+        $end_time = date_add(new Datetime($data['popup_time']), date_interval_create_from_date_string("15 minutes"));
+        $current_ema = (new DateTime() > new DateTime($data['popup_time']) && new DateTime() <= $end_time) ? 1 : 0;
+        $data['nth_ema'] = $data['nth_ema'] < 3 ? $data['nth_ema'] + 1 : 3;
+        $data['current_ema'] = $current_ema;
+        return $data;
+    }
+
+    public function getPromptMessage($ema)
+    {
+        $postponded_1 = $ema['postponded_1'];
+        $postponded_2 = $ema['postponded_2'];
+        if ($postponded_2 > 0) {
+            switch ($postponded_2) {
+                case 1: {
+                        $title = "2nd Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+                case 2: {
+                        $title = "2nd Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+                case 3: {
+                        $title = "2nd Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+            }
+            return ['title' => $title, 'body' => $msg];
+        } else {
+            $title = "2nd Reminder alert";
+            $msg = "最後一次機會做這份問卷！放棄填寫會損失是次現金禮券!";
+        }
+        if ($postponded_1 > 0) {
+            switch ($postponded_1) {
+                case 1: {
+                        $title = "1st Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+                case 2: {
+                        $title = "1st Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+                case 3: {
+                        $title = "1st Reminder alert";
+                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
+                        break;
+                    }
+            }
+            return ['title' => $title, 'body' => $msg];
+        } else {
+            $title = "1st Reminder alert";
+            $msg = "吸煙雷達邀請你做問卷了";
+        }
+        return ['title' => $title, 'body' => $msg];
     }
 
 }
