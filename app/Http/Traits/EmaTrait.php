@@ -120,7 +120,7 @@ trait EmaTrait
     {
         $end_time = date_add(new Datetime($data['popup_time']), date_interval_create_from_date_string("15 minutes"));
         $current_ema = (new DateTime() > new DateTime($data['popup_time']) && new DateTime() <= $end_time) ? 1 : 0;
-        $data['nth_ema'] = $data['nth_ema'] < 3 ? $data['nth_ema'] + 1 : 3;
+        $data['nth_popup'] = $data['nth_popup'] < 3 ? $data['nth_popup'] + 1 : 3;
         $data['current_ema'] = $current_ema;
         return $data;
     }
