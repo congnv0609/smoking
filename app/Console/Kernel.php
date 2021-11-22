@@ -43,15 +43,15 @@ class Kernel extends ConsoleKernel
         // $schedule->job(new SendNotification($value))->everyMinute();
         if (!empty($data)) {
             foreach ($data as $key => $value) {
-                if ($value["nth_popup"] == 1) {
+                if ($value["nth_popup"] == 0) {
                     $time = date_format(new DateTime($value["popup_time"]), 'H:i');
                     $schedule->job(new SendNotification($value))->daily()->at($time);
                 }
-                if ($value["postponded_1"] == null && $value["nth_popup"] == 2) {
+                if ($value["postponded_1"] == null && $value["nth_popup"] == 1) {
                     $time1 = date_format(new DateTime($value["popup_time1"]), 'H:i');
                     $schedule->job(new SendNotification($value))->daily()->at($time1);
                 }
-                if ($value["postponded_1"] == null && $value["nth_popup"] == 3) {
+                if ($value["postponded_1"] == null && $value["nth_popup"] == 2) {
                     $time2 = date_format(new DateTime($value["popup_time2"]), 'H:i');
                     $schedule->job(new SendNotification($value))->daily()->at($time2);
                 }
