@@ -120,7 +120,7 @@ trait EmaTrait
     {
         $end_time = date_add(new Datetime($data['popup_time']), date_interval_create_from_date_string("15 minutes"));
         $current_ema = (new DateTime() > new DateTime($data['popup_time']) && new DateTime() <= $end_time) ? 1 : 0;
-        $data['nth_popup'] = $data['nth_popup'] < 3 ? $data['nth_popup'] + 1 : 3;
+        $data['nth_popup'] = (int)$data['nth_popup'] < 3 ? (int)$data['nth_popup'] + 1 : 3;
         $data['current_ema'] = $current_ema;
         return $data;
     }
@@ -131,51 +131,64 @@ trait EmaTrait
         $postponded_1 = $ema['postponded_1'];
         $postponded_2 = $ema['postponded_2'];
         $postponded_3 = $ema['postponded_3'];
-        if ($postponded_2 > 0) {
-            switch ($postponded_2) {
-                case 1: {
-                        $title = "2nd Reminder alert";
-                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
-                        break;
+        switch ($nth_popup) {
+            case 1: {
+                    switch ($postponded_1) {
+                        case 1: {
+                                $title = "1st Reminder alert";
+                                $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
+                                break;
+                            }
+                        case 2: {
+                                $title = "1st Reminder alert";
+                                $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
+                                break;
+                            }
+                        default:
+                            $title = "1st Reminder alert";
+                            $msg = "吸煙雷達邀請你做問卷了！";
+                            break;
                     }
-                case 2: {
-                        $title = "2nd Reminder alert";
-                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
-                        break;
+                    break;
+                }
+            case 2: {
+                    switch ($postponded_2) {
+                        case 1: {
+                                $title = "2nd Reminder alert";
+                                $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
+                                break;
+                            }
+                        case 2: {
+                                $title = "2nd Reminder alert";
+                                $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
+                                break;
+                            }
+                        default:
+                            $title = "2nd Reminder alert";
+                            $msg = "吸煙雷達邀請你做問卷了！";
+                            break;
                     }
-                case 3: {
-                        $title = "2nd Reminder alert";
-                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
-                        break;
+                    break;
+                }
+            case 3: {
+                    switch ($postponded_3) {
+                        case 1: {
+                                $title = "3rd Reminder alert";
+                                $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
+                                break;
+                            }
+                        case 2: {
+                                $title = "3rd Reminder alert";
+                                $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
+                                break;
+                            }
+                        default:
+                            $title = "3rd Reminder alert";
+                            $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
+                            break;
                     }
-            }
-            return ['title' => $title, 'body' => $msg];
-        } else {
-            $title = "2nd Reminder alert";
-            $msg = "最後一次機會做這份問卷！放棄填寫會損失是次現金禮券!";
-        }
-        if ($postponded_1 > 0) {
-            switch ($postponded_1) {
-                case 1: {
-                        $title = "1st Reminder alert";
-                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
-                        break;
-                    }
-                case 2: {
-                        $title = "1st Reminder alert";
-                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
-                        break;
-                    }
-                case 3: {
-                        $title = "1st Reminder alert";
-                        $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券";
-                        break;
-                    }
-            }
-            return ['title' => $title, 'body' => $msg];
-        } else {
-            $title = "1st Reminder alert";
-            $msg = "吸煙雷達邀請你做問卷了";
+                    break;
+                }
         }
         return ['title' => $title, 'body' => $msg];
     }
