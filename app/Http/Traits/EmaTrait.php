@@ -109,7 +109,7 @@ trait EmaTrait
         return $ema;
     }
 
-    public function updateCountPush($data)
+    public function updateCountPush(&$data)
     {
         unset($data['current_ema']);
         $ema = $this->getEma($data['nth_ema'], $data);
