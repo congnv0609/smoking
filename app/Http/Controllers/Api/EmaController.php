@@ -25,6 +25,7 @@ class EmaController extends Controller
      * emaId, postponded value
      * @authenticated
      * @header accountId integer required
+     * @bodyParam nth_popup integer 1,2,3
      * @bodyParam postponded_1 integer 0,1,2
      * @bodyParam postponded_2 integer 0,1,2
      * @bodyParam postponded_3 integer 0,1,2
@@ -49,6 +50,9 @@ class EmaController extends Controller
         $data['account_id'] = $this->accountId;
         $ema = $this->getEma($emaId, $data);
         $data['popup_time'] = $ema->popup_time;
+        $data['popup_time1'] = $ema->popup_time1;
+        $data['popup_time2'] = $ema->popup_time2;
+
         $this->updatePopupTime($data);
         $ema->update($data);
         Artisan::call('ema:schedule-get');
@@ -136,14 +140,6 @@ class EmaController extends Controller
             case 2: return 30;
             default: return 0;
         }
-        // if ($postponded) {
-        //     return 30;
-        // } elseif ($postponded) {
-        //     return 15;
-        // } elseif ($postponded) {
-        //     return 5;
-        // }
-        // return 0;
     }
 
     private function updatePopupTime(&$data)
@@ -157,13 +153,13 @@ class EmaController extends Controller
         if (isset($data['postponded_2'])) {
             $delayMinutes = $this->getMinuteDelay($data['postponded_2']);
             if ($delayMinutes > 0) {
-                $data['popup_time'] = $data['popup_time'] < new DateTime() ? date_format(date_add(new DateTime(), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s') : $data['popup_time'];
+                $data['popup_time1'] = $data['popup_time1'] < new DateTime() ? date_format(date_add(new DateTime(), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s') : $data['popup_time1'];
             }
         }
         if (isset($data['postponded_3'])) {
             $delayMinutes = $this->getMinuteDelay($data['postponded_3']);
             if ($delayMinutes > 0) {
-                $data['popup_time'] = $data['popup_time'] < new DateTime() ? date_format(date_add(new DateTime(), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s') : $data['popup_time'];
+                $data['popup_time2'] = $data['popup_time2'] < new DateTime() ? date_format(date_add(new DateTime(), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s') : $data['popup_time2'];
             }
         }
     }
