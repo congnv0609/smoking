@@ -25,7 +25,6 @@ class EmaController extends Controller
      * emaId, postponded value
      * @authenticated
      * @header accountId integer required
-     * @bodyParam nth_popup integer 1,2,3
      * @bodyParam postponded_1 integer 0,1,2
      * @bodyParam postponded_2 integer 0,1,2
      * @bodyParam postponded_3 integer 0,1,2
