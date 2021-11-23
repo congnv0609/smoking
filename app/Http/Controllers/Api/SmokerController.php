@@ -356,6 +356,8 @@ class SmokerController extends Controller
 
     /**
      * Saving device token to push message
+     * @authenticated
+     * @header accountId integer required
      * @bodyParam token string required token use to push notification
      */
     public function saveDeviceToken(Request $request)
