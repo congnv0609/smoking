@@ -6,8 +6,9 @@
           <CCardHeader>
             <CForm inline>
               <CRow class="align-items-center">
-                  <CInput class="mr-2" v-model="query.account" placeholder="User ID"> </CInput>
+                  <CInput class="ml-2" v-model="query.account" placeholder="User ID"> </CInput>
                   <CSelect
+                    class="ml-2"
                     horizontal
                     :value.sync="query.sort"
                     :options="form.sort"
