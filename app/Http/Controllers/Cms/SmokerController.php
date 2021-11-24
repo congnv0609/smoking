@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Cms;
+
 use App\Http\Controllers\Controller;
 use App\Models\Smoker;
 
@@ -67,9 +68,18 @@ class SmokerController extends Controller
      * @queryParam page integer page number
      * @queryParam size integer number of row per page
      */
-    public function list() {
+    public function list()
+    {
+        $list = [];
         $size = request()->input('size');
-        $list = Smoker::paginate($size)->withQueryString();
+        $query = request()->query();
+        $account = $query['account']??null;
+        $sort = explode(',', $query['sort']);
+        $list = Smoker::where(function ($con) use ($account) {
+            if(!empty($account)) {
+                $con->where('account', $account);
+            }
+        })->orderBy($sort[0], $sort[1])->paginate($size)->withQueryString();
         return response()->json($list, 200);
     }
 
@@ -111,5 +121,4 @@ class SmokerController extends Controller
         $smoker->save();
         return response()->json($smoker, 200);
     }
-
 }
