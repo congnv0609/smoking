@@ -217,4 +217,69 @@ trait EmaTrait
         }
         return null;
     }
+
+    private function getEma1ByCond($cond)
+    {
+        $data = [];
+        if (empty($cond)) {
+            return [];
+        }
+        $data = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
+        return $data;
+    }
+
+    private function getEma2ByCond($cond)
+    {
+        $data = [];
+        if (empty($cond)) {
+            return [];
+        }
+        $data = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
+        return $data;
+    }
+
+    private function getEma3ByCond($cond)
+    {
+        $data = [];
+        if (empty($cond)) {
+            return [];
+        }
+        $data = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
+        return $data;
+    }
+
+    private function getEma4ByCond($cond)
+    {
+        $data = [];
+        if (empty($cond)) {
+            return [];
+        }
+        $data = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
+        return $data;
+    }
+
+    private function getEma5ByCond($cond)
+    {
+        $data = [];
+        if (empty($cond)) {
+            return [];
+        }
+        $data = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
+        return $data;
+    }
+    public function getEmaByQuery($query) {
+        switch ($query['nth_ema']) {
+            case 1:
+                return $this->getEma1ByCond($query);
+            case 2:
+                return $this->getEma2ByCond($query);
+            case 3:
+                return $this->getEma3ByCond($query);
+            case 4:
+                return $this->getEma4ByCond($query);
+            case 5:
+                return $this->getEma5ByCond($query);
+        }
+        return null;
+    }
 }

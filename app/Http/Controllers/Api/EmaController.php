@@ -31,21 +31,22 @@ class EmaController extends Controller
      * 
      */
 
-     public function delay($emaId) {
+    public function delay($emaId)
+    {
         $data = [];
-         $pp1 = request()->input('postponded_1');
-         $pp2 = request()->input('postponded_2');
-         $pp3 = request()->input('postponded_3');
-         if(isset($pp1)) {
+        $pp1 = request()->input('postponded_1');
+        $pp2 = request()->input('postponded_2');
+        $pp3 = request()->input('postponded_3');
+        if (isset($pp1)) {
             $data['postponded_1'] = $pp1;
-         }
+        }
         if (isset($pp2)) {
             $data['postponded_2'] = $pp2;
         }
         if (isset($pp3)) {
             $data['postponded_3'] = $pp3;
         }
-        $data['date'] = date_format(new DateTime(),'Y-m-d');
+        $data['date'] = date_format(new DateTime(), 'Y-m-d');
         $data['account_id'] = $this->accountId;
         $ema = $this->getEma($emaId, $data);
         $data['popup_time'] = $ema->popup_time;
@@ -56,7 +57,7 @@ class EmaController extends Controller
         $ema->update($data);
         Artisan::call('ema:schedule-get');
         return response()->json($ema, 200);
-     }
+    }
 
     /**
      * update an EMA and date values, use form url encoded
@@ -134,10 +135,13 @@ class EmaController extends Controller
 
     private function getMinuteDelay($postponded)
     {
-        switch($postponded) {
-            case 1: return 5;
-            case 2: return 30;
-            default: return 0;
+        switch ($postponded) {
+            case 1:
+                return 5;
+            case 2:
+                return 30;
+            default:
+                return 0;
         }
     }
 
@@ -161,5 +165,54 @@ class EmaController extends Controller
                 $data['popup_time2'] = $data['popup_time2'] < new DateTime() ? date_format(date_add(new DateTime(), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s') : $data['popup_time2'];
             }
         }
+    }
+
+    /**
+     * Check ema validat time
+     * @header accountId integer required
+     * @authenticated
+     * @queryParam nth_ema integer required
+     * @queryParam nth_day integer required
+     * 
+     */
+    public function checkValidEma()
+    {
+        $nth_ema = request()->query('nth_ema');
+        $nth_day = request()->query('nth_day');
+        $accountId = $this->accountId;
+        $query = [
+            'nth_ema' => $nth_ema,
+            'nth_day' => $nth_day,
+            'account_id' => $accountId,
+        ];
+        $ema = $this->getEmaByQuery($query);
+        if (!empty($ema)) {
+            if ($ema->postponded_3 > 0) {
+                $valid = 0;
+                $delayMinutes = $this->getMinuteDelay($ema->postponded_3)+15;
+                $end_time = date_format(date_add(new Datetime($ema->popup_time2), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
+                if (new DateTime($ema->popup_time2) <= new DateTime() && new DateTime() <= new DateTime($end_time)) {
+                    $valid = 1;
+                }
+                return response()->json(['current_ema' => $valid], 200);
+            }
+            if ($ema->postponded_2 > 0) {
+                $valid = 0;
+                $delayMinutes = $this->getMinuteDelay($ema->postponded_2)+15;
+                $end_time = date_format(date_add(new Datetime($ema->popup_time1), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
+                if (new DateTime($ema->popup_time1) <= new DateTime() && new DateTime() <= new DateTime($end_time)) {
+                    $valid = 1;
+                }
+                return response()->json(['current_ema' => $valid], 200);
+            }
+            $valid = 0;
+            $delayMinutes = $this->getMinuteDelay($ema->postponded_1)+15;
+            $end_time = date_format(date_add(new Datetime($ema->popup_time), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
+            if (new DateTime($ema->popup_time) <= new DateTime() && new DateTime() <= new DateTime($end_time)) {
+                $valid = 1;
+            }
+            return response()->json(['current_ema' => $valid], 200);
+        }
+        return response()->json(['msg' => 'Ema not found'], 200);
     }
 }
