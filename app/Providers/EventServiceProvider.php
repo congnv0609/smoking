@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Events\EmaProcessed;
+use Illuminate\Auth\Events\SmokerProcessed;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
-use Illuminate\Auth\Listeners\UpdateEma;
+use Illuminate\Auth\Listeners\UpdateSmoker;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 

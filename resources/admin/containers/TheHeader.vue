@@ -14,7 +14,7 @@
       <CIcon name="logo" height="48" alt="Logo"/>
     </CHeaderBrand>
     <CHeaderNav class="d-md-down-none mr-auto">
-      <CHeaderNavItem class="px-3">
+      <!-- <CHeaderNavItem class="px-3">
         <CHeaderNavLink to="/dashboard">
           Dashboard
         </CHeaderNavLink>
@@ -28,7 +28,7 @@
         <CHeaderNavLink>
           Settings
         </CHeaderNavLink>
-      </CHeaderNavItem>
+      </CHeaderNavItem> -->
     </CHeaderNav>
     <CHeaderNav class="mr-4">
       <CHeaderNavItem class="d-md-down-none mx-2">
@@ -36,11 +36,11 @@
           <CIcon name="cil-bell"/>
         </CHeaderNavLink>
       </CHeaderNavItem>
-      <CHeaderNavItem class="d-md-down-none mx-2">
+      <!-- <CHeaderNavItem class="d-md-down-none mx-2">
         <CHeaderNavLink>
           <CIcon name="cil-list"/>
         </CHeaderNavLink>
-      </CHeaderNavItem>
+      </CHeaderNavItem> -->
       <CHeaderNavItem class="d-md-down-none mx-2">
         <CHeaderNavLink>
           <CIcon name="cil-envelope-open"/>

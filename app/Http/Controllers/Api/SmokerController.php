@@ -362,10 +362,12 @@ class SmokerController extends Controller
      */
     public function saveDeviceToken(Request $request)
     {
-        // auth('api')->user()->update(['device_token' => $request->token]);
         $smoker = Smoker::where('id', $this->accountId)->first();
-        $smoker->update(['device_token' => $request->token]);
-        return response()->json(['Token stored.']);
+        if(!empty($smoker)) {
+            $smoker->update(['device_token' => $request->token]);
+            return response()->json(['Token stored.']);
+        }
+        return response()->json(['msg'=>'User not found'], 404);
     }
 
     /**

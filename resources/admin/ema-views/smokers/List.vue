@@ -4,16 +4,26 @@
       <CCol sm="12">
         <CCard>
           <CCardHeader>
+            <CRow>
+              <CCol>
+                <h3>1.1 User Survey Status</h3>
+              </CCol>
+            </CRow>
             <CForm inline>
               <CRow class="align-items-center">
-                  <CInput class="ml-2" v-model="query.account" placeholder="User ID"> </CInput>
-                  <CSelect
-                    class="ml-2"
-                    horizontal
-                    :value.sync="query.sort"
-                    :options="form.sort"
-                    placeholder="Please select"
-                  />
+                <CInput
+                  class="ml-2"
+                  v-model="query.account"
+                  placeholder="User ID"
+                >
+                </CInput>
+                <CSelect
+                  class="ml-2"
+                  horizontal
+                  :value.sync="query.sort"
+                  :options="form.sort"
+                  placeholder="Please select"
+                />
                 <CCol col="4" sm="4" md="2" xl>
                   <CButton block color="info" @click="getList">Search</CButton>
                 </CCol>
@@ -41,7 +51,22 @@
                 <td>{{ item.nth_day_current }}</td>
               </template>
               <template #ema_completed_nth_day="{ item }">
-                <td>{{ item.ema_completed_nth_day }}</td>
+                <td
+                  v-if="
+                    item.nth_day_current <= 3 && item.ema_completed_nth_day < 3
+                  "
+                  class="text-danger text-bold"
+                >
+                  {{ item.ema_completed_nth_day }}
+                </td>
+                <td
+                  v-if="
+                    item.nth_day_current > 3 && item.ema_completed_nth_day < 3
+                  "
+                  class="light-red-color"
+                >
+                  {{ item.ema_completed_nth_day }}
+                </td>
               </template>
               <template #incentive_nth_day="{ item }">
                 <td>{{ item.incentive_nth_day }}</td>
@@ -85,7 +110,7 @@ export default {
         account: undefined,
         page: 1,
         size: 20,
-        sort: 'id,desc'
+        sort: "id,desc",
       },
       caption: "Smokers",
       fields: [
@@ -105,15 +130,15 @@ export default {
       form: {
         sort: [
           {
-            value: 'id,desc',
-            label: 'Default'
+            value: "id,desc",
+            label: "Default",
           },
           {
-            value: 'startDate,desc',
-            label: 'IDs grouped'
+            value: "startDate,desc",
+            label: "IDs grouped",
           },
-        ]
-      }
+        ],
+      },
     };
   },
   mounted() {
@@ -144,3 +169,11 @@ export default {
   },
 };
 </script>
+<style scoped>
+.light-red-color {
+  color: pink;
+}
+.text-bold {
+  font-weight: bold;
+}
+</style>

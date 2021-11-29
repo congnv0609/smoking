@@ -2,7 +2,9 @@
 
 namespace App\Console;
 
+use App\Events\SmokerProcessed;
 use App\Jobs\SendNotification;
+use App\Jobs\UpdateSmokerInfo;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use DateTime;
@@ -57,6 +59,11 @@ class Kernel extends ConsoleKernel
                 }
             }
         }
+
+
+        //run event
+
+        $schedule->command('smoker:update-info')->everyFifteenMinutes();
     }
 
     /**
