@@ -48,25 +48,26 @@
                 <td>{{ item.endDate | moment("YYYY-MM-DD HH:mm") }}</td>
               </template>
               <template #nth_day_current="{ item }">
-                <td>{{ item.nth_day_current }}</td>
+                <td v-if="item.nth_day_current <= 3 && item.ema_completed_nth_day < 3"
+                  class="text-danger text-bold">
+                  {{ item.nth_day_current }}
+                </td>
+                <td v-if="item.nth_day_current > 3 && item.ema_completed_nth_day < 3"
+                  class="light-red-color">
+                  {{ item.nth_day_current }}
+                </td>
+                <td v-if="item.ema_completed_nth_day >= 3">{{ item.nth_day_current }}</td>
               </template>
               <template #ema_completed_nth_day="{ item }">
-                <td
-                  v-if="
-                    item.nth_day_current <= 3 && item.ema_completed_nth_day < 3
-                  "
-                  class="text-danger text-bold"
-                >
+                <td v-if="item.nth_day_current <= 3 && item.ema_completed_nth_day < 3"
+                  class="text-danger text-bold">
                   {{ item.ema_completed_nth_day }}
                 </td>
-                <td
-                  v-if="
-                    item.nth_day_current > 3 && item.ema_completed_nth_day < 3
-                  "
-                  class="light-red-color"
-                >
+                <td v-if="item.nth_day_current > 3 && item.ema_completed_nth_day < 3"
+                  class="light-red-color">
                   {{ item.ema_completed_nth_day }}
                 </td>
+                <td v-if="item.ema_completed_nth_day >= 3">{{ item.ema_completed_nth_day }}</td>
               </template>
               <template #incentive_nth_day="{ item }">
                 <td>{{ item.incentive_nth_day }}</td>
