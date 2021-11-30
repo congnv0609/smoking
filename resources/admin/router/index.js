@@ -62,6 +62,7 @@ const Login = () => import('../ema-views/pages/Login')
 const Smoker = () => import('../ema-views/smokers/List')
 const EditSmoker = () => import('../ema-views/smokers/Edit')
 const Ema = () => import('../ema-views/ema/List')
+const Overview = () => import('../ema-views/smokers/Overview')
 
 
 Vue.use(Router)
@@ -77,7 +78,7 @@ function configRoutes () {
   return [
     {
       path: '/',
-      redirect: 'dashboard',
+      redirect: 'smokers',
       name: 'Home',
       component: TheContainer,
       meta: { requiresAuth: true },
@@ -96,14 +97,19 @@ function configRoutes () {
           children: [
             {
               path: 'list',
-              name: 'SmokerList',
+              name: 'User',
               component: Smoker
             },
             {
               path: 'edit/:id(\\d+)',
               name: 'SmokerEdit',
               component: EditSmoker
-            }
+            },
+            {
+              path: 'overview',
+              name: 'Overview',
+              component: Overview
+            },
           ]
         },
         {

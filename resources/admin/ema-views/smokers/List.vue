@@ -102,10 +102,10 @@
                 <td>
                   <CRow>
                     <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
-                      <CButton block color="info">Overview</CButton>
+                      <CButton block color="info" @click="overview">Overview</CButton>
                     </CCol>
                     <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
-                      <CButton block color="info">Export</CButton>
+                      <CButton block color="info" @click="exportData">Export</CButton>
                     </CCol>
                   </CRow>
                   <!-- <span @click="editRow(item.id)" role="button">
@@ -194,6 +194,12 @@ export default {
     },
     deleteRow(id) {
       console.log("delete", id);
+    },
+    overview(){
+      this.$router.push({'name':'Overview'})
+    },
+    exportData(){
+
     },
   },
 };

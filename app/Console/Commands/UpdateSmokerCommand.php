@@ -49,9 +49,13 @@ class UpdateSmokerCommand extends Command
                 $ema = Ema1::where([['date', $date], ['account_id', $value->id]])->first();
                 $incentive = Incentive::where([['date', $date], ['account_id', $value->id]])->first();
                 $incentive_total = Incentive::where([['account_id', $value->id], ['incentive', '>=', '15']])->sum('incentive');
-                $value->nth_day_current = $ema->nth_day;
-                $value->ema_completed_nth_day = $incentive->valid_ema??0;
-                $value->incentive_nth_day = $incentive->incentive >= 15 ? $incentive->incentive : 0;
+                if(!empty($ema)) {
+                    $value->nth_day_current = $ema->nth_day;
+                }
+                if(!empty($incentive)) {
+                    $value->ema_completed_nth_day = $incentive->valid_ema??0;
+                    $value->incentive_nth_day = $incentive->incentive >= 15 ? $incentive->incentive : 0;
+                }
                 $value->incentive_total = (int)$incentive_total;
                 $value->save();
             }
