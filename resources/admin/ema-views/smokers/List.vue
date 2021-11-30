@@ -172,7 +172,7 @@ export default {
 </script>
 <style scoped>
 .light-red-color {
-  color: pink;
+  color:palevioletred;
 }
 .text-bold {
   font-weight: bold;
