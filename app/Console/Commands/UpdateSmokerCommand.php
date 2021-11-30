@@ -43,7 +43,7 @@ class UpdateSmokerCommand extends Command
     {
         // return Command::SUCCESS;
         $date = date_format(new DateTime(), 'Y-m-d');
-        $userList = Smoker::where([['startDate', '<=', $date], ['endDate', '>=', $date]])->get();
+        $userList = Smoker::whereDate('startDate', '<=', $date)->whereDate('endDate', '>=', $date)->get();
         if (!empty($userList)) {
             foreach ($userList as $key => $value) {
                 $ema = Ema1::where([['date', $date], ['account_id', $value->id]])->first();
