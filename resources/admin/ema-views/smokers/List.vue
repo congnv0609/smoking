@@ -48,26 +48,46 @@
                 <td>{{ item.endDate | moment("YYYY-MM-DD HH:mm") }}</td>
               </template>
               <template #nth_day_current="{ item }">
-                <td v-if="item.nth_day_current <= 3 && item.ema_completed_nth_day < 3"
-                  class="text-danger text-bold">
+                <td
+                  v-if="
+                    item.nth_day_current <= 3 && item.ema_completed_nth_day < 3
+                  "
+                  class="text-danger text-bold"
+                >
                   {{ item.nth_day_current }}
                 </td>
-                <td v-if="item.nth_day_current > 3 && item.ema_completed_nth_day < 3"
-                  class="light-red-color">
+                <td
+                  v-if="
+                    item.nth_day_current > 3 && item.ema_completed_nth_day < 3
+                  "
+                  class="light-red-color"
+                >
                   {{ item.nth_day_current }}
                 </td>
-                <td v-if="item.ema_completed_nth_day >= 3">{{ item.nth_day_current }}</td>
+                <td v-if="item.ema_completed_nth_day >= 3">
+                  {{ item.nth_day_current }}
+                </td>
               </template>
               <template #ema_completed_nth_day="{ item }">
-                <td v-if="item.nth_day_current <= 3 && item.ema_completed_nth_day < 3"
-                  class="text-danger text-bold">
+                <td
+                  v-if="
+                    item.nth_day_current <= 3 && item.ema_completed_nth_day < 3
+                  "
+                  class="text-danger text-bold"
+                >
                   {{ item.ema_completed_nth_day }}
                 </td>
-                <td v-if="item.nth_day_current > 3 && item.ema_completed_nth_day < 3"
-                  class="light-red-color">
+                <td
+                  v-if="
+                    item.nth_day_current > 3 && item.ema_completed_nth_day < 3
+                  "
+                  class="light-red-color"
+                >
                   {{ item.ema_completed_nth_day }}
                 </td>
-                <td v-if="item.ema_completed_nth_day >= 3">{{ item.ema_completed_nth_day }}</td>
+                <td v-if="item.ema_completed_nth_day >= 3">
+                  {{ item.ema_completed_nth_day }}
+                </td>
               </template>
               <template #incentive_nth_day="{ item }">
                 <td>{{ item.incentive_nth_day }}</td>
@@ -80,12 +100,20 @@
               </template>
               <template #action="{ item }">
                 <td>
-                  <span @click="editRow(item.id)" role="button">
+                  <CRow>
+                    <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
+                      <CButton block color="info">Overview</CButton>
+                    </CCol>
+                    <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
+                      <CButton block color="info">Export</CButton>
+                    </CCol>
+                  </CRow>
+                  <!-- <span @click="editRow(item.id)" role="button">
                     <CIcon name="cil-pencil" />
                   </span>
                   <span @click="deleteRow(item.id)" role="button">
                     <CIcon name="cil-trash" />
-                  </span>
+                  </span> -->
                 </td>
               </template>
             </CDataTable>
@@ -172,7 +200,7 @@ export default {
 </script>
 <style scoped>
 .light-red-color {
-  color:palevioletred;
+  color: palevioletred;
 }
 .text-bold {
   font-weight: bold;
