@@ -96,19 +96,10 @@
               <template #incentive_total="{ item }">
                 <td>{{ item.incentive_total }}</td>
               </template>
-              <template #updated_at="{ item }">
-                <td>{{ item.updated_at | moment("YYYY-MM-DD HH:mm") }}</td>
-              </template>
               <template #action="{ item }">
                 <td>
-                  <CRow>
-                    <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
-                      <CButton block color="info" @click="overview">Overview</CButton>
-                    </CCol>
-                    <CCol col="6" sm="4" md="2" xl class="mb-3 mb-xl-0">
-                      <CButton block color="info" @click="exportData">Export</CButton>
-                    </CCol>
-                  </CRow>
+                      <CButton block color="info" @click="overview">Personal Overview Description</CButton>
+                      <CButton block color="info" @click="exportData">EMA Record Export</CButton>
                   <!-- <span @click="editRow(item.id)" role="button">
                     <CIcon name="cil-pencil" />
                   </span>
@@ -144,7 +135,6 @@ export default {
       },
       caption: "Smokers",
       fields: [
-        "id",
         "UserID",
         "startDate",
         "endDate",
@@ -152,7 +142,6 @@ export default {
         "ema_completed_nth_day",
         "incentive_nth_day",
         "incentive_total",
-        "updated_at",
         "action",
       ],
       items: [],
