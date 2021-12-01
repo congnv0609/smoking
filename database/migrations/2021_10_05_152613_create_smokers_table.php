@@ -15,7 +15,7 @@ class CreateSmokersTable extends Migration
     {
         Schema::create('smokers', function (Blueprint $table) {
             $table->id();
-            $table->integer('account');
+            $table->string('account');
             $table->integer('term');
             $table->timestamp('startDate')->nullable();
             $table->timestamp('endDate')->nullable();

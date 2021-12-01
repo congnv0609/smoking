@@ -62,7 +62,7 @@ class LoginController extends Controller
         $term = Smoker::where('account', $account)->max('term');
 
         $smoker = new Smoker();
-        $smoker->account = $account;
+        $smoker->account = (string)$account;
         $smoker->term = $term + 1;
         $smoker->save();
 
