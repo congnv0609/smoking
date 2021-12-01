@@ -39,7 +39,8 @@
               :items-per-page="query.size"
             >
               <template #UserID="{ item }">
-                <td>{{ item.account }}</td>
+                <td v-if="item.term>1">{{ item.account }}-{{item.term}}</td>
+                <td v-else>{{ item.account }}</td>
               </template>
               <template #startDate="{ item }">
                 <td>{{ item.startDate | moment("YYYY-MM-DD HH:mm") }}</td>
@@ -145,7 +146,6 @@ export default {
       fields: [
         "id",
         "UserID",
-        "term",
         "startDate",
         "endDate",
         "nth_day_current",
