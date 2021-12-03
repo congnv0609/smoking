@@ -97,7 +97,7 @@ function configRoutes () {
           children: [
             {
               path: 'list',
-              name: 'User',
+              name: 'SmokerUser',
               component: Smoker
             },
             {

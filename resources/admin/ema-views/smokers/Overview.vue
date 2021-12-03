@@ -1,11 +1,5 @@
 <template>
-  <div class="vld-parent">
-    <loading
-      :active="isLoading"
-      :can-cancel="true"
-      :on-cancel="onCancel"
-      :is-full-page="fullPage"
-    />
+  <div>
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
@@ -694,8 +688,6 @@
 </template>
 <script>
 import { overview } from "../../helpers/smoker";
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
 
 export default {
   name: "Overview",
@@ -703,7 +695,6 @@ export default {
     return {
       id: undefined,
       isLoading: false,
-      fullPage: true,
       fields: [
         "B2.食 - 普通煙",
         "B3.食 - 加熱煙",
