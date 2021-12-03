@@ -197,12 +197,12 @@ trait EmaTrait
     {
         // $data = $this->getEmaSchedule();
         $data = [];
-        $date = date_format(new DateTime(), 'Y-m-d');
-        $data[] = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->whereDate('date', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
-        $data[] = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->whereDate('date', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
-        $data[] = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->whereDate('date', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
-        $data[] = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->whereDate('date', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
-        $data[] = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->whereDate('date', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
+        $date = date_format(new DateTime(), 'Y-m-d H:i:s');
+        $data[] = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
+        $data[] = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
+        $data[] = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
+        $data[] = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
+        $data[] = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
         if (!empty($data)) {
             foreach ($data as $key => $value) {
                 if (!empty($value)) {
