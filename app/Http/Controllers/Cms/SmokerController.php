@@ -138,5 +138,4 @@ class SmokerController extends Controller
         return response()->json($data, 404);
     }
 
-
 }
