@@ -210,10 +210,7 @@ trait EmaTrait
                     $next_survey = $value;
                     $end_time = date_add(new Datetime($next_survey->popup_time), date_interval_create_from_date_string("15 minutes"));
                     $current_ema = (new DateTime() > new DateTime($next_survey->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
-                    if ($end_time > (new DateTime())) {
-                        $next_survey->current_ema = $current_ema;
-                        // return $next_survey->toArray();
-                    }
+                    $next_survey->current_ema = $current_ema;
                 }
             }
             return $next_survey;
