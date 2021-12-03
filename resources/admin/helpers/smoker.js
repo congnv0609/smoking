@@ -33,3 +33,15 @@ export function update(data) {
             })
     })
 }
+
+export function overview(id) {
+    return new Promise((resolve, reject) => {
+        axios.get(`/backend/smokers/overview/user/${id}`)
+            .then(result => {
+                resolve(result.data);
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}

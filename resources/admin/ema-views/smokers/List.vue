@@ -98,7 +98,7 @@
               </template>
               <template #action="{ item }">
                 <td>
-                      <CButton block color="info" @click="overview">Personal Overview Description</CButton>
+                      <CButton block color="info" @click="overview(item.id)">Personal Overview Description</CButton>
                       <CButton block color="info" @click="exportData">EMA Record Export</CButton>
                   <!-- <span @click="editRow(item.id)" role="button">
                     <CIcon name="cil-pencil" />
@@ -184,8 +184,8 @@ export default {
     deleteRow(id) {
       console.log("delete", id);
     },
-    overview(){
-      this.$router.push({'name':'Overview'})
+    overview(id){
+      this.$router.push({path: `/smokers/overview/${id}`})
     },
     exportData(){
 

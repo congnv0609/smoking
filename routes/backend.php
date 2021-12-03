@@ -12,6 +12,7 @@ Route::post('/refresh', [LoginController::class, 'refresh'])->middleware('jwt.re
 Route::get('/smokers/list', [SmokerController::class, 'list']);
 Route::get('/smokers/detail/{id}', [SmokerController::class, 'detail']);
 Route::put('/smokers/update/{id}', [SmokerController::class, 'updateSchedule']);
+Route::get('/smokers/overview/user/{id}', [SmokerController::class, 'overview']);
 
 //ema
 Route::get('/ema/list', [EmaController::class, 'index']);

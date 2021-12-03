@@ -33,16 +33,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('ema:schedule-get')->daily();
         // $schedule->command('ema:get-schedule');
         $data = Cache::get('ema:schedule');
-        // $value = [
-        //     "id" => 134,
-        //     "account_id" => 34,
-        //     "date" => "2021-11-14",
-        //     "popup_time" => "2021-11-12 21:30:00",
-        //     "postponded_1" => 0,
-        //     "postponded_2" => 0,
-        //     "postponded_3" => 0,
-        // ];
-        // $schedule->job(new SendNotification($value))->everyMinute();
+
         if (!empty($data)) {
             foreach ($data as $key => $value) {
                 if ($value["nth_popup"] == 0 || $value["postponded_1"] > 0) {
@@ -63,7 +54,7 @@ class Kernel extends ConsoleKernel
 
         //run event
 
-        $schedule->command('smoker:update-info')->everyFifteenMinutes();
+        $schedule->command('smoker:update-info')->everyFiveMinutes();
     }
 
     /**

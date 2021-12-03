@@ -106,7 +106,7 @@ function configRoutes () {
               component: EditSmoker
             },
             {
-              path: 'overview',
+              path: 'overview/:id(\\d+)',
               name: 'Overview',
               component: Overview
             },

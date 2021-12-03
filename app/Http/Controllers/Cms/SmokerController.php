@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\ReportTrait;
+use App\Models\Ema1;
 use App\Models\Smoker;
 
 
 class SmokerController extends Controller
 {
+    use ReportTrait;
 
     /**
      * Get schedule for an account
@@ -121,4 +124,19 @@ class SmokerController extends Controller
         $smoker->save();
         return response()->json($smoker, 200);
     }
+
+    /**
+     * Get overview personal description
+     * 
+     */
+    public function overview($accountId){
+        $data = [];
+        $data = $this->getOverviewData($accountId);
+        if(!empty($data)) {
+            return response()->json($data,200);
+        }
+        return response()->json($data, 404);
+    }
+
+
 }
