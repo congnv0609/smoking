@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +37,14 @@ Route::get('/1.0/incentive/progress', [App\Http\Controllers\Api\IncentiveControl
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+Route::get('send-mail', function () {
+
+    $details = [
+        'title' => 'Mail from ItSolutionStuff.com',
+        'body' => 'This is for testing email using smtp'
+    ];
+
+    Mail::to('congnv69@gmail.com')->send(new \App\Mail\AlertMail($details));
+
+    dd("Email is Sent.");
+})->withoutMiddleware('smoking');;

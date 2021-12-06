@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "024f800754b45510f1fb1d92aa3215b8",
+    "content-hash": "cdfa1ca2dc0ee7333ec6bb49bf38bc9f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3652,6 +3652,7 @@
                     "type": "tidelift"
                 }
             ],
+            "abandoned": "symfony/mailer",
             "time": "2021-10-18T15:26:12+00:00"
         },
         {

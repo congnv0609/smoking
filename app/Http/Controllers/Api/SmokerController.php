@@ -268,10 +268,13 @@ class SmokerController extends Controller
 
     private function updateEma1($data)
     {
+        $date = date_format(new DateTime(), 'Y-m-d');
         if (!empty($data)) {
             $oldData = Ema1::where('account_id', $this->accountId)->get();
             foreach ($oldData as $key => $item) {
-                $item->update($data[$key]);
+                if($item->date > $date) {
+                    $item->update($data[$key]);
+                }
             }
         }
     }
@@ -288,10 +291,13 @@ class SmokerController extends Controller
 
     private function updateEma2($data)
     {
+        $date = date_format(new DateTime(), 'Y-m-d');
         if (!empty($data)) {
             $oldData = Ema2::where('account_id', $this->accountId)->get();
             foreach ($oldData as $key => $item) {
-                $item->update($data[$key]);
+                if ($item->date > $date) {
+                    $item->update($data[$key]);
+                }
             }
         }
     }
@@ -308,10 +314,13 @@ class SmokerController extends Controller
 
     private function updateEma3($data)
     {
+        $date = date_format(new DateTime(), 'Y-m-d');
         if (!empty($data)) {
             $oldData = Ema3::where('account_id', $this->accountId)->get();
             foreach ($oldData as $key => $item) {
-                $item->update($data[$key]);
+                if ($item->date > $date) {
+                    $item->update($data[$key]);
+                }
             }
         }
     }
@@ -328,10 +337,13 @@ class SmokerController extends Controller
 
     private function updateEma4($data)
     {
+        $date = date_format(new DateTime(), 'Y-m-d');
         if (!empty($data)) {
             $oldData = Ema4::where('account_id', $this->accountId)->get();
             foreach ($oldData as $key => $item) {
-                $item->update($data[$key]);
+                if ($item->date > $date) {
+                    $item->update($data[$key]);
+                }
             }
         }
     }
@@ -348,10 +360,13 @@ class SmokerController extends Controller
 
     private function updateEma5($data)
     {
+        $date = date_format(new DateTime(), 'Y-m-d');
         if (!empty($data)) {
             $oldData = Ema5::where('account_id', $this->accountId)->get();
             foreach ($oldData as $key => $item) {
-                $item->update($data[$key]);
+                if ($item->date > $date) {
+                    $item->update($data[$key]);
+                }
             }
         }
     }
