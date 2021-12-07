@@ -23,6 +23,8 @@ class SmokerController extends Controller
 
     private $accountId;
 
+    const PERIOD_TIME = 1;
+
     public function __construct()
     {
         $this->accountId = request()->header('accountId');
@@ -199,29 +201,30 @@ class SmokerController extends Controller
             $record['date'] = date_format(date_add($dateString, date_interval_create_from_date_string("$i days")), 'Y-m-d');
             $record['nth_day'] = $i + 1;
             $record['submit_time'] = new DateTime();
+            $period = $ema * self::PERIOD_TIME;
             switch ($ema) {
                 case 1:
                     $record['popup_time'] = date_format($dateString, 'Y-m-d H:i:s');
-                    $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
+                    $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("$period hours")), 'Y-m-d H:i:s');
                     $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     break;
                 case 2:
-                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("3 hours")), 'Y-m-d H:i:s');
+                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("$period hours")), 'Y-m-d H:i:s');
                     $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     break;
                 case 3:
-                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("6 hours")), 'Y-m-d H:i:s');
+                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("$period hours")), 'Y-m-d H:i:s');
                     $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     break;
                 case 4:
-                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("9 hours")), 'Y-m-d H:i:s');
+                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("$period hours")), 'Y-m-d H:i:s');
                     $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     break;
                 case 5:
-                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("12 hours")), 'Y-m-d H:i:s');
+                    $record['popup_time'] = date_format(date_add($dateString, date_interval_create_from_date_string("$period hours")), 'Y-m-d H:i:s');
                     $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     $record['date'] = date_format($dateString, 'Y-m-d');
