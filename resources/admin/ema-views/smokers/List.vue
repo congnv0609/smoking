@@ -39,7 +39,7 @@
               :items-per-page="query.size"
             >
               <template #user_id="{ item }">
-                <td v-if="item.term>1">{{ item.account }}-{{item.term}}</td>
+                <td v-if="item.term > 1">{{ item.account }}-{{ item.term }}</td>
                 <td v-else>{{ item.account }}</td>
               </template>
               <template #start_date="{ item }">
@@ -98,8 +98,12 @@
               </template>
               <template #action="{ item }">
                 <td>
-                      <CButton block color="info" @click="overview(item.id)">Personal Overview Description</CButton>
-                      <CButton block color="info" @click="exportData">EMA Record Export</CButton>
+                  <CButton block color="info" @click="overview(item.id)"
+                    >Personal Overview Description</CButton
+                  >
+                  <CButton block color="info" @click="exportData"
+                    >EMA Record Export</CButton
+                  >
                   <!-- <span @click="editRow(item.id)" role="button">
                     <CIcon name="cil-pencil" />
                   </span>
@@ -167,6 +171,11 @@ export default {
       return this.getList();
     },
   },
+  metaInfo() {
+    return {
+      title: "User Survey Status",
+    };
+  },
   methods: {
     getList() {
       smokers(this.query)
@@ -184,12 +193,10 @@ export default {
     deleteRow(id) {
       console.log("delete", id);
     },
-    overview(id){
-      this.$router.push({path: `/smokers/overview/${id}`})
+    overview(id) {
+      this.$router.push({ path: `/smokers/overview/${id}` });
     },
-    exportData(){
-
-    },
+    exportData() {},
   },
 };
 </script>

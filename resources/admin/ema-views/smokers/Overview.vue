@@ -734,6 +734,11 @@ export default {
     this.query.id = this.$route.params.id;
     this.getList();
   },
+  metaInfo() {
+        return { 
+            title: "Personal Overview Description",
+        }
+    },
   methods: {
     getList() {
       this.isLoading = true;

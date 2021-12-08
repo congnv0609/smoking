@@ -8,7 +8,6 @@ const state = {
   sidebarShow: 'responsive',
   sidebarMinimize: false,
   // authenticated: false,
-  pageTitle: 'EMA Project',
 }
 
 const mutations = {

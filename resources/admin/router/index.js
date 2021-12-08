@@ -108,7 +108,7 @@ function configRoutes () {
             {
               path: 'overview/:id(\\d+)',
               name: 'Overview',
-              component: Overview
+              component: Overview,
             },
           ]
         },

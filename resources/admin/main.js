@@ -9,6 +9,7 @@ import { iconsSet as icons } from './assets/icons/icons.js'
 import store from './store'
 import { initialize } from "./helpers/general"
 import VueMoment from 'vue-moment';
+import VueMeta from 'vue-meta'
 
 initialize(store, router)
 
@@ -16,6 +17,7 @@ Vue.config.performance = true
 Vue.use(CoreuiVue)
 Vue.prototype.$log = console.log.bind(console)
 Vue.use(VueMoment)
+Vue.use(VueMeta)
 
 new Vue({
   el: '#app',

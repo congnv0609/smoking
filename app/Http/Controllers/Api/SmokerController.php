@@ -408,6 +408,6 @@ class SmokerController extends Controller
         if(empty($ema)) {
             return response()->json(['msg' => 'Not found Ema'], 404);
         }
-        SendNotification::dispatch($ema);
+        SendNotification::dispatch($ema->toArray());
     }
 }
