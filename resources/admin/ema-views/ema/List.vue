@@ -106,6 +106,7 @@ export default {
         "popup_time1",
         "popup_time2",
         "attempt_time",
+        "completed",
         "postponded_1",
         "postponded_2",
         "postponded_3",
