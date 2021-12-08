@@ -39,14 +39,14 @@
               :items-per-page="query.size"
             >
               <template #user_id="{ item }">
-                <td v-if="item.term > 1">{{ item.account }}-{{ item.term }}</td>
-                <td v-else>{{ item.account }}</td>
+                <!-- <td v-if="item.term > 1">{{ item.account }}-{{ item.term }}</td> -->
+                <td>{{ item.account }}</td>
               </template>
               <template #start_date="{ item }">
-                <td>{{ item.startDate | moment("YYYY-MM-DD") }}</td>
+                <td>{{ item.start_date | moment("YYYY-MM-DD") }}</td>
               </template>
               <template #end_date="{ item }">
-                <td>{{ item.endDate | moment("YYYY-MM-DD") }}</td>
+                <td>{{ item.end_date | moment("YYYY-MM-DD") }}</td>
               </template>
               <template #nth_day_current="{ item }">
                 <td
@@ -98,7 +98,7 @@
               </template>
               <template #action="{ item }">
                 <td>
-                  <CButton block color="info" @click="overview(item.id)"
+                  <CButton block color="info" @click="overview(item.account_id)"
                     >Personal Overview Description</CButton
                   >
                   <CButton block color="info" @click="exportData"
@@ -135,7 +135,7 @@ export default {
         account: undefined,
         page: 1,
         size: 20,
-        sort: "id,desc",
+        sort: "id,asc",
       },
       caption: "Smokers",
       fields: [
@@ -156,7 +156,7 @@ export default {
             label: "Default",
           },
           {
-            value: "startDate,desc",
+            value: "start_date,desc",
             label: "IDs grouped",
           },
         ],

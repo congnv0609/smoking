@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Traits\ReportTrait;
 use App\Models\Ema1;
 use App\Models\Smoker;
-
+use App\Models\Survey;
 
 class SmokerController extends Controller
 {
@@ -78,7 +78,7 @@ class SmokerController extends Controller
         $query = request()->query();
         $account = $query['account']??null;
         $sort = explode(',', $query['sort']);
-        $list = Smoker::where(function ($con) use ($account) {
+        $list = Survey::where(function ($con) use ($account) {
             if(!empty($account)) {
                 $con->where('account', 'like', '%'.$account.'%');
             }
