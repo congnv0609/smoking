@@ -152,7 +152,7 @@ export default {
       form: {
         sort: [
           {
-            value: "id,desc",
+            value: "id,asc",
             label: "Default",
           },
           {
