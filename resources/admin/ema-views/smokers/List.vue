@@ -38,15 +38,15 @@
               :fields="fields"
               :items-per-page="query.size"
             >
-              <template #UserID="{ item }">
+              <template #user_id="{ item }">
                 <td v-if="item.term>1">{{ item.account }}-{{item.term}}</td>
                 <td v-else>{{ item.account }}</td>
               </template>
-              <template #startDate="{ item }">
-                <td>{{ item.startDate | moment("YYYY-MM-DD HH:mm") }}</td>
+              <template #start_date="{ item }">
+                <td>{{ item.startDate | moment("YYYY-MM-DD") }}</td>
               </template>
-              <template #endDate="{ item }">
-                <td>{{ item.endDate | moment("YYYY-MM-DD HH:mm") }}</td>
+              <template #end_date="{ item }">
+                <td>{{ item.endDate | moment("YYYY-MM-DD") }}</td>
               </template>
               <template #nth_day_current="{ item }">
                 <td
@@ -135,9 +135,9 @@ export default {
       },
       caption: "Smokers",
       fields: [
-        "UserID",
-        "startDate",
-        "endDate",
+        "user_id",
+        "start_date",
+        "end_date",
         "nth_day_current",
         "ema_completed_nth_day",
         "incentive_nth_day",

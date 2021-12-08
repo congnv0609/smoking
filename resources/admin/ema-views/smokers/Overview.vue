@@ -3,9 +3,16 @@
     <CCard>
       <CCardHeader>
         <CRow>
-          <CCol sm="3">user_id: {{ account}} </CCol>
-          <CCol sm="3">start_date: {{ startDate | moment("YYYY-MM-DD")}} </CCol>
-          <CCol sm="3">end_date: {{ endDate | moment("YYYY-MM-DD")}} </CCol>
+          <CCol>
+            <h3>1.1.1 Personal Overview Description</h3>
+          </CCol>
+        </CRow>
+        <CRow>
+          <CCol sm="3">user_id: {{ account }} </CCol>
+          <CCol sm="3"
+            >start_date: {{ startDate | moment("YYYY-MM-DD") }}
+          </CCol>
+          <CCol sm="3">end_date: {{ endDate | moment("YYYY-MM-DD") }} </CCol>
         </CRow>
       </CCardHeader>
       <CCardBody>
@@ -730,8 +737,9 @@ export default {
   methods: {
     getList() {
       this.isLoading = true;
-      get(this.query).then((user)=>{
-        this.account = user.term > 1 ? user.account+"-"+user.term : user.account;
+      get(this.query).then((user) => {
+        this.account =
+          user.term > 1 ? user.account + "-" + user.term : user.account;
         this.startDate = user.startDate;
         this.endDate = user.endDate;
       });

@@ -184,7 +184,7 @@ trait EmaTrait
                             }
                         default:
                             $title = "3rd Reminder alert";
-                            $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
+                            $msg = "最後一次機會做這份問卷！放棄填寫會損失是次現金禮券！";
                             break;
                     }
                     break;
