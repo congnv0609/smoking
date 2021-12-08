@@ -76,6 +76,11 @@ class SmokerController extends Controller
         $smoker->save();
         $smokerData = $this->makeDateArray($data['startDate']);
         $this->createIncentive($smokerData);
+        //survey
+        $account = $smoker->term > 1 ? $smoker->account . "-" . $smoker->term : $smoker->account;
+        $dataSurvey = ['start_date' => $data["startDate"], 'end_date' => $data["endDate"], 'account_id' => $this->accountId, 'account' => $account];
+        $survey = $this->makeSurvey($dataSurvey);
+        $this->saveSurvey($survey);
         //create ema data 
         $ema_arr1 = $this->makeEmaArray($data['startDate'], 1);
         $ema_arr2 = $this->makeEmaArray($data['startDate'], 2);
@@ -275,7 +280,7 @@ class SmokerController extends Controller
         if (!empty($data)) {
             $oldData = Ema1::where('account_id', $this->accountId)->get();
             foreach ($oldData as $key => $item) {
-                if($item->date > $date) {
+                if ($item->date > $date) {
                     $item->update($data[$key]);
                 }
             }
@@ -383,11 +388,11 @@ class SmokerController extends Controller
     public function saveDeviceToken(Request $request)
     {
         $smoker = Smoker::where('id', $this->accountId)->first();
-        if(!empty($smoker)) {
+        if (!empty($smoker)) {
             $smoker->update(['device_token' => $request->token]);
             return response()->json(['Token stored.']);
         }
-        return response()->json(['msg'=>'User not found'], 404);
+        return response()->json(['msg' => 'User not found'], 404);
     }
 
     /**
@@ -404,8 +409,8 @@ class SmokerController extends Controller
             return response()->json(['msg' => 'User not found!'], 404);
         }
         $ema = $this->getNextSurvey($this->accountId);
-        
-        if(empty($ema)) {
+
+        if (empty($ema)) {
             return response()->json(['msg' => 'Not found Ema'], 404);
         }
         SendNotification::dispatch($ema->toArray());

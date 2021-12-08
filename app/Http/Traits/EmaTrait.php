@@ -7,6 +7,7 @@ use App\Models\Ema2;
 use App\Models\Ema3;
 use App\Models\Ema4;
 use App\Models\Ema5;
+use App\Models\Survey;
 use DateTime;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -30,7 +31,7 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date],['completed',false]])->get();
+        $data = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
         return $data;
     }
 
@@ -38,7 +39,7 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date],['completed',false]])->get();
+        $data = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
         return $data;
     }
 
@@ -46,7 +47,7 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date],['completed',false]])->get();
+        $data = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
         return $data;
     }
 
@@ -54,7 +55,7 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date],['completed',false]])->get();
+        $data = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
         return $data;
     }
 
@@ -62,7 +63,7 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date],['completed',false]])->get();
+        $data = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
         return $data;
     }
 
@@ -93,7 +94,7 @@ trait EmaTrait
         switch ($id) {
             case 1:
                 // $ema = Ema1::paginate($size)->withQueryString();
-                $ema = DB::table('ema1s')->join('smokers','ema1s.account_id', '=', 'smokers.id')->paginate($size);
+                $ema = DB::table('ema1s')->join('smokers', 'ema1s.account_id', '=', 'smokers.id')->paginate($size);
                 break;
             case 2:
                 // $ema = Ema2::paginate($size)->withQueryString();
@@ -204,11 +205,11 @@ trait EmaTrait
         // $data = $this->getEmaSchedule();
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d H:i:s');
-        $data[] = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
-        $data[] = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
-        $data[] = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
-        $data[] = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
-        $data[] = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId],['completed', false]])->orderby('date', 'asc')->first();
+        $data[] = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId], ['completed', false]])->orderby('date', 'asc')->first();
+        $data[] = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId], ['completed', false]])->orderby('date', 'asc')->first();
+        $data[] = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId], ['completed', false]])->orderby('date', 'asc')->first();
+        $data[] = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId], ['completed', false]])->orderby('date', 'asc')->first();
+        $data[] = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId], ['completed', false]])->orderby('date', 'asc')->first();
         $next_survey = reset($data);
         if (!empty($data)) {
             foreach ($data as $key => $value) {
@@ -273,7 +274,9 @@ trait EmaTrait
         $data = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
         return $data;
     }
-    public function getEmaByQuery($query) {
+
+    public function getEmaByQuery($query)
+    {
         switch ($query['nth_ema']) {
             case 1:
                 return $this->getEma1ByCond($query);
@@ -289,5 +292,27 @@ trait EmaTrait
         return null;
     }
 
-    
+    public function makeSurvey(array $data)
+    {
+        $ret = [];
+        for ($i = 0; $i < 7; $i++) {
+            $record = [];
+            $record['account_id'] = $data['account_id'];
+            $record['account'] = $data['account'];
+            $record['start_date'] = date_format(new DateTime($data['start_date']), 'Y-m-d');
+            $record['end_date'] = date_format(new DateTime($data['end_date']), 'Y-m-d');
+            $record['nth_day_current'] = $i + 1;
+            $ret[] = $record;
+        }
+
+        return $ret;
+    }
+
+    public function saveSurvey($data) {
+        if(!empty($data)) {
+            foreach($data as $item) {
+                Survey::create($item);
+            }
+        }
+    }
 }
