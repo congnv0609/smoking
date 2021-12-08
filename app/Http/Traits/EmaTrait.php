@@ -9,6 +9,7 @@ use App\Models\Ema4;
 use App\Models\Ema5;
 use DateTime;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 trait EmaTrait
 {
@@ -91,19 +92,24 @@ trait EmaTrait
     {
         switch ($id) {
             case 1:
-                $ema = Ema1::paginate($size)->withQueryString();
+                // $ema = Ema1::paginate($size)->withQueryString();
+                $ema = DB::table('ema1s')->join('smokers','ema1s.account_id', '=', 'smokers.id')->paginate($size);
                 break;
             case 2:
-                $ema = Ema2::paginate($size)->withQueryString();
+                // $ema = Ema2::paginate($size)->withQueryString();
+                $ema = DB::table('ema2s')->join('smokers', 'ema2s.account_id', '=', 'smokers.id')->paginate($size);
                 break;
             case 3:
-                $ema = Ema3::paginate($size)->withQueryString();
+                // $ema = Ema3::paginate($size)->withQueryString();
+                $ema = DB::table('ema3s')->join('smokers', 'ema3s.account_id', '=', 'smokers.id')->paginate($size);
                 break;
             case 4:
-                $ema = Ema4::paginate($size)->withQueryString();
+                // $ema = Ema4::paginate($size)->withQueryString();
+                $ema = DB::table('ema4s')->join('smokers', 'ema4s.account_id', '=', 'smokers.id')->paginate($size);
                 break;
             case 5:
-                $ema = Ema5::paginate($size)->withQueryString();
+                // $ema = Ema5::paginate($size)->withQueryString();
+                $ema = DB::table('ema5s')->join('smokers', 'ema5s.account_id', '=', 'smokers.id')->paginate($size);
                 break;
         }
         return $ema;

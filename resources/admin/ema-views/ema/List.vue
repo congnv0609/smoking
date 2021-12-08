@@ -96,6 +96,8 @@ export default {
       fields: [
         "id",
         "account_id",
+        "account",
+        "term",
         "date",
         "nth_day",
         "nth_ema",

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +15,11 @@ class Ema1 extends Model
         'attempt_time' => 'datetime',
         'submit_time' => 'datetime',
     ];
+
+    public function smokers()
+    {
+        return $this->hasOne(Smoker::class, 'id', 'account_id');
+    }
 
     // public function setSubmitTimeAttribute($submit_time)
     // {
