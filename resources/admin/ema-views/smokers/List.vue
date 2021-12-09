@@ -39,7 +39,6 @@
               :items-per-page="query.size"
             >
               <template #user_id="{ item }">
-                <!-- <td v-if="item.term > 1">{{ item.account }}-{{ item.term }}</td> -->
                 <td>{{ item.account }}</td>
               </template>
               <template #start_date="{ item }">
@@ -127,7 +126,7 @@
 <script>
 import { smokers } from "../../helpers/smoker";
 export default {
-  name: "Smokers",
+  name: "Users",
   data() {
     return {
       last_page: 1,
@@ -137,15 +136,15 @@ export default {
         size: 20,
         sort: "id,asc",
       },
-      caption: "Smokers",
+      caption: "Users",
       fields: [
-        "user_id",
-        "start_date",
-        "end_date",
-        "nth_day_current",
-        "ema_completed_nth_day",
-        "incentive_nth_day",
-        "incentive_total",
+        {key: "user_id", label: "user_id"},
+        {key: "start_date", label: "start_date"},
+        {key: "end_date", label: "end_date"},
+        {key: "nth_day_current", label: "nth_day_current"},
+        {key: "ema_completed_nth_day", label: "ema_completed_nth_day"},
+        {key: "incentive_nth_day", label: "incentive_nth_day"},
+        {key: "incentive_total", label: "incentive_total"},
         "action",
       ],
       items: [],
