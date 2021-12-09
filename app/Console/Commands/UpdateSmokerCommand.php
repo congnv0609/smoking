@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Ema1;
 use App\Models\Incentive;
-use App\Models\Smoker;
+use App\Models\Survey;
 use DateTime;
 use Illuminate\Console\Command;
 
@@ -43,15 +42,15 @@ class UpdateSmokerCommand extends Command
     {
         // return Command::SUCCESS;
         $date = date_format(new DateTime(), 'Y-m-d');
-        $userList = Smoker::whereDate('startDate', '<=', $date)->whereDate('endDate', '>=', $date)->get();
+        $userList = Survey::whereDate('start_date', '<=', $date)->whereDate('end_date', '>=', $date)->get();
         if (!empty($userList)) {
             foreach ($userList as $key => $value) {
-                $ema = Ema1::where([['date', $date], ['account_id', $value->id]])->first();
-                $incentive = Incentive::where([['date', $date], ['account_id', $value->id]])->first();
-                $incentive_total = Incentive::where([['account_id', $value->id], ['incentive', '>=', '15']])->sum('incentive');
-                if(!empty($ema)) {
-                    $value->nth_day_current = $ema->nth_day;
-                }
+                // $ema = Ema1::where([['date', $date], ['account_id', $value->id]])->first();
+                $incentive = Incentive::where([['date', $date], ['account_id', $value->account_id]])->first();
+                $incentive_total = Incentive::where([['account_id', $value->account_id], ['incentive', '>=', '15']])->sum('incentive');
+                // if(!empty($ema)) {
+                //     $value->nth_day_current = $ema->nth_day;
+                // }
                 if(!empty($incentive)) {
                     $value->ema_completed_nth_day = $incentive->valid_ema??0;
                     $value->incentive_nth_day = $incentive->incentive >= 15 ? $incentive->incentive : 0;
