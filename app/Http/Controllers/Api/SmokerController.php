@@ -210,7 +210,7 @@ class SmokerController extends Controller
             switch ($ema) {
                 case 1:
                     $record['popup_time'] = date_format($dateString, 'Y-m-d H:i:s');
-                    $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("$period hours")), 'Y-m-d H:i:s');
+                    $record['popup_time1'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     $record['popup_time2'] = date_format(date_add($dateString, date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
                     break;
                 case 2:
