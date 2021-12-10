@@ -53,7 +53,7 @@ class SendNotification implements ShouldQueue
             "notification" => [
                 "title" => $info["title"],
                 "body" => $info["body"],
-                'sound' => $smoker->notification == 1 ? "default" : "",
+                'sound' => $smoker->notification == 1 ? "default" : null,
             ],
             "data" => ["current_ema" => $ema['current_ema'], "ema" => $ema['nth_ema'], "nth_popup" => $ema['nth_popup'], 'nth_day'=>$ema['nth_day'], "postponded_1" => $ema['postponded_1'], "postponded_2" => $ema['postponded_2'], "postponded_3" => $ema['postponded_3']],
         ];
