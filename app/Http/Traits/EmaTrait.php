@@ -204,7 +204,7 @@ trait EmaTrait
     {
         // $data = $this->getEmaSchedule();
         $data = [];
-        $date = date_format(new DateTime(), 'Y-m-d H:i:s');
+        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("15 minutes")), 'Y-m-d H:i:s');
         $data[] = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId], ['completed', false]])->orderby('date', 'asc')->first();
         $data[] = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId], ['completed', false]])->orderby('date', 'asc')->first();
         $data[] = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId], ['completed', false]])->orderby('date', 'asc')->first();
@@ -214,10 +214,10 @@ trait EmaTrait
         if (!empty($data)) {
             foreach ($data as $key => $value) {
                 if (!empty($value->popup_time) && !empty($next_survey->popup_time)) {
-                    if ($value->popup_time < $next_survey->popup_time) {
+                    if ($value->popup_time <= $next_survey->popup_time) {
                         $next_survey = $value;
                         $end_time = date_add(new Datetime($next_survey->popup_time), date_interval_create_from_date_string("15 minutes"));
-                        $current_ema = (new DateTime() > new DateTime($next_survey->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
+                        $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
                         $next_survey->current_ema = $current_ema;
                     }
                 }
