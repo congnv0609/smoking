@@ -213,15 +213,30 @@ trait EmaTrait
         $next_survey = reset($data);
         if (!empty($data)) {
             foreach ($data as $key => $value) {
+                //old
                 if (!empty($value->popup_time) && !empty($next_survey->popup_time)) {
                     if ($value->popup_time <= $next_survey->popup_time) {
                         $next_survey = $value;
-                        $end_time = date_add(new Datetime($next_survey->popup_time), date_interval_create_from_date_string("15 minutes"));
-                        $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
-                        $next_survey->current_ema = $current_ema;
+                        // $end_time = date_add(new Datetime($next_survey->popup_time), date_interval_create_from_date_string("15 minutes"));
+                        // $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
+                        // $next_survey->current_ema = $current_ema;
                     }
                 }
             }
+
+            //current ema
+            if ($next_survey->postponded_3 > 0) {
+                $end_time = date_add(new Datetime($next_survey->popup_time2), date_interval_create_from_date_string("15 minutes"));
+                $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time2) && new DateTime() <= $end_time) ? 1 : 0;
+            } elseif ($next_survey->postponded_2 > 0) {
+                $end_time = date_add(new Datetime($next_survey->popup_time1), date_interval_create_from_date_string("15 minutes"));
+                $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time1) && new DateTime() <= $end_time) ? 1 : 0;
+            } else {
+                $end_time = date_add(new Datetime($next_survey->popup_time), date_interval_create_from_date_string("15 minutes"));
+                $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
+            }
+
+            $next_survey->current_ema = $current_ema;
             return $next_survey;
         }
         return null;
