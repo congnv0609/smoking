@@ -176,9 +176,7 @@ class SmokerController extends Controller
         if (!empty($endDateTime)) {
             $data['endDate'] = $endDateTime;
         }
-        if (!empty($notification)) {
-            $data['notification'] = $notification;
-        }
+        $data['notification'] = $notification > 0 ? 1 : 0;
 
         return $data;
     }
@@ -191,7 +189,7 @@ class SmokerController extends Controller
             $record = [];
             $record['account_id'] = $this->accountId;
             $record['date'] = $i > 0 ? date_format(date_add($dateString, date_interval_create_from_date_string("1 days")), 'Y-m-d') : date_format($dateString, 'Y-m-d');
-            $record['nth_day_current'] = $i+1;
+            $record['nth_day_current'] = $i + 1;
             $data[] = $record;
         }
         return $data;
@@ -207,7 +205,7 @@ class SmokerController extends Controller
             $record['date'] = date_format(date_add($dateString, date_interval_create_from_date_string("$i days")), 'Y-m-d');
             $record['nth_day'] = $i + 1;
             $record['submit_time'] = new DateTime();
-            $period = $ema * self::PERIOD_TIME;
+            $period = ($ema-1) * self::PERIOD_TIME;
             switch ($ema) {
                 case 1:
                     $record['popup_time'] = date_format($dateString, 'Y-m-d H:i:s');
