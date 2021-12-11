@@ -118,7 +118,7 @@ class EmaController extends Controller
         if (empty($currentEma)) {
             return response()->json(['msg' => 'Not found next survey time'], 404);
         }
-        return response()->json(['survey_time' => date_format(new Datetime($currentEma['popup_time']), 'Y-m-d H:i:s'), 'current_ema' => $currentEma['current_ema'], 'ema' => $currentEma['nth_ema'], 'popup_time' => $currentEma['popup_time'], 'nth_day' => $currentEma['nth_day'], 'postponded_1' => $currentEma['postponded_1'], 'postponded_2' => $currentEma['postponded_2'], 'postponded_3' => $currentEma['postponded_3']], 200);
+        return response()->json(['survey_time' => date_format(new Datetime($currentEma['popup_time']), 'Y-m-d H:i:s'), 'current_ema' => $currentEma['current_ema'], 'ema' => $currentEma['nth_ema'], 'popup_time' => $currentEma['popup_time'], 'nth_day' => $currentEma['nth_day'], 'nth_popup' => $currentEma['nth_popup'], 'postponded_1' => $currentEma['postponded_1'], 'postponded_2' => $currentEma['postponded_2'], 'postponded_3' => $currentEma['postponded_3']], 200);
     }
 
     private function updateIncentive(int $emaId, array $data)
