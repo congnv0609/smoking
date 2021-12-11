@@ -73,6 +73,7 @@ class SmokerController extends Controller
         }
         $smoker->startDate = $data["startDate"];
         $smoker->endDate = $data["endDate"];
+        $smoker->notification = $data["notification"];
         $smoker->save();
         $smokerData = $this->makeDateArray($data['startDate']);
         $this->createIncentive($smokerData);
