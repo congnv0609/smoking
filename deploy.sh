@@ -75,7 +75,7 @@ php artisan route:cache
 php artisan view:cache
 php artisan scribe:generate
 
-sytemctl restart supervisord.service
+systemctl restart supervisord.service
 
 echo "Strarting build SPAs in $PWD"
 
