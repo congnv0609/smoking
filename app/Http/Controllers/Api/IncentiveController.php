@@ -30,11 +30,11 @@ class IncentiveController extends Controller
     public function finished(){
         $data = [];
         // $data = Incentive::select('date','valid_ema', 'updated_at')->where('account_id', $this->accountId)->get();
-        $ema1 = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'submit_time', 'completed')->where([['completed', true],['account_id', $this->accountId]])->get();
-        $ema2 = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'submit_time', 'completed')->where([['completed', true],['account_id', $this->accountId]])->get();
-        $ema3 = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'submit_time', 'completed')->where([['completed', true],['account_id', $this->accountId]])->get();
-        $ema4 = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'submit_time', 'completed')->where([['completed', true],['account_id', $this->accountId]])->get();
-        $ema5 = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'submit_time', 'completed')->where([['completed', true],['account_id', $this->accountId]])->get();
+        $ema1 = Ema1::select('account_id', 'date', 'nth_day', 'nth_ema', 'submit_time', 'completed')->where([['completed', true],['account_id', $this->accountId]])->get();
+        $ema2 = Ema2::select('account_id', 'date', 'nth_day', 'nth_ema', 'submit_time', 'completed')->where([['completed', true],['account_id', $this->accountId]])->get();
+        $ema3 = Ema3::select('account_id', 'date', 'nth_day', 'nth_ema', 'submit_time', 'completed')->where([['completed', true],['account_id', $this->accountId]])->get();
+        $ema4 = Ema4::select('account_id', 'date', 'nth_day', 'nth_ema', 'submit_time', 'completed')->where([['completed', true],['account_id', $this->accountId]])->get();
+        $ema5 = Ema5::select('account_id', 'date', 'nth_day', 'nth_ema', 'submit_time', 'completed')->where([['completed', true],['account_id', $this->accountId]])->get();
         if(!empty($ema1)) {
             $data[]=$ema1->toArray();
         }
