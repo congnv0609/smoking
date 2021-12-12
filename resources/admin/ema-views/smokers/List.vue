@@ -134,7 +134,7 @@ export default {
         account: undefined,
         page: 1,
         size: 20,
-        sort: "id,asc",
+        sort: "id,desc",
       },
       caption: "Users",
       fields: [
@@ -151,7 +151,7 @@ export default {
       form: {
         sort: [
           {
-            value: "id,asc",
+            value: "id,desc",
             label: "Default",
           },
           {
