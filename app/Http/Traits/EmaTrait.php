@@ -95,7 +95,7 @@ trait EmaTrait
             case 1:
                 $ema = DB::table('ema1s')->join('smokers', 'ema1s.account_id', '=', 'smokers.id');
                 if ($accountId > 0) {
-                    $ema->where('smokers.account','like', "%".$accountId."%");
+                    $ema->where('smokers.account', 'like', "%" . $accountId . "%");
                 }
                 return $ema->paginate($size);
             case 2:
@@ -214,42 +214,125 @@ trait EmaTrait
     {
         // $data = $this->getEmaSchedule();
         $data = [];
+
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("15 minutes")), 'Y-m-d H:i:s');
-        $data[] = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId], ['completed', false]])->orderby('date', 'asc')->first();
-        $data[] = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId], ['completed', false]])->orderby('date', 'asc')->first();
-        $data[] = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId], ['completed', false]])->orderby('date', 'asc')->first();
-        $data[] = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId], ['completed', false]])->orderby('date', 'asc')->first();
-        $data[] = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where('popup_time', '>=', $date)->where([['account_id', $accountId], ['completed', false]])->orderby('date', 'asc')->first();
+
+        $this->getEarliestEma1($accountId, $data);
+        $this->getEarliestEma2($accountId, $data);
+        $this->getEarliestEma3($accountId, $data);
+        $this->getEarliestEma4($accountId, $data);
+        $this->getEarliestEma5($accountId, $data);
         $next_survey = reset($data);
+
         if (!empty($data)) {
             foreach ($data as $key => $value) {
-                //old
-                if (!empty($value->popup_time) && !empty($next_survey->popup_time)) {
-                    if ($value->popup_time <= $next_survey->popup_time) {
-                        $next_survey = $value;
-                        // $end_time = date_add(new Datetime($next_survey->popup_time), date_interval_create_from_date_string("15 minutes"));
-                        // $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
-                        // $next_survey->current_ema = $current_ema;
-                    }
+                // find earlieast ema
+                if($value->popup_time <= $next_survey->popup_time) {
+                    $next_survey = $value;
                 }
+                //find current ema
+                if ($next_survey->postponded_3 > 0) {
+                    $end_time = date_add(new Datetime($next_survey->popup_time2), date_interval_create_from_date_string("15 minutes"));
+                    $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time2) && new DateTime() <= $end_time) ? 1 : 0;
+                } elseif ($next_survey->postponded_2 > 0) {
+                    $end_time = date_add(new Datetime($next_survey->popup_time1), date_interval_create_from_date_string("15 minutes"));
+                    $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time1) && new DateTime() <= $end_time) ? 1 : 0;
+                } else{
+                    $end_time = date_add(new Datetime($next_survey->popup_time), date_interval_create_from_date_string("15 minutes"));
+                    $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
+                }
+                //
+                $next_survey->current_ema = $current_ema;
             }
-
             //current ema
-            if ($next_survey->postponded_3 > 0) {
-                $end_time = date_add(new Datetime($next_survey->popup_time2), date_interval_create_from_date_string("15 minutes"));
-                $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time2) && new DateTime() <= $end_time) ? 1 : 0;
-            } elseif ($next_survey->postponded_2 > 0) {
-                $end_time = date_add(new Datetime($next_survey->popup_time1), date_interval_create_from_date_string("15 minutes"));
-                $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time1) && new DateTime() <= $end_time) ? 1 : 0;
-            } else {
-                $end_time = date_add(new Datetime($next_survey->popup_time), date_interval_create_from_date_string("15 minutes"));
-                $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
-            }
-
-            $next_survey->current_ema = $current_ema;
             return $next_survey;
         }
         return null;
+    }
+
+    private function getEarliestEma1($accountId, &$data)
+    {
+        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("15 minutes")), 'Y-m-d H:i:s');
+        $data[] = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
+            ->when('postponded_3>0', function ($query) use ($date) {
+                $query->where('popup_time2', '>=', $date);
+            }, function ($query) use ($date) {
+                $query->when('postponded_2>0', function ($query) use ($date) {
+                    $query->where('popup_time1', '>=', $date);
+                }, function ($query) use ($date) {
+                    $query->where('popup_time', '>=', $date);
+                });
+            })
+            ->where([['account_id', $accountId], ['completed', false]])
+            ->orderby('date', 'asc')->first();
+    }
+
+    private function getEarliestEma2($accountId, &$data)
+    {
+        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("15 minutes")), 'Y-m-d H:i:s');
+        $data[] = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
+            ->when('postponded_3>0', function ($query) use ($date) {
+                $query->where('popup_time2', '>=', $date);
+            }, function ($query) use ($date) {
+                $query->when('postponded_2>0', function ($query) use ($date) {
+                    $query->where('popup_time1', '>=', $date);
+                }, function ($query) use ($date) {
+                    $query->where('popup_time', '>=', $date);
+                });
+            })
+            ->where([['account_id', $accountId], ['completed', false]])
+            ->orderby('date', 'asc')->first();
+    }
+
+    private function getEarliestEma3($accountId, &$data)
+    {
+        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("15 minutes")), 'Y-m-d H:i:s');
+        $data[] = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
+            ->when('postponded_3>0', function ($query) use ($date) {
+                $query->where('popup_time2', '>=', $date);
+            }, function ($query) use ($date) {
+                $query->when('postponded_2>0', function ($query) use ($date) {
+                    $query->where('popup_time1', '>=', $date);
+                }, function ($query) use ($date) {
+                    $query->where('popup_time', '>=', $date);
+                });
+            })
+            ->where([['account_id', $accountId], ['completed', false]])
+            ->orderby('date', 'asc')->first();
+    }
+
+    private function getEarliestEma4($accountId, &$data)
+    {
+        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("15 minutes")), 'Y-m-d H:i:s');
+        $data[] = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
+            ->when('postponded_3>0', function ($query) use ($date) {
+                $query->where('popup_time2', '>=', $date);
+            }, function ($query) use ($date) {
+                $query->when('postponded_2>0', function ($query) use ($date) {
+                    $query->where('popup_time1', '>=', $date);
+                }, function ($query) use ($date) {
+                    $query->where('popup_time', '>=', $date);
+                });
+            })
+            ->where([['account_id', $accountId], ['completed', false]])
+            ->orderby('date', 'asc')->first();
+    }
+
+    private function getEarliestEma5($accountId, &$data)
+    {
+        $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("15 minutes")), 'Y-m-d H:i:s');
+        $data[] = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
+            ->when('postponded_3>0', function ($query) use ($date) {
+                $query->where('popup_time2', '>=', $date);
+            }, function ($query) use ($date) {
+                $query->when('postponded_2>0', function ($query) use ($date) {
+                    $query->where('popup_time1', '>=', $date);
+                }, function ($query) use ($date) {
+                    $query->where('popup_time', '>=', $date);
+                });
+            })
+            ->where([['account_id', $accountId], ['completed', false]])
+            ->orderby('date', 'asc')->first();
     }
 
     private function getEma1ByCond($cond)

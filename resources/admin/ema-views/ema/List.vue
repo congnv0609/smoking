@@ -16,7 +16,7 @@
               />
             </CRow>
             <CRow>
-              <CCol sm="2">Account ID</CCol>
+              <CCol sm="2">Account</CCol>
                 <CInput
                   class="ml-2"
                   v-model="query.account"
