@@ -181,9 +181,15 @@ trait EmaTrait
                                 break;
                             }
                         default:
-                            $title = "2nd Reminder alert";
-                            $msg = "吸煙雷達邀請你做問卷了！";
-                            break;
+                            if($postponded_1 > 0) {
+                                $title = "2nd Reminder alert";
+                                $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
+                                break;
+                            } else {
+                                $title = "2nd Reminder alert";
+                                $msg = "吸煙雷達邀請你做問卷了！";
+                                break;
+                            }
                     }
                     break;
                 }
