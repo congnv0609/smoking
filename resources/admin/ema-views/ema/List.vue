@@ -20,7 +20,7 @@
                 <CInput
                   class="ml-2"
                   v-model="query.account"
-                  placeholder="User ID"
+                  placeholder="Account"
                   @change="accountChange"
                 ></CInput>
             </CRow>
@@ -104,7 +104,6 @@ export default {
         },
       ],
       fields: [
-        "id",
         "account_id",
         "account",
         "term",

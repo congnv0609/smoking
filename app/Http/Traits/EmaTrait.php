@@ -93,40 +93,35 @@ trait EmaTrait
     {
         switch ($id) {
             case 1:
-                $ema = DB::table('ema1s');
-                if($accountId>0) {
-                    $ema->where('ema1s.account_id', $accountId);
+                $ema = DB::table('ema1s')->join('smokers', 'ema1s.account_id', '=', 'smokers.id');
+                if ($accountId > 0) {
+                    $ema->where('smokers.account','like', "%".$accountId."%");
                 }
-                $ema = $ema->join('smokers', 'ema1s.account_id', '=', 'smokers.id')->paginate($size);
-                return $ema;
+                return $ema->paginate($size);
             case 2:
-                $ema = DB::table('ema2s');
+                $ema = DB::table('ema2s')->join('smokers', 'ema2s.account_id', '=', 'smokers.id');
                 if ($accountId > 0) {
-                    $ema->where('ema2s.account_id', $accountId);
+                    $ema->where('smokers.account', 'like', "%" . $accountId . "%");
                 }
-                $ema = $ema->join('smokers', 'ema2s.account_id', '=', 'smokers.id')->paginate($size);
-                return $ema;
+                return $ema->paginate($size);
             case 3:
-                $ema = DB::table('ema3s');
+                $ema = DB::table('ema3s')->join('smokers', 'ema3s.account_id', '=', 'smokers.id');
                 if ($accountId > 0) {
-                    $ema->where('ema3s.account_id', $accountId);
+                    $ema->where('smokers.account', 'like', "%" . $accountId . "%");
                 }
-                $ema = $ema->join('smokers', 'ema3s.account_id', '=', 'smokers.id')->paginate($size);
-                return $ema;
+                return $ema->paginate($size);
             case 4:
-                $ema = DB::table('ema4s');
+                $ema = DB::table('ema4s')->join('smokers', 'ema4s.account_id', '=', 'smokers.id');
                 if ($accountId > 0) {
-                    $ema->where('ema4s.account_id', $accountId);
+                    $ema->where('smokers.account', 'like', "%" . $accountId . "%");
                 }
-                $ema = $ema->join('smokers', 'ema4s.account_id', '=', 'smokers.id')->paginate($size);
-                return $ema;
+                return $ema->paginate($size);
             case 5:
-                $ema = DB::table('ema5s');
+                $ema = DB::table('ema5s')->join('smokers', 'ema5s.account_id', '=', 'smokers.id');
                 if ($accountId > 0) {
-                    $ema->where('ema5s.account_id', $accountId);
+                    $ema->where('smokers.account', 'like', "%" . $accountId . "%");
                 }
-                $ema = $ema->join('smokers', 'ema5s.account_id', '=', 'smokers.id')->paginate($size);
-                return $ema;
+                return $ema->paginate($size);
         }
         return null;
     }
