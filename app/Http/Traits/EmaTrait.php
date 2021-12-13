@@ -143,12 +143,12 @@ trait EmaTrait
                     switch ($postponded_1) {
                         case 1: {
                                 $title = "1st Reminder alert";
-                                $msg = "最後一次機會做這份問卷！放棄填寫會損失是次現金禮券！";
+                                $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
                                 break;
                             }
                         case 2: {
                                 $title = "1st Reminder alert";
-                                $msg = "最後一次機會做這份問卷！放棄填寫會損失是次現金禮券！";
+                                $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
                                 break;
                             }
                         default:
@@ -162,12 +162,12 @@ trait EmaTrait
                     switch ($postponded_2) {
                         case 1: {
                                 $title = "2nd Reminder alert";
-                                $msg = "最後一次機會做這份問卷！放棄填寫會損失是次現金禮券！";
+                                $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
                                 break;
                             }
                         case 2: {
                                 $title = "2nd Reminder alert";
-                                $msg = "最後一次機會做這份問卷！放棄填寫會損失是次現金禮券！";
+                                $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
                                 break;
                             }
                         default:
@@ -181,12 +181,12 @@ trait EmaTrait
                     switch ($postponded_3) {
                         case 1: {
                                 $title = "3rd Reminder alert";
-                                $msg = "最後一次機會做這份問卷！放棄填寫會損失是次現金禮券！";
+                                $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
                                 break;
                             }
                         case 2: {
                                 $title = "3rd Reminder alert";
-                                $msg = "最後一次機會做這份問卷！放棄填寫會損失是次現金禮券！";
+                                $msg = "吸煙雷達邀請你做問卷了！放棄填寫會損失是次現金禮券！";
                                 break;
                             }
                         default:
