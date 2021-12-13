@@ -89,31 +89,46 @@ trait EmaTrait
         return null;
     }
 
-    public function getEmaList(int $id, $size)
+    public function getEmaList(int $id, $accountId, $size)
     {
         switch ($id) {
             case 1:
-                // $ema = Ema1::paginate($size)->withQueryString();
-                $ema = DB::table('ema1s')->join('smokers', 'ema1s.account_id', '=', 'smokers.id')->paginate($size);
-                break;
+                $ema = DB::table('ema1s');
+                if($accountId>0) {
+                    $ema->where('ema1s.account_id', $accountId);
+                }
+                $ema = $ema->join('smokers', 'ema1s.account_id', '=', 'smokers.id')->paginate($size);
+                return $ema;
             case 2:
-                // $ema = Ema2::paginate($size)->withQueryString();
-                $ema = DB::table('ema2s')->join('smokers', 'ema2s.account_id', '=', 'smokers.id')->paginate($size);
-                break;
+                $ema = DB::table('ema2s');
+                if ($accountId > 0) {
+                    $ema->where('ema2s.account_id', $accountId);
+                }
+                $ema = $ema->join('smokers', 'ema2s.account_id', '=', 'smokers.id')->paginate($size);
+                return $ema;
             case 3:
-                // $ema = Ema3::paginate($size)->withQueryString();
-                $ema = DB::table('ema3s')->join('smokers', 'ema3s.account_id', '=', 'smokers.id')->paginate($size);
-                break;
+                $ema = DB::table('ema3s');
+                if ($accountId > 0) {
+                    $ema->where('ema3s.account_id', $accountId);
+                }
+                $ema = $ema->join('smokers', 'ema3s.account_id', '=', 'smokers.id')->paginate($size);
+                return $ema;
             case 4:
-                // $ema = Ema4::paginate($size)->withQueryString();
-                $ema = DB::table('ema4s')->join('smokers', 'ema4s.account_id', '=', 'smokers.id')->paginate($size);
-                break;
+                $ema = DB::table('ema4s');
+                if ($accountId > 0) {
+                    $ema->where('ema4s.account_id', $accountId);
+                }
+                $ema = $ema->join('smokers', 'ema4s.account_id', '=', 'smokers.id')->paginate($size);
+                return $ema;
             case 5:
-                // $ema = Ema5::paginate($size)->withQueryString();
-                $ema = DB::table('ema5s')->join('smokers', 'ema5s.account_id', '=', 'smokers.id')->paginate($size);
-                break;
+                $ema = DB::table('ema5s');
+                if ($accountId > 0) {
+                    $ema->where('ema5s.account_id', $accountId);
+                }
+                $ema = $ema->join('smokers', 'ema5s.account_id', '=', 'smokers.id')->paginate($size);
+                return $ema;
         }
-        return $ema;
+        return null;
     }
 
     public function updateCountPush(&$data)

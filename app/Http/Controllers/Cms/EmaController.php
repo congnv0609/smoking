@@ -13,7 +13,8 @@ class EmaController extends Controller
     public function index(){
         $emaId = request()->input('ema');
         $size = request()->input('size')??15;
-        $list = $this->getEmaList($emaId, $size);
+        $accountId = request()->input('account')??0;
+        $list = $this->getEmaList($emaId, $accountId, $size);
         return response()->json($list, 200);
     }
 }

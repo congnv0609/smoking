@@ -12,8 +12,17 @@
                 :custom="true"
                 :checked="query.ema"
                 :inline="true"
-                @update:checked="getList"
+                @update:checked="emaChange"
               />
+            </CRow>
+            <CRow>
+              <CCol sm="2">Account ID</CCol>
+                <CInput
+                  class="ml-2"
+                  v-model="query.account"
+                  placeholder="User ID"
+                  @change="accountChange"
+                ></CInput>
             </CRow>
           </CCardHeader>
           <CCardBody>
@@ -69,6 +78,7 @@ export default {
         page: 1,
         size: 20,
         ema: 1,
+        account: undefined,
       },
       caption: "Ema List",
       options: [
@@ -115,7 +125,7 @@ export default {
     };
   },
   mounted() {
-    this.getList(this.query.ema);
+    this.getList();
   },
   watch: {
     "query.page": function (val, oldVal) {
@@ -123,8 +133,8 @@ export default {
     },
   },
   methods: {
-    getList(value) {
-      this.query.ema = value;
+    getList() {
+      console.log(this.query);
       emaList(this.query)
         .then((res) => {
           this.items = res.data;
@@ -133,6 +143,14 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    emaChange(value) {
+      this.query.ema = value;
+      this.getList();
+    },
+    accountChange(value) {
+      this.query.account = value;
+      this.getList();
     },
     editRow(id) {
       this.$router.push({ path: `/ema/edit/${id}` });
