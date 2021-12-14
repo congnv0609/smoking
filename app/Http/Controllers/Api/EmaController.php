@@ -119,7 +119,7 @@ class EmaController extends Controller
         if (empty($currentEma)) {
             return response()->json(['msg' => 'Not found next survey time'], 404);
         }
-        return response()->json(['survey_time' => date_format(new Datetime($currentEma['popup_time']), 'Y-m-d H:i:s'), 'current_ema' => $currentEma['current_ema'], 'ema' => $currentEma['nth_ema'], 'popup_time' => $currentEma['popup_time'], 'nth_day' => $currentEma['nth_day'], 'nth_popup' => $currentEma['nth_popup'], 'postponded_1' => $currentEma['postponded_1'], 'postponded_2' => $currentEma['postponded_2'], 'postponded_3' => $currentEma['postponded_3']], 200);
+        return response()->json(['survey_time' => date_format(new Datetime($currentEma['popup_time']), 'Y-m-d H:i:s'), 'current_ema' => $currentEma['current_ema'], 'ema' => $currentEma['nth_ema'], 'popup_time' => $currentEma['popup_time'], 'popup_time1' => $currentEma['popup_time1'], 'popup_time2' => $currentEma['popup_time2'], 'nth_day' => $currentEma['nth_day'], 'nth_popup' => $currentEma['nth_popup'], 'postponded_1' => $currentEma['postponded_1'], 'postponded_2' => $currentEma['postponded_2'], 'postponded_3' => $currentEma['postponded_3']], 200);
     }
 
     private function updateIncentive(int $emaId, array $data)
@@ -190,7 +190,7 @@ class EmaController extends Controller
         if (!empty($ema)) {
             if ($ema->postponded_3 > 0) {
                 $valid = 0;
-                $delayMinutes = $this->getMinuteDelay($ema->postponded_3)+15;
+                $delayMinutes = $this->getMinuteDelay($ema->postponded_3) + 15;
                 $end_time = date_format(date_add(new Datetime($ema->popup_time2), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
                 if (new DateTime($ema->popup_time2) <= new DateTime() && new DateTime() <= new DateTime($end_time)) {
                     $valid = 1;
@@ -199,7 +199,7 @@ class EmaController extends Controller
             }
             if ($ema->postponded_2 > 0) {
                 $valid = 0;
-                $delayMinutes = $this->getMinuteDelay($ema->postponded_2)+15;
+                $delayMinutes = $this->getMinuteDelay($ema->postponded_2) + 15;
                 $end_time = date_format(date_add(new Datetime($ema->popup_time1), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
                 if (new DateTime($ema->popup_time1) <= new DateTime() && new DateTime() <= new DateTime($end_time)) {
                     $valid = 1;
@@ -207,7 +207,7 @@ class EmaController extends Controller
                 return response()->json(['current_ema' => $valid], 200);
             }
             $valid = 0;
-            $delayMinutes = $this->getMinuteDelay($ema->postponded_1)+15;
+            $delayMinutes = $this->getMinuteDelay($ema->postponded_1) + 15;
             $end_time = date_format(date_add(new Datetime($ema->popup_time), date_interval_create_from_date_string("$delayMinutes minutes")), 'Y-m-d H:i:s');
             if (new DateTime($ema->popup_time) <= new DateTime() && new DateTime() <= new DateTime($end_time)) {
                 $valid = 1;
