@@ -260,7 +260,7 @@ trait EmaTrait
     {
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
         $list = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
-        ->where([['account_id', $accountId], ['completed', false]])
+            ->where([['account_id', $accountId], ['completed', false]])
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
             foreach ($list as $ema) {
@@ -268,12 +268,15 @@ trait EmaTrait
                 $popup_time1 = date_format(new DateTime($ema->popup_time1), 'Y-m-d H:i:s');
                 $popup_time = date_format(new DateTime($ema->popup_time), 'Y-m-d H:i:s');
                 if (!empty($ema->postponded_3) && $ema->postponded_3 > 0 && $popup_time2 >= $date) {
-                    $data[]=$ema;
+                    $data[] = $ema;
                     return;
                 } elseif (!empty($ema->postponded_2) && $ema->postponded_2 > 0 && $popup_time1 >= $date) {
                     $data[] = $ema;
                     return;
-                } elseif ($popup_time >= $date) {
+                } elseif (!empty($ema->postponded_1) && $ema->postponded_1 > 0 && $popup_time >= $date) {
+                    $data[] = $ema;
+                    return;
+                } elseif ($popup_time2 >= $date) {
                     $data[] = $ema;
                     return;
                 }
@@ -286,7 +289,7 @@ trait EmaTrait
     {
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
         $list = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
-        ->where([['account_id', $accountId], ['completed', false]])
+            ->where([['account_id', $accountId], ['completed', false]])
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
             foreach ($list as $ema) {
@@ -299,7 +302,10 @@ trait EmaTrait
                 } elseif (!empty($ema->postponded_2) && $ema->postponded_2 > 0 && $popup_time1 >= $date) {
                     $data[] = $ema;
                     return;
-                } elseif ($popup_time >= $date) {
+                } elseif (!empty($ema->postponded_1) && $ema->postponded_1 > 0 && $popup_time >= $date) {
+                    $data[] = $ema;
+                    return;
+                } elseif ($popup_time2 >= $date) {
                     $data[] = $ema;
                     return;
                 }
@@ -312,7 +318,7 @@ trait EmaTrait
     {
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
         $list = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
-        ->where([['account_id', $accountId], ['completed', false]])
+            ->where([['account_id', $accountId], ['completed', false]])
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
             foreach ($list as $ema) {
@@ -325,7 +331,10 @@ trait EmaTrait
                 } elseif (!empty($ema->postponded_2) && $ema->postponded_2 > 0 && $popup_time1 >= $date) {
                     $data[] = $ema;
                     return;
-                } elseif ($popup_time >= $date) {
+                } elseif (!empty($ema->postponded_1) && $ema->postponded_1 > 0 && $popup_time >= $date) {
+                    $data[] = $ema;
+                    return;
+                } elseif ($popup_time2 >= $date) {
                     $data[] = $ema;
                     return;
                 }
@@ -338,7 +347,7 @@ trait EmaTrait
     {
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
         $list = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
-        ->where([['account_id', $accountId], ['completed', false]])
+            ->where([['account_id', $accountId], ['completed', false]])
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
             foreach ($list as $ema) {
@@ -351,7 +360,10 @@ trait EmaTrait
                 } elseif (!empty($ema->postponded_2) && $ema->postponded_2 > 0 && $popup_time1 >= $date) {
                     $data[] = $ema;
                     return;
-                } elseif ($popup_time >= $date) {
+                } elseif (!empty($ema->postponded_1) && $ema->postponded_1 > 0 && $popup_time >= $date) {
+                    $data[] = $ema;
+                    return;
+                } elseif ($popup_time2 >= $date) {
                     $data[] = $ema;
                     return;
                 }
@@ -364,7 +376,7 @@ trait EmaTrait
     {
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
         $list = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
-        ->where([['account_id', $accountId], ['completed', false]])
+            ->where([['account_id', $accountId], ['completed', false]])
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
             foreach ($list as $ema) {
@@ -377,7 +389,10 @@ trait EmaTrait
                 } elseif (!empty($ema->postponded_2) && $ema->postponded_2 > 0 && $popup_time1 >= $date) {
                     $data[] = $ema;
                     return;
-                } elseif ($popup_time >= $date) {
+                } elseif (!empty($ema->postponded_1) && $ema->postponded_1 > 0 && $popup_time >= $date) {
+                    $data[] = $ema;
+                    return;
+                } elseif ($popup_time2 >= $date) {
                     $data[] = $ema;
                     return;
                 }
