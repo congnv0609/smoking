@@ -8,7 +8,7 @@
     <template #toggler>
       <CHeaderNavLink>
         <div class="c-avatar">
-          <img src="/images/img/avatars/6.jpg" class="c-avatar-img" />
+          <img src="/images/img/avatars/apple-touch-icon.png" class="c-avatar-img" />
         </div>
       </CHeaderNavLink>
     </template>
