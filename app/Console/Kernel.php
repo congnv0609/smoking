@@ -54,7 +54,7 @@ class Kernel extends ConsoleKernel
 
         //run event
 
-        $schedule->command('smoker:update-info')->everyFiveMinutes();
+        // $schedule->command('smoker:update-info')->everyFiveMinutes();
         
     }
 

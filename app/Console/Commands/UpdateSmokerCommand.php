@@ -14,7 +14,7 @@ class UpdateSmokerCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'smoker:update-info';
+    protected $signature = 'smoker:update-info {account_id : account id}';
 
     /**
      * The console command description.
@@ -41,8 +41,9 @@ class UpdateSmokerCommand extends Command
     public function handle()
     {
         // return Command::SUCCESS;
+        $account_id = $this->argument('account_id');
         $date = date_format(new DateTime(), 'Y-m-d');
-        $userList = Survey::whereDate('start_date', '<=', $date)->whereDate('end_date', '>=', $date)->get();
+        $userList = Survey::whereDate('start_date', '<=', $date)->whereDate('end_date', '>=', $date)->where('account_id', $account_id)->get();
         if (!empty($userList)) {
             foreach ($userList as $key => $value) {
                 // $ema = Ema1::where([['date', $date], ['account_id', $value->id]])->first();
