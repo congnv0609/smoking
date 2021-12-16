@@ -134,7 +134,7 @@ export default {
         account: undefined,
         page: 1,
         size: 20,
-        sort: "id,desc",
+        sort: "updated_at,desc",
       },
       caption: "Users",
       fields: [
@@ -151,7 +151,7 @@ export default {
       form: {
         sort: [
           {
-            value: "id,desc",
+            value: "updated_at,desc",
             label: "Default",
           },
           {
