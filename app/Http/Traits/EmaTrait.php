@@ -31,7 +31,7 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
+        $data = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
         return $data;
     }
 
@@ -39,7 +39,7 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
+        $data = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
         return $data;
     }
 
@@ -47,7 +47,7 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
+        $data = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
         return $data;
     }
 
@@ -55,7 +55,7 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
+        $data = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
         return $data;
     }
 
@@ -63,7 +63,7 @@ trait EmaTrait
     {
         $data = [];
         $date = date_format(new DateTime(), 'Y-m-d');
-        $data = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
+        $data = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where([['date', $date], ['completed', false]])->get();
         return $data;
     }
 
@@ -243,7 +243,7 @@ trait EmaTrait
                 } elseif ($next_survey->postponded_2 > 0) {
                     $end_time = date_add(new Datetime($next_survey->popup_time1), date_interval_create_from_date_string("5 minutes"));
                     $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time1) && new DateTime() <= $end_time) ? 1 : 0;
-                } elseif($next_survey->postponded_1 > 0) {
+                } elseif ($next_survey->postponded_1 > 0) {
                     $end_time = date_add(new Datetime($next_survey->popup_time), date_interval_create_from_date_string("5 minutes"));
                     $current_ema = (new DateTime() >= new DateTime($next_survey->popup_time) && new DateTime() <= $end_time) ? 1 : 0;
                 } else {
@@ -262,7 +262,7 @@ trait EmaTrait
     private function getEarliestEma1($accountId, &$data)
     {
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-        $list = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
+        $list = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
             ->where([['account_id', $accountId], ['completed', false]])
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
@@ -291,7 +291,7 @@ trait EmaTrait
     private function getEarliestEma2($accountId, &$data)
     {
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-        $list = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
+        $list = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
             ->where([['account_id', $accountId], ['completed', false]])
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
@@ -320,7 +320,7 @@ trait EmaTrait
     private function getEarliestEma3($accountId, &$data)
     {
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-        $list = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
+        $list = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
             ->where([['account_id', $accountId], ['completed', false]])
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
@@ -349,7 +349,7 @@ trait EmaTrait
     private function getEarliestEma4($accountId, &$data)
     {
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-        $list = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
+        $list = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
             ->where([['account_id', $accountId], ['completed', false]])
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
@@ -378,7 +378,7 @@ trait EmaTrait
     private function getEarliestEma5($accountId, &$data)
     {
         $date = date_format(date_sub(new DateTime(), date_interval_create_from_date_string("5 minutes")), 'Y-m-d H:i:s');
-        $list = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
+        $list = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')
             ->where([['account_id', $accountId], ['completed', false]])
             ->orderby('date', 'asc')->get();
         if (!empty($list)) {
@@ -410,7 +410,7 @@ trait EmaTrait
         if (empty($cond)) {
             return [];
         }
-        $data = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
+        $data = Ema1::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
         return $data;
     }
 
@@ -420,7 +420,7 @@ trait EmaTrait
         if (empty($cond)) {
             return [];
         }
-        $data = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
+        $data = Ema2::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
         return $data;
     }
 
@@ -430,7 +430,7 @@ trait EmaTrait
         if (empty($cond)) {
             return [];
         }
-        $data = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
+        $data = Ema3::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
         return $data;
     }
 
@@ -440,7 +440,7 @@ trait EmaTrait
         if (empty($cond)) {
             return [];
         }
-        $data = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
+        $data = Ema4::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
         return $data;
     }
 
@@ -450,7 +450,7 @@ trait EmaTrait
         if (empty($cond)) {
             return [];
         }
-        $data = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
+        $data = Ema5::select('id', 'account_id', 'date', 'nth_day', 'nth_ema', 'nth_popup', 'attempt_time', 'popup_time', 'popup_time1', 'popup_time2', 'postponded_1', 'postponded_2', 'postponded_3')->where($cond)->first();
         return $data;
     }
 
