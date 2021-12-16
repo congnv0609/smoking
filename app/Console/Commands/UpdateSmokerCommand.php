@@ -56,6 +56,7 @@ class UpdateSmokerCommand extends Command
                     $value->incentive_nth_day = $incentive->incentive >= 15 ? $incentive->incentive : 0;
                 }
                 $value->incentive_total = (int)$incentive_total;
+                $value->updated_time = new DateTime();
                 $value->save();
             }
         }
