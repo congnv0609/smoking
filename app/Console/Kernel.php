@@ -36,15 +36,15 @@ class Kernel extends ConsoleKernel
 
         if (!empty($data)) {
             foreach ($data as $key => $value) {
-                if ($value["nth_popup"] == 0 || $value["postponded_1"] > 0) {
+                if ((empty($value["attempt_time"]) && $value["nth_popup"] == 0) || $value["postponded_1"] > 0) {
                     $time = date_format(new DateTime($value["popup_time"]), 'H:i');
                     $schedule->job(new SendNotification($value))->daily()->at($time);
                 }
-                if (($value["postponded_1"] == null && $value["postponded_2"] == null && $value["nth_popup"] == 1) || $value["postponded_2"] > 0) {
+                if ((empty($value["attempt_time"]) && $value["postponded_1"] == null && $value["postponded_2"] == null && $value["nth_popup"] == 1) || $value["postponded_2"] > 0) {
                     $time1 = date_format(new DateTime($value["popup_time1"]), 'H:i');
                     $schedule->job(new SendNotification($value))->daily()->at($time1);
                 }
-                if (($value["postponded_1"] == null && $value["postponded_2"] == null && $value["postponded_3"] == null && $value["nth_popup"] == 2) || $value["postponded_3"] > 0) {
+                if ((empty($value["attempt_time"]) && $value["postponded_1"] == null && $value["postponded_2"] == null && $value["postponded_3"] == null && $value["nth_popup"] == 2) || $value["postponded_3"] > 0) {
                     $time2 = date_format(new DateTime($value["popup_time2"]), 'H:i');
                     $schedule->job(new SendNotification($value))->daily()->at($time2);
                 }
