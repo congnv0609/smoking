@@ -14,7 +14,7 @@ export default [
       // },
       {
         _name: 'CSidebarNavItem',
-        name: 'User',
+        name: '1.1 User Survey Status',
         to: '/smokers',
         icon: 'cil-smoke'
       },

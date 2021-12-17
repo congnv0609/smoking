@@ -2,6 +2,8 @@
 
 namespace App\Http\Traits;
 
+use App\Models\Smoker;
+
 trait ValidTrait
 {
     public function checkValidAccount($account)
@@ -11,6 +13,17 @@ trait ValidTrait
             return 1;
         } else {
             return false;
+        }
+    }
+
+    public function newAccount($account)
+    {
+        if (Smoker::where([['account', $account->account], ['term', $account->term]])->exists()) {
+            $account->term++;
+            $this->newAccount($account);
+        } else {
+            $account->save();
+            return $account;
         }
     }
 }

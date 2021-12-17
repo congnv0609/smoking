@@ -64,7 +64,8 @@ class LoginController extends Controller
         $smoker = new Smoker();
         $smoker->account = (string)$account;
         $smoker->term = $term + 1;
-        $smoker->save();
+        
+        $this->newAccount($smoker);
 
         return response()->json($smoker, 200);
     }

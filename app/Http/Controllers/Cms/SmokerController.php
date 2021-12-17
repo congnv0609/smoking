@@ -80,7 +80,7 @@ class SmokerController extends Controller
         $sort = explode(',', $query['sort']);
         $list = Survey::where(function ($con) use ($account) {
             if(!empty($account)) {
-                $con->where('account', 'like', '%'.$account.'%');
+                $con->where('account', 'like', $account);
             }
         })->orderBy($sort[0], $sort[1])->orderBy('nth_day_current', 'asc')->paginate($size)->withQueryString();
         return response()->json($list, 200);

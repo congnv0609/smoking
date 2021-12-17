@@ -48,9 +48,9 @@
       </CHeaderNavItem>
       <TheHeaderDropdownAccnt/>
     </CHeaderNav>
-    <CSubheader class="px-3">
+    <!-- <CSubheader class="px-3">
       <CBreadcrumbRouter class="border-0 mb-0"/>
-    </CSubheader>
+    </CSubheader> -->
   </CHeader>
 </template>
 
