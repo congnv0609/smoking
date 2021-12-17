@@ -45,7 +45,7 @@
                 <td>{{ item.date | moment("YYYY-MM-DD") }}</td>
               </template>
               <template #nth_day_current="{ item }">
-                <td>{{ item.nth_day_current | moment("YYYY-MM-DD") }}</td>
+                <td>{{ item.nth_day_current }}</td>
               </template>
               <template #ema_1="{ item }">
                 <td>{{ item.ema_1 }}</td>
