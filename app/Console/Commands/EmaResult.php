@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Http\Traits\EmaTrait;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Date;
 
 class EmaResult extends Command
 {
@@ -40,9 +41,10 @@ class EmaResult extends Command
     public function handle()
     {
         // return Command::SUCCESS;
+        $today = Date('Y-m-d');
         $emaId = $this->ask('Which ema do you want to show?');
         $data["account_id"] = $this->ask('Which account do you want to show?');
-        $data["date"] = $this->ask('Which date yyyy-mm-dd do you want to show?');
+        $data["date"] = $this->ask('Which date yyyy-mm-dd do you want to show?', $today);
         $ema = $this->getEma($emaId, $data);
         dd($ema);
     }
