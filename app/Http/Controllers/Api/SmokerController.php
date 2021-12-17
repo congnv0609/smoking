@@ -169,7 +169,7 @@ class SmokerController extends Controller
         $strDateTime = sprintf("%s %s", $date, $time);
         $strDateTime = date_create($strDateTime);
         $startDateTime = date_format($strDateTime, "Y-m-d H:i");
-        $endTime = date_add($strDateTime, date_interval_create_from_date_string("7 days"));
+        $endTime = date_add($strDateTime, date_interval_create_from_date_string("6 days"));
         $endDateTime = date_format($endTime, "Y-m-d H:i");
         if (!empty($startDateTime)) {
             $data['startDate'] = $startDateTime;
