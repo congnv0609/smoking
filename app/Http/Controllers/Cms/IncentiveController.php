@@ -20,7 +20,7 @@ class IncentiveController extends Controller
             if (!empty($account_id)) {
                 $query->where('account_id', 'like', '%' . $account_id . '%');
             }
-        })->orderBy($sort[0], $sort[1])->paginate($size)->withQueryString();
+        })->orderBy($sort[0], $sort[1])->orderBy('nth_day_current', 'asc')->paginate($size)->withQueryString();
         return response()->json($list, 200);
     }
 }
