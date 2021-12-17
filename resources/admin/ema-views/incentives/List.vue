@@ -91,7 +91,7 @@ export default {
         account_id: undefined,
         page: 1,
         size: 20,
-        sort: "nth_day_current,asc",
+        sort: "account_id,desc",
       },
       caption: "Users",
       fields: [
@@ -110,7 +110,7 @@ export default {
       form: {
         sort: [
           {
-            value: "nth_day_current,asc",
+            value: "account_id,desc",
             label: "Default",
           },
           {
