@@ -13,7 +13,7 @@
               <CRow class="align-items-center">
                 <CInput
                   class="ml-2"
-                  v-model="query.account"
+                  v-model="query.account_id"
                   placeholder="User ID"
                 >
                 </CInput>
@@ -38,78 +38,35 @@
               :fields="fields"
               :items-per-page="query.size"
             >
-              <template #user_id="{ item }">
-                <td>{{ item.account }}</td>
+              <template #account_id="{ item }">
+                <td>{{ item.account_id }}</td>
               </template>
-              <template #start_date="{ item }">
-                <td>{{ item.start_date | moment("YYYY-MM-DD") }}</td>
-              </template>
-              <template #end_date="{ item }">
-                <td>{{ item.end_date | moment("YYYY-MM-DD") }}</td>
+              <template #date="{ item }">
+                <td>{{ item.date | moment("YYYY-MM-DD") }}</td>
               </template>
               <template #nth_day_current="{ item }">
-                <td
-                  v-if="
-                    item.nth_day_current <= 3 && item.ema_completed_nth_day < 3
-                  "
-                  class="text-danger text-bold"
-                >
-                  {{ item.nth_day_current }}
-                </td>
-                <td
-                  v-if="
-                    item.nth_day_current > 3 && item.ema_completed_nth_day < 3
-                  "
-                  class="light-red-color"
-                >
-                  {{ item.nth_day_current }}
-                </td>
-                <td v-if="item.ema_completed_nth_day >= 3">
-                  {{ item.nth_day_current }}
-                </td>
+                <td>{{ item.nth_day_current | moment("YYYY-MM-DD") }}</td>
               </template>
-              <template #ema_completed_nth_day="{ item }">
-                <td
-                  v-if="
-                    item.nth_day_current <= 3 && item.ema_completed_nth_day < 3
-                  "
-                  class="text-danger text-bold"
-                >
-                  {{ item.ema_completed_nth_day }}
-                </td>
-                <td
-                  v-if="
-                    item.nth_day_current > 3 && item.ema_completed_nth_day < 3
-                  "
-                  class="light-red-color"
-                >
-                  {{ item.ema_completed_nth_day }}
-                </td>
-                <td v-if="item.ema_completed_nth_day >= 3">
-                  {{ item.ema_completed_nth_day }}
-                </td>
+              <template #ema_1="{ item }">
+                <td>{{ item.ema_1 }}</td>
               </template>
-              <template #incentive_nth_day="{ item }">
-                <td>{{ item.incentive_nth_day }}</td>
+              <template #ema_2="{ item }">
+                <td>{{ item.ema_2 }}</td>
               </template>
-              <template #incentive_total="{ item }">
-                <td>{{ item.incentive_total }}</td>
+              <template #ema_3="{ item }">
+                <td>{{ item.ema_3 }}</td>
               </template>
-              <template #action="{ item }">
-                <td>
-                  <CButton block color="info" @click="overview(item.account_id)"
-                    >Personal Overview Description</CButton
-                  >
-                  <CButton block color="info" @click="exportData"
-                    >EMA Record Export</CButton
-                  >
-                  <!-- <span @click="editRow(item.id)" role="button">
-                    <CIcon name="cil-pencil" />
-                  </span>
-                  <span @click="deleteRow(item.id)" role="button">
-                    <CIcon name="cil-trash" />
-                  </span> -->
-                </td>
+              <template #ema_4="{ item }">
+                <td>{{ item.ema_4 }}</td>
+              </template>
+              <template #ema_5="{ item }">
+                <td>{{ item.ema_5 }}</td>
+              </template>
+              <template #valid_ema="{ item }">
+                <td>{{ item.valid_ema }}</td>
+              </template>
+              <template #incentive="{ item }">
+                <td>{{ item.incentive }}</td>
               </template>
             </CDataTable>
           </CCardBody>
@@ -124,28 +81,30 @@
   </div>
 </template>
 <script>
-import { smokers } from "../../helpers/smoker";
+import { incentiveList } from "../../helpers/incentive";
 export default {
   name: "Users",
   data() {
     return {
       last_page: 1,
       query: {
-        account: undefined,
+        account_id: undefined,
         page: 1,
         size: 20,
         sort: "updated_at,desc",
       },
       caption: "Users",
       fields: [
-        {key: "user_id", label: "user_id"},
-        {key: "start_date", label: "start_date"},
-        {key: "end_date", label: "end_date"},
-        {key: "nth_day_current", label: "nth_day_current"},
-        {key: "ema_completed_nth_day", label: "ema_completed_nth_day"},
-        {key: "incentive_nth_day", label: "incentive_nth_day"},
-        {key: "incentive_total", label: "incentive_total"},
-        "action",
+        { key: "account_id", label: "account_id" },
+        { key: "date", label: "date" },
+        { key: "nth_day_current", label: "nth_day_current" },
+        { key: "ema_1", label: "ema_1" },
+        { key: "ema_2", label: "ema_2" },
+        { key: "ema_3", label: "ema_3" },
+        { key: "ema_4", label: "ema_4" },
+        { key: "ema_5", label: "ema_5" },
+        { key: "valid_ema", label: "valid_ema" },
+        { key: "incentive", label: "incentive" },
       ],
       items: [],
       form: {
@@ -155,7 +114,7 @@ export default {
             label: "Default",
           },
           {
-            value: "start_date,desc",
+            value: "date,desc",
             label: "IDs grouped",
           },
         ],
@@ -177,7 +136,7 @@ export default {
   },
   methods: {
     getList() {
-      smokers(this.query)
+      incentiveList(this.query)
         .then((res) => {
           this.items = res.data;
           this.last_page = res.last_page;
@@ -186,16 +145,6 @@ export default {
           console.log(err);
         });
     },
-    editRow(id) {
-      this.$router.push({ path: `/smokers/edit/${id}` });
-    },
-    deleteRow(id) {
-      console.log("delete", id);
-    },
-    overview(id) {
-      this.$router.push({ path: `/smokers/overview/${id}` });
-    },
-    exportData() {},
   },
 };
 </script>

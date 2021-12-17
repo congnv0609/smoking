@@ -24,6 +24,12 @@ export default [
         to: '/ema',
         icon: 'cil-align-left'
       },
+      {
+        _name: 'CSidebarNavItem',
+        name: 'Incentives',
+        to: '/incentives',
+        icon: 'cil-align-left'
+      },
       // {
       //   _name: 'CSidebarNavTitle',
       //   _children: ['Theme']

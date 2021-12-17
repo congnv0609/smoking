@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Cms\IncentiveController;
 use App\Http\Controllers\Cms\EmaController;
 use App\Http\Controllers\Cms\SmokerController;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +14,8 @@ Route::get('/smokers/list', [SmokerController::class, 'list']);
 Route::get('/smokers/detail/{id}', [SmokerController::class, 'detail']);
 Route::put('/smokers/update/{id}', [SmokerController::class, 'updateSchedule']);
 Route::get('/smokers/overview/user/{id}', [SmokerController::class, 'overview']);
+
+Route::get('/incentive/list', [IncentiveController::class, 'list']);
 
 //ema
 Route::get('/ema/list', [EmaController::class, 'index']);
