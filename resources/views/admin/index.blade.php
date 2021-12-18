@@ -22,7 +22,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
   <link rel="manifest" href="/mix-manifest.json">
   <meta name="msapplication-TileColor" content="#ffffff">
-  <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png">
+  <!-- <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png"> -->
   <meta name="theme-color" content="#ffffff">
   <link href="{{ mix('css/style.css') }}" rel="stylesheet">
 </head>
