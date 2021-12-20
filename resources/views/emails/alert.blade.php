@@ -2,12 +2,15 @@
 <html>
 
 <head>
-    <title>ItsolutionStuff.com</title>
+    <title>Noncompliant participants</title>
 </head>
 
 <body>
-    <h1>{{ $details['title'] }}</h1>
-    <p>{{ $details['body'] }}</p>
+    <h1>{{ $details['date'] }}</h1>
+    <p>User ID</p>
+    @foreach ($details['data'] as $user)
+    <p>{{ $user->account }}</p>
+    @endforeach
 
     <p>Thank you</p>
 </body>
