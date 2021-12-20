@@ -57,6 +57,7 @@ class SendMail extends Command
                     ->where(function($query) {
                         $query->where('valid_ema', '<', 3)->orWhereNull('valid_ema');
                     })
+                    ->orderBy('smokers.account', 'asc')->orderBy('term', 'asc')
                     ->get();
         return $userList;
     }
