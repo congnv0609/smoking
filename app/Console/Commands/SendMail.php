@@ -41,7 +41,6 @@ class SendMail extends Command
     public function handle()
     {
         $email = env('MAIL_TO_ADDRESS', 'info@zoneonezone.com');
-        // $email = 'congnv69@gmail.com';
         $userList = $this->getUserInfo();
         $data = [
                     'date'=> date("d M Y", strtotime("yesterday")),
@@ -52,8 +51,12 @@ class SendMail extends Command
 
     private function getUserInfo(){
         $yesterday = date("Y-m-d", strtotime("yesterday"));
-        $userList = DB::table('incentives')->join('smokers', 'incentives.account_id', '=', 'smokers.id')
-                    ->where([['incentives.date', $yesterday],['valid_ema', '<', 3]])->get();
+        $userList = DB::table('incentives')
+                    ->join('smokers', 'incentives.account_id', '=', 'smokers.id')
+                    ->where('incentives.date', $yesterday)
+                    ->orWhere('valid_ema', '<', 3)
+                    ->orWhereNull('valid_ema')
+                    ->get();
         return $userList;
     }
 }
