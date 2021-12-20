@@ -52,10 +52,11 @@ class SendMail extends Command
     private function getUserInfo(){
         $yesterday = date("Y-m-d", strtotime("yesterday"));
         $userList = DB::table('incentives')
-                    ->join('smokers', 'incentives.account_id', '=', 'smokers.id')
+                    ->leftjoin('smokers', 'incentives.account_id', '=', 'smokers.id')
                     ->where('incentives.date', $yesterday)
-                    ->orWhere('valid_ema', '<', 3)
-                    ->orWhereNull('valid_ema')
+                    ->where(function($query) {
+                        $query->where('valid_ema', '<', 3)->orWhereNull('valid_ema');
+                    })
                     ->get();
         return $userList;
     }
