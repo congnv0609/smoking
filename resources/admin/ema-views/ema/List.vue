@@ -32,6 +32,8 @@
               :items="items"
               :fields="fields"
               :items-per-page="query.size"
+              :scrollX="true"
+              :scrollY="true"
             >
               <template #date="{ item }">
                 <td>{{ item.date | moment("YYYY-MM-DD") }}</td>
@@ -76,7 +78,7 @@ export default {
       last_page: 1,
       query: {
         page: 1,
-        size: 20,
+        size: 7,
         ema: 1,
         account: undefined,
       },
@@ -103,23 +105,7 @@ export default {
           label: "Ema 5",
         },
       ],
-      fields: [
-        "account_id",
-        "account",
-        "term",
-        "date",
-        "nth_day",
-        "nth_ema",
-        "nth_popup",
-        "popup_time",
-        "popup_time1",
-        "popup_time2",
-        "attempt_time",
-        "completed",
-        "postponded_1",
-        "postponded_2",
-        "postponded_3",
-      ],
+      fields: [],
       items: [],
     };
   },
@@ -133,9 +119,9 @@ export default {
   },
   methods: {
     getList() {
-      console.log(this.query);
       emaList(this.query)
         .then((res) => {
+          this.fields = Object.keys(res.data[0]);
           this.items = res.data;
           this.last_page = res.last_page;
         })
