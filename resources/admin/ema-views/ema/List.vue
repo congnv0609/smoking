@@ -121,7 +121,9 @@ export default {
     getList() {
       emaList(this.query)
         .then((res) => {
-          this.fields = Object.keys(res.data[0]);
+          var fieldList = Object.keys(res.data[0]);
+          var removeList = ["id", "device_token"];
+          this.fields = fieldList.filter(item => !removeList.includes(item));
           this.items = res.data;
           this.last_page = res.last_page;
         })
