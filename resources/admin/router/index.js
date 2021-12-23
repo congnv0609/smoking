@@ -64,6 +64,7 @@ const EditSmoker = () => import('../ema-views/smokers/Edit')
 const Ema = () => import('../ema-views/ema/List')
 const Overview = () => import('../ema-views/smokers/Overview')
 const Incentive = () => import('../ema-views/incentives/List')
+const Report = () => import('../ema-views/export/Report')
 
 
 Vue.use(Router)
@@ -112,6 +113,11 @@ function configRoutes () {
               component: Overview,
             },
           ]
+        },
+        {
+          path: 'export',
+          name: 'ExportReport',
+          component: Report
         },
         {
           path: 'ema',

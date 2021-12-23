@@ -103,12 +103,6 @@
                   <CButton block color="info" @click="exportData"
                     >EMA Record Export</CButton
                   >
-                  <!-- <span @click="editRow(item.id)" role="button">
-                    <CIcon name="cil-pencil" />
-                  </span>
-                  <span @click="deleteRow(item.id)" role="button">
-                    <CIcon name="cil-trash" />
-                  </span> -->
                 </td>
               </template>
             </CDataTable>
@@ -124,7 +118,7 @@
   </div>
 </template>
 <script>
-import { smokers } from "../../helpers/smoker";
+import { smokers, exportData } from "../../helpers/smoker";
 export default {
   name: "Users",
   data() {
@@ -138,13 +132,13 @@ export default {
       },
       caption: "Users",
       fields: [
-        {key: "user_id", label: "user_id"},
-        {key: "start_date", label: "start_date"},
-        {key: "end_date", label: "end_date"},
-        {key: "nth_day_current", label: "nth_day_current"},
-        {key: "ema_completed_nth_day", label: "ema_completed_nth_day"},
-        {key: "incentive_nth_day", label: "incentive_nth_day"},
-        {key: "incentive_total", label: "incentive_total"},
+        { key: "user_id", label: "user_id" },
+        { key: "start_date", label: "start_date" },
+        { key: "end_date", label: "end_date" },
+        { key: "nth_day_current", label: "nth_day_current" },
+        { key: "ema_completed_nth_day", label: "ema_completed_nth_day" },
+        { key: "incentive_nth_day", label: "incentive_nth_day" },
+        { key: "incentive_total", label: "incentive_total" },
         "action",
       ],
       items: [],
@@ -195,7 +189,9 @@ export default {
     overview(id) {
       this.$router.push({ path: `/smokers/overview/${id}` });
     },
-    exportData() {},
+    exportData() {
+      exportData();
+    },
   },
 };
 </script>

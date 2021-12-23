@@ -20,6 +20,12 @@ export default [
       },
       {
         _name: 'CSidebarNavItem',
+        name: '2. Export Report',
+        to: '/export',
+        icon: 'cil-file'
+      },
+      {
+        _name: 'CSidebarNavItem',
         name: 'Ema',
         to: '/ema',
         icon: 'cil-align-left'

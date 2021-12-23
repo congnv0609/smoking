@@ -34,9 +34,17 @@ class Smoker extends Model
         // 'remember_token',
     ];
 
+    public function getAccountAttribute()
+    {
+        if ($this->term > 1) {
+            return $this->attributes['account'] . "-" . $this->attributes['term'];
+        } else {
+            return $this->attributes['account'];
+        }
+    }
+
     protected $casts = [
         'startDate' => 'datetime',
         'endDate' => 'datetime',
     ];
-
 }
