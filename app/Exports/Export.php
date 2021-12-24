@@ -18,6 +18,7 @@ class Export implements WithMultipleSheets
 
         $sheets[] = new User();
         $sheets[] = new Incentive();
+        $sheets[] = new Waketime();
 
         return $sheets;
     }

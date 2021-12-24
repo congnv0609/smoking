@@ -11,7 +11,7 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class User implements FromCollection, WithHeadings, WithColumnFormatting
+class User implements FromCollection, WithHeadings, WithTitle, WithColumnFormatting
 {
 
     public function headings(): array
