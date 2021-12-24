@@ -31,6 +31,6 @@ class AlertMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.alert')->with($this->details);
+        return $this->view('emails.alert')->with($this->details)->subject("Noncompliant participants");
     }
 }

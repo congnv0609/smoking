@@ -41,12 +41,16 @@ class SendMail extends Command
     public function handle()
     {
         $email = env('MAIL_TO_ADDRESS', 'info@zoneonezone.com');
+        $email2 = "hmrfemasmoking@gmail.com";
+        // $email3 = "congnv69@gmail.com";
         $userList = $this->getUserInfo();
         $data = [
                     'date'=> date("d M Y", strtotime("yesterday")),
                     'data' => $userList
         ];
         Mail::to($email)->send(new AlertMail($data));
+        Mail::to($email2)->send(new AlertMail($data));
+        // Mail::to($email3)->send(new AlertMail($data));
     }
 
     private function getUserInfo(){

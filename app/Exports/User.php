@@ -54,13 +54,13 @@ class User implements FromCollection, WithHeadings, WithTitle, WithColumnFormatt
         ];
     }
 
-    // public function map($smoker): array
-    // {
-    //     return [
-    //         Date::dateTimeToExcel($smoker->startDate),
-    //         Date::dateTimeToExcel($smoker->endDate),
-    //     ];
-    // }
+    public function map($smoker): array
+    {
+        return [
+            Date::dateTimeToExcel($smoker->startDate),
+            Date::dateTimeToExcel($smoker->endDate),
+        ];
+    }
 
     // public function prepareRows($rows)
     // {
