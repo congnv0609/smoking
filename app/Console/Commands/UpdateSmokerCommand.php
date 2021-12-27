@@ -43,6 +43,7 @@ class UpdateSmokerCommand extends Command
         // return Command::SUCCESS;
         $account_id = $this->argument('account_id');
         $date = date_format(new DateTime(), 'Y-m-d');
+        //update survey data
         $userList = Survey::whereDate('start_date', '<=', $date)->whereDate('end_date', '>=', $date)->where('account_id', $account_id)->orderBy('nth_day_current', 'desc')->get();
         if (!empty($userList)) {
             foreach ($userList as $key => $value) {
@@ -61,5 +62,6 @@ class UpdateSmokerCommand extends Command
                 $value->save();
             }
         }
+        
     }
 }

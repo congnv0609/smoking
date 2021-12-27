@@ -42,8 +42,7 @@ class User implements FromCollection, WithHeadings, WithTitle, WithColumnFormatt
     */
     public function collection()
     {
-        $list = Smoker::select('account', 'startDate', 'endDate')->get();
-        dd($list);
+        $list = Smoker::select('account', 'startDate', 'endDate', 'prompt_ema', 'response_ema', 'non_response_ema', 'future_ema', 'response_rate')->get();
         // $this->prepareRows($list);
         return $list;
     }
