@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Smoker;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
@@ -42,6 +43,7 @@ class User implements FromCollection, WithHeadings, WithTitle, WithColumnFormatt
     public function collection()
     {
         $list = Smoker::select('account', 'startDate', 'endDate')->get();
+        dd($list);
         // $this->prepareRows($list);
         return $list;
     }
@@ -54,13 +56,13 @@ class User implements FromCollection, WithHeadings, WithTitle, WithColumnFormatt
         ];
     }
 
-    public function map($smoker): array
-    {
-        return [
-            Date::dateTimeToExcel($smoker->startDate),
-            Date::dateTimeToExcel($smoker->endDate),
-        ];
-    }
+    // public function map($smoker): array
+    // {
+    //     return [
+    //         Date::dateTimeToExcel($smoker->startDate),
+    //         Date::dateTimeToExcel($smoker->endDate),
+    //     ];
+    // }
 
     // public function prepareRows($rows)
     // {

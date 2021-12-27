@@ -82,7 +82,9 @@ class SmokerController extends Controller
             if(!empty($account)) {
                 $con->where('account', 'like', $account);
             }
-        })->orderBy($sort[0], $sort[1])->orderBy('nth_day_current', 'asc')->paginate($size)->withQueryString();
+        })->orderBy($sort[0], $sort[1])
+        ->orderBy('nth_day_current', 'asc')
+        ->paginate($size)->withQueryString();
         return response()->json($list, 200);
     }
 

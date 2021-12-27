@@ -12,9 +12,11 @@ class Ema1 extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'attempt_time' => 'datetime',
-        'submit_time' => 'datetime',
+        // 'attempt_time' => 'datetime',
+        // 'submit_time' => 'datetime',
     ];
+
+    protected $hidden = ['id'];
 
 
     // public function setSubmitTimeAttribute($submit_time)

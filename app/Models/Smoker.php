@@ -44,7 +44,7 @@ class Smoker extends Model
     }
 
     protected $casts = [
-        'startDate' => 'datetime',
-        'endDate' => 'datetime',
+        // 'startDate' => 'datetime',
+        // 'endDate' => 'datetime',
     ];
 }
