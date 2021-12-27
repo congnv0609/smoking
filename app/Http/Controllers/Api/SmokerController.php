@@ -78,8 +78,7 @@ class SmokerController extends Controller
         $smokerData = $this->makeDateArray($data['startDate']);
         $this->createIncentive($smokerData);
         //survey
-        $account = $smoker->term > 1 ? $smoker->account . "-" . $smoker->term : $smoker->account;
-        $dataSurvey = ['start_date' => $data["startDate"], 'end_date' => $data["endDate"], 'account_id' => $this->accountId, 'account' => $account];
+        $dataSurvey = ['start_date' => $data["startDate"], 'end_date' => $data["endDate"], 'account_id' => $this->accountId, 'account' => $smoker->account];
         $survey = $this->makeSurvey($dataSurvey);
         $this->saveSurvey($survey);
         //create ema data 
