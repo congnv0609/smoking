@@ -23,3 +23,4 @@ Route::get('/ema/list', [EmaController::class, 'index']);
 
 //export excel
 Route::get('/smokers/export', [ExportController::class, 'export']);
+Route::get('/smokers/export-personal/{id}', [ExportController::class, 'exportPersonal']);

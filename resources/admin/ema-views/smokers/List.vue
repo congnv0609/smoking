@@ -100,7 +100,7 @@
                   <CButton block color="info" @click="overview(item.account_id)"
                     >Personal Overview Description</CButton
                   >
-                  <CButton block color="info" @click="exportData"
+                  <CButton block color="info" @click="exportData(item.account_id)"
                     >EMA Record Export</CButton
                   >
                 </td>
@@ -118,7 +118,7 @@
   </div>
 </template>
 <script>
-import { smokers, exportData } from "../../helpers/smoker";
+import { smokers, exportPersonal } from "../../helpers/smoker";
 export default {
   name: "Users",
   data() {
@@ -189,8 +189,8 @@ export default {
     overview(id) {
       this.$router.push({ path: `/smokers/overview/${id}` });
     },
-    exportData() {
-      exportData();
+    exportData(id) {
+      exportPersonal(id);
     },
   },
 };

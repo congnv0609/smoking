@@ -71,3 +71,29 @@ export function exportData(query) {
             })
     })
 }
+
+export function exportPersonal(id) {
+    return new Promise((resolve, reject) => {
+        axios.get(`/backend/smokers/export-personal/${id}`, { responseType: 'blob' })
+            .then(response => {
+                const url = URL.createObjectURL(new Blob([response.data]))
+                const link = document.createElement('a')
+                link.href = url
+                link.setAttribute(
+                    'download',
+                    `${new Date().toLocaleDateString()}.xlsx`
+                )
+                document.body.appendChild(link)
+                link.click()
+                // const url = window.URL.createObjectURL(new Blob([response.data]));
+                // const link = document.createElement('a');
+                // link.href = url;
+                // link.setAttribute('download', 'file.xlsx'); //or any other extension
+                // document.body.appendChild(link);
+                // link.click();
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
