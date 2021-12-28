@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class Ema2 implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize
 {
@@ -67,5 +68,11 @@ class Ema2 implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize
         }
     }
 
+    public function columnFormats(): array
+    {
+        return [
+            'A' => NumberFormat::FORMAT_TEXT,
+        ];
+    }
 
 }

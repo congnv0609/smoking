@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class Waketime implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize
 {
@@ -29,6 +30,13 @@ class Waketime implements FromCollection, WithHeadings, WithTitle, ShouldAutoSiz
     public function title(): string
     {
         return 'Wake time';
+    }
+
+    public function columnFormats(): array
+    {
+        return [
+            'A' => NumberFormat::FORMAT_TEXT,
+        ];
     }
 
     /**
