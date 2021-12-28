@@ -11,6 +11,8 @@ class Smoker extends Model
 {
     use HasFactory, Notifiable;
 
+    // protected $guarded = [];
+
     /**
      * The attributes that are mass assignable.
      *

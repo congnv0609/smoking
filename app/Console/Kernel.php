@@ -56,6 +56,7 @@ class Kernel extends ConsoleKernel
 
         // $schedule->command('smoker:update-info')->everyFiveMinutes();
         $schedule->command('alert-mail:send')->dailyAt('01:00');
+        $schedule->command('smokers:report')->everyFifteenMinutes();
         
     }
 

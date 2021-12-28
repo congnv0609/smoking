@@ -7,8 +7,9 @@ use App\Models\WakeTime as ModelsWakeTime;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class Waketime implements FromCollection, WithHeadings, WithTitle
+class Waketime implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize
 {
 
     public function headings(): array

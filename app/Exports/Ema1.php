@@ -6,8 +6,9 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class Ema1 implements FromCollection, WithHeadings, WithTitle
+class Ema1 implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize
 {
 
     private $_headings = [];

@@ -11,8 +11,9 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class User implements FromCollection, WithHeadings, WithTitle, WithColumnFormatting
+class User implements FromCollection, WithHeadings, WithTitle, WithColumnFormatting, ShouldAutoSize
 {
 
     public function headings(): array
