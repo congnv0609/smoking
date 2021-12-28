@@ -53,7 +53,7 @@ class User implements FromCollection, WithHeadings, WithTitle, WithColumnFormatt
         return [
             // 'B' => NumberFormat::FORMAT_DATE_YYYYMMDD,
             // 'C' => NumberFormat::FORMAT_DATE_YYYYMMDD,
-            'A'=>NumberFormat::FORMAT_TEXT,
+            'A'=> NumberFormat::FORMAT_TEXT,
             'H'=>NumberFormat::FORMAT_NUMBER,
         ];
     }

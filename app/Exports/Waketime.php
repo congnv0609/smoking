@@ -9,8 +9,9 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 
-class Waketime implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize
+class Waketime implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, WithColumnFormatting
 {
 
     public function headings(): array
