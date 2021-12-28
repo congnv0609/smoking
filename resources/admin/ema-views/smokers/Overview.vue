@@ -434,6 +434,28 @@
             </tr>
 
             <tr>
+              <th scope="row">c2_j.焦慮</th>
+              <td>{{ items.b2_c2j[0] || '' }}</td>
+              <td>{{ items.b2_c2j[1] || '' }}</td>
+              <td>{{ items.b3_c2j[0] || '' }}</td>
+              <td>{{ items.b3_c2j[1] || '' }}</td>
+              <td>{{ items.b4_c2j[0] || '' }}</td>
+              <td>{{ items.b4_c2j[1] || '' }}</td>
+              <td>{{ items.b7_c2j[0] || '' }}</td>
+              <td>{{ items.b7_c2j[1] || '' }}</td>
+              <td>{{ items.b10_c2j[0] || '' }}</td>
+              <td>{{ items.b10_c2j[1] || '' }}</td>
+              <td>{{ items.b13_c2j[0] || '' }}</td>
+              <td>{{ items.b13_c2j[1] || '' }}</td>
+              <td>{{ items.b14_c2j[0] || '' }}</td>
+              <td>{{ items.b14_c2j[1] || '' }}</td>
+              <td>{{ items.b15_c2j[0] || '' }}</td>
+              <td>{{ items.b15_c2j[1] || '' }}</td>
+              <td>{{ items.b16_c2j[0] || '' }}</td>
+              <td>{{ items.b16_c2j[1] || '' }}</td>
+            </tr>
+
+            <tr>
               <th scope="row">c2_k.坐立不安</th>
               <td>{{ items.b2_c2k[0] || '' }}</td>
               <td>{{ items.b2_c2k[1] || '' }}</td>
