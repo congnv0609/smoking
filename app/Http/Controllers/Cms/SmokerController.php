@@ -23,12 +23,12 @@ class SmokerController extends Controller
      * @authenticated
      * 
      */
-    public function getSchedule()
-    {
-        $smoker = Smoker::where('id', $this->accountId)->first();
+    // public function getSchedule()
+    // {
+    //     $smoker = Smoker::where('id', $this->accountId)->first();
 
-        return response()->json($smoker, 200);
-    }
+    //     return response()->json($smoker, 200);
+    // }
 
     /**
      * Post schedule for an account
@@ -41,14 +41,14 @@ class SmokerController extends Controller
      * @bodyParam startTime string required hh:ii
      * @bodyParam notification integer default 1
      */
-    public function postSchedule()
-    {
-        $data = $this->getParams();
-        $smoker = Smoker::where('id', $this->accountId)->first();
+    // public function postSchedule()
+    // {
+    //     $data = $this->getParams();
+    //     $smoker = Smoker::where('id', $this->accountId)->first();
 
-        $smoker->update($data);
-        return response()->json($smoker, 200);
-    }
+    //     $smoker->update($data);
+    //     return response()->json($smoker, 200);
+    // }
 
     private function getParams()
     {
@@ -137,9 +137,11 @@ class SmokerController extends Controller
         $data = [];
         $data = Cache::get("report:$accountId");
         if(empty($data)) {
-            MakeReport::dispatch($accountId);
-            $data = Cache::get("report:$accountId");
-            return response()->json($data, 200);
+            // MakeReport::dispatch($accountId);
+            // $data = Cache::get("report:$accountId");
+            $data = $this->getOverviewData($accountId);
+            Cache::put("report:$accountId", $data, 3600 * 24);
+            // return response()->json($data, 200);
         }
         if(!empty($data)) {
             return response()->json($data,200);
