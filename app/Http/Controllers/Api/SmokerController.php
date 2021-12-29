@@ -204,7 +204,7 @@ class SmokerController extends Controller
             $record['account_id'] = $this->accountId;
             $record['date'] = date_format(date_add($dateString, date_interval_create_from_date_string("$i days")), 'Y-m-d');
             $record['nth_day'] = $i + 1;
-            $record['submit_time'] = new DateTime();
+            // $record['submit_time'] = new DateTime();
             $period = ($ema-1) * self::PERIOD_TIME;
             switch ($ema) {
                 case 1:
