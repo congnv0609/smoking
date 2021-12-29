@@ -15,7 +15,7 @@ class Ema3 implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, W
 
     private $_headings = [];
 
-    private $_withoutColumns = ['id', 'account_id', 'popup_time1', 'popup_time2', 'created_at', 'updated_at'];
+    private $_withoutColumns = ['id', 'account_id', 'nth_popup', 'popup_time1', 'popup_time2', 'created_at', 'updated_at'];
 
     /**
      * @return string
