@@ -138,6 +138,8 @@ class SmokerController extends Controller
         $data = Cache::get("report:$accountId");
         if(empty($data)) {
             MakeReport::dispatch($accountId);
+            $data = Cache::get("report:$accountId");
+            return response()->json($data, 200);
         }
         if(!empty($data)) {
             return response()->json($data,200);
