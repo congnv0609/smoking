@@ -15,7 +15,7 @@ class Ema5 implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, W
 
     private $_headings = [];
 
-    private $_withoutColumns = ['id', 'created_at', 'updated_at'];
+    private $_withoutColumns = ['id', 'account_id', 'popup_time1', 'popup_time2', 'created_at', 'updated_at'];
 
     /**
      * @return string
@@ -39,7 +39,7 @@ class Ema5 implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, W
     {
         $list = DB::Table('smokers')
             ->join('ema5s', 'smokers.id', '=', 'ema5s.account_id')
-            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as account'), 'ema5s.*')
+            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema5s.*')
             ->get();
         $list->transform(function ($i) {
             foreach ($i as $key => $col) {
@@ -56,7 +56,7 @@ class Ema5 implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, W
     {
         $row = DB::Table('smokers')
             ->join('ema5s', 'smokers.id', '=', 'ema5s.account_id')
-            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as account'), 'ema5s.*')
+            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema5s.*')
             ->first();
         if (!empty($row)) {
             $cols = array_keys(get_object_vars($row));

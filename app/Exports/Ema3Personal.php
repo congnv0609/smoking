@@ -15,7 +15,7 @@ class Ema3Personal implements FromCollection, WithHeadings, WithTitle, WithColum
 
     private $_headings = [];
 
-    private $_withoutColumns = ['id', 'account_id', 'created_at', 'updated_at'];
+    private $_withoutColumns = ['id', 'account_id', 'popup_time1', 'popup_time2', 'created_at', 'updated_at'];
 
     private $_accountId = null;
 
@@ -50,7 +50,7 @@ class Ema3Personal implements FromCollection, WithHeadings, WithTitle, WithColum
     {
         $list = DB::Table('smokers')->where('smokers.id', $this->_accountId)
             ->join('ema3s', 'smokers.id', '=', 'ema3s.account_id')
-            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as account'), 'ema3s.*')
+            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema3s.*')
             ->get();
         $list->transform(function ($i) {
             foreach ($i as $key => $col) {
@@ -67,7 +67,7 @@ class Ema3Personal implements FromCollection, WithHeadings, WithTitle, WithColum
     {
         $row = DB::Table('smokers')
             ->join('ema3s', 'smokers.id', '=', 'ema3s.account_id')
-            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as account'), 'ema3s.*')
+            ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema3s.*')
             ->first();
         if (!empty($row)) {
             $cols = array_keys(get_object_vars($row));
