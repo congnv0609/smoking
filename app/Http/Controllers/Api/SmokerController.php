@@ -16,6 +16,7 @@ use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use App\Jobs\SendNotification;
+use Illuminate\Support\Facades\Date;
 
 class SmokerController extends Controller
 {
@@ -152,8 +153,8 @@ class SmokerController extends Controller
     {
         $data = [
             'account_id' => $old->id,
-            'data_of_change' => !empty($old->startDate) ? date_format($old->startDate, "Y-m-d") : null,
-            'old_wake' => !empty($old->startDate) ? date_format($old->startDate, "H:i") : null,
+            'data_of_change' => !empty($old->startDate) ? date_format(date_create($old->startDate), "Y-m-d") : null,
+            'old_wake' => !empty($old->startDate) ? date_format(date_create($old->startDate), "H:i") : null,
             'new_wake' => date_format(date_create($new["startDate"]), "H:i"),
         ];
         $wakeLog = WakeTime::create($data);

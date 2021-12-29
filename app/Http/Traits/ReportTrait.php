@@ -73,18 +73,18 @@ trait ReportTrait
             foreach ($this->rows as $row) {
                 if ($row[0] != "none") {
                     $colName = sprintf("%s_%s", $col, $row[1]);
-                    $sumYesEma1 = Ema1::where([[$row[0], true], [$colName, true], ['account_id', $accountId]])->count($colName);
-                    $sumYesEma2 = Ema2::where([[$row[0], true], [$colName, true], ['account_id', $accountId]])->count($colName);
-                    $sumYesEma3 = Ema3::where([[$row[0], true], [$colName, true], ['account_id', $accountId]])->count($colName);
-                    $sumYesEma4 = Ema4::where([[$row[0], true], [$colName, true], ['account_id', $accountId]])->count($colName);
-                    $sumYesEma5 = Ema5::where([[$row[0], true], [$colName, true], ['account_id', $accountId]])->count($colName);
+                    $sumYesEma1 = Ema1::where([[$row[0], true], [$colName, true], ['account_id', $accountId]])->count();
+                    $sumYesEma2 = Ema2::where([[$row[0], true], [$colName, true], ['account_id', $accountId]])->count();
+                    $sumYesEma3 = Ema3::where([[$row[0], true], [$colName, true], ['account_id', $accountId]])->count();
+                    $sumYesEma4 = Ema4::where([[$row[0], true], [$colName, true], ['account_id', $accountId]])->count();
+                    $sumYesEma5 = Ema5::where([[$row[0], true], [$colName, true], ['account_id', $accountId]])->count();
                     $sumYes = array_sum([$sumYesEma1, $sumYesEma2, $sumYesEma3, $sumYesEma4, $sumYesEma5]);
 
-                    $sumNoEma1 = Ema1::where([[$row[0], true], [$colName, false], ['account_id', $accountId]])->count($colName);
-                    $sumNoEma2 = Ema2::where([[$row[0], true], [$colName, false], ['account_id', $accountId]])->count($colName);
-                    $sumNoEma3 = Ema3::where([[$row[0], true], [$colName, false], ['account_id', $accountId]])->count($colName);
-                    $sumNoEma4 = Ema4::where([[$row[0], true], [$colName, false], ['account_id', $accountId]])->count($colName);
-                    $sumNoEma5 = Ema5::where([[$row[0], true], [$colName, false], ['account_id', $accountId]])->count($colName);
+                    $sumNoEma1 = Ema1::where([[$row[0], true], [$colName, false], ['account_id', $accountId]])->count();
+                    $sumNoEma2 = Ema2::where([[$row[0], true], [$colName, false], ['account_id', $accountId]])->count();
+                    $sumNoEma3 = Ema3::where([[$row[0], true], [$colName, false], ['account_id', $accountId]])->count();
+                    $sumNoEma4 = Ema4::where([[$row[0], true], [$colName, false], ['account_id', $accountId]])->count();
+                    $sumNoEma5 = Ema5::where([[$row[0], true], [$colName, false], ['account_id', $accountId]])->count();
                     $sumNo = array_sum([$sumNoEma1, $sumNoEma2, $sumNoEma3, $sumNoEma4, $sumNoEma5]);
                     //add to array
                     $data[$colName] = [$sumYes, $sumNo];
@@ -93,37 +93,37 @@ trait ReportTrait
                     $colName = sprintf("%s_%s", $col, $row[1]);
                     $sumYesEma1 = Ema1::where($this->cond_none[$col], true)
                         ->orWhere('c1_i', false)->orWhere('c2_q', false)->orWhere('c3_f', false)
-                        ->where([[$colName, true], ['account_id', $accountId]])->count($colName);
+                        ->where([[$colName, true], ['account_id', $accountId]])->count();
                     $sumYesEma2 = Ema2::where($this->cond_none[$col], true)
                         ->orWhere('c1_i', false)->orWhere('c2_q', false)->orWhere('c3_f', false)
-                        ->where([[$colName, true], ['account_id', $accountId]])->count($colName);
+                        ->where([[$colName, true], ['account_id', $accountId]])->count();
                     $sumYesEma3 = Ema3::where($this->cond_none[$col], true)
                         ->orWhere('c1_i', false)->orWhere('c2_q', false)->orWhere('c3_f', false)
-                        ->where([[$colName, true], ['account_id', $accountId]])->count($colName);
+                        ->where([[$colName, true], ['account_id', $accountId]])->count();
                     $sumYesEma4 = Ema4::where($this->cond_none[$col], true)
                         ->orWhere('c1_i', false)->orWhere('c2_q', false)->orWhere('c3_f', false)
-                        ->where([[$colName, true], ['account_id', $accountId]])->count($colName);
+                        ->where([[$colName, true], ['account_id', $accountId]])->count();
                     $sumYesEma5 = Ema5::where($this->cond_none[$col], true)
                         ->orWhere('c1_i', false)->orWhere('c2_q', false)->orWhere('c3_f', false)
-                        ->where([[$colName, true], ['account_id', $accountId]])->count($colName);
+                        ->where([[$colName, true], ['account_id', $accountId]])->count();
 
                     $sumYes = array_sum([$sumYesEma1, $sumYesEma2, $sumYesEma3, $sumYesEma4, $sumYesEma5]);
 
                     $sumNoEma1 = Ema1::where($this->cond_none[$col], true)
                         ->orWhere('c1_i', false)->orWhere('c2_q', false)->orWhere('c3_f', false)
-                        ->where([[$colName, false], ['account_id', $accountId]])->count($colName);
+                        ->where([[$colName, false], ['account_id', $accountId]])->count();
                     $sumNoEma2 = Ema2::where($this->cond_none[$col], true)
                         ->orWhere('c1_i', false)->orWhere('c2_q', false)->orWhere('c3_f', false)
-                        ->where([[$colName, false], ['account_id', $accountId]])->count($colName);
+                        ->where([[$colName, false], ['account_id', $accountId]])->count();
                     $sumNoEma3 = Ema3::where($this->cond_none[$col], true)
                         ->orWhere('c1_i', false)->orWhere('c2_q', false)->orWhere('c3_f', false)
-                        ->where([[$colName, false], ['account_id', $accountId]])->count($colName);
+                        ->where([[$colName, false], ['account_id', $accountId]])->count();
                     $sumNoEma4 = Ema4::where($this->cond_none[$col], true)
                         ->orWhere('c1_i', false)->orWhere('c2_q', false)->orWhere('c3_f', false)
-                        ->where([[$colName, false], ['account_id', $accountId]])->count($colName);
+                        ->where([[$colName, false], ['account_id', $accountId]])->count();
                     $sumNoEma5 = Ema5::where($this->cond_none[$col], true)
                         ->orWhere('c1_i', false)->orWhere('c2_q', false)->orWhere('c3_f', false)
-                        ->where([[$colName, false], ['account_id', $accountId]])->count($colName);
+                        ->where([[$colName, false], ['account_id', $accountId]])->count();
 
                     $sumNo = array_sum([$sumNoEma1, $sumNoEma2, $sumNoEma3, $sumNoEma4, $sumNoEma5]);
                     //add to array
