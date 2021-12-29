@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Cms;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ReportTrait;
+use App\Jobs\MakeReport;
 use App\Models\Ema1;
 use App\Models\Smoker;
 use App\Models\Survey;
+use Illuminate\Support\Facades\Cache;
 
 class SmokerController extends Controller
 {
@@ -133,7 +135,10 @@ class SmokerController extends Controller
      */
     public function overview($accountId){
         $data = [];
-        $data = $this->getOverviewData($accountId);
+        $data = Cache::get("report:$accountId");
+        if(empty($data)) {
+            MakeReport::dispatch($accountId);
+        }
         if(!empty($data)) {
             return response()->json($data,200);
         }

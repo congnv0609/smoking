@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\EmaTrait;
+use App\Jobs\MakeReport;
 use App\Models\Incentive;
 use DateTime;
 use Illuminate\Support\Facades\Artisan;
@@ -85,6 +86,7 @@ class EmaController extends Controller
         Artisan::call('ema:schedule-get');
         $this->updateIncentive($id, $data);
         Artisan::call('smoker:update-info', ['account_id'=>$this->accountId]);
+        MakeReport::dispatch($this->accountId);
         return response()->json($ema, 200);
     }
 
