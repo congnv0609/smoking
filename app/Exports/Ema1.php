@@ -7,10 +7,12 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
 
-class Ema1 implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, WithColumnFormatting
+class Ema1 extends DefaultValueBinder implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, WithCustomValueBinder
 {
 
     private $_headings = [];
@@ -69,10 +71,21 @@ class Ema1 implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, W
         }
     }
 
-    public function columnFormats(): array
+    // public function columnFormats(): array
+    // {
+    //     return [
+    //         'A' => NumberFormat::FORMAT_TEXT,
+    //     ];
+    // }
+
+    public function bindValue(Cell $cell, $value)
     {
-        return [
-            'A' => NumberFormat::FORMAT_TEXT,
-        ];
+        if (is_numeric($value) && $cell->getColumn() == "A") {
+            $cell->setValueExplicit($value, DataType::TYPE_STRING);
+            return true;
+        }
+
+        // else return default behavior
+        return parent::bindValue($cell, $value);
     }
 }

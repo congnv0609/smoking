@@ -3,7 +3,6 @@
 namespace App\Exports;
 
 use App\Models\Smoker;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
@@ -12,8 +11,12 @@ use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
 
-class User implements FromCollection, WithHeadings, WithTitle, WithColumnFormatting, ShouldAutoSize
+class User extends DefaultValueBinder implements FromCollection, WithHeadings, WithTitle, WithColumnFormatting, ShouldAutoSize, WithMapping, WithCustomValueBinder
 {
 
     public function headings(): array
@@ -44,35 +47,46 @@ class User implements FromCollection, WithHeadings, WithTitle, WithColumnFormatt
     public function collection()
     {
         $list = Smoker::select('account', 'startDate', 'endDate', 'prompt_ema', 'response_ema', 'non_response_ema', 'future_ema', 'response_rate')->get();
-        // $this->prepareRows($list);
         return $list;
     }
 
     public function columnFormats(): array
     {
         return [
-            // 'B' => NumberFormat::FORMAT_DATE_YYYYMMDD,
-            // 'C' => NumberFormat::FORMAT_DATE_YYYYMMDD,
             'A'=> NumberFormat::FORMAT_TEXT,
+            'B' => NumberFormat::FORMAT_DATE_YYYYMMDD,
+            'C' => NumberFormat::FORMAT_DATE_YYYYMMDD,
+            'D'=>NumberFormat::FORMAT_NUMBER,
+            'E'=>NumberFormat::FORMAT_NUMBER,
+            'F'=>NumberFormat::FORMAT_NUMBER,
+            'G'=>NumberFormat::FORMAT_NUMBER,
             'H'=>NumberFormat::FORMAT_NUMBER_00,
         ];
     }
 
-    // public function map($smoker): array
-    // {
-    //     return [
-    //         Date::dateTimeToExcel($smoker->startDate),
-    //         Date::dateTimeToExcel($smoker->endDate),
-    //     ];
-    // }
+    public function map($smoker): array
+    {
+        return [
+            $smoker->account,
+            Date::dateTimeToExcel(date_create($smoker->startDate)),
+            Date::dateTimeToExcel(date_create($smoker->endDate)),
+            $smoker->prompt_ema,
+            $smoker->response_ema,
+            $smoker->non_response_ema,
+            $smoker->future_ema,
+            $smoker->response_rate,
+        ];
+    }
 
-    // public function prepareRows($rows)
-    // {
-    //     return $rows->transform(function ($user) {
-    //         $this->map($user);
+    public function bindValue(Cell $cell, $value)
+    {
+        if (is_numeric($value) && $cell->getColumn()=="A") {
+            $cell->setValueExplicit($value, DataType::TYPE_STRING);
+            return true;
+        }
 
-    //         return $user;
-    //     });
-    // }
+        // else return default behavior
+        return parent::bindValue($cell, $value);
+    }
 
 }

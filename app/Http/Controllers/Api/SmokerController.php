@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\EmaTrait;
+use App\Jobs\MakeReport;
 use App\Models\Ema1;
 use App\Models\Ema2;
 use App\Models\Ema3;
@@ -95,6 +96,7 @@ class SmokerController extends Controller
         $this->createEma5($ema_arr5);
         Artisan::call('ema:schedule-get');
         Artisan::call('smoker:update-info', ['account_id' => $this->accountId]);
+        MakeReport::dispatch($this->accountId);
         return response()->json($smoker, 200);
         //     }
         // );

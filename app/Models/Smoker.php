@@ -46,6 +46,7 @@ class Smoker extends Model
     }
 
     protected $casts = [
+        // 'account' => 'string',
         // 'startDate' => 'datetime',
         // 'endDate' => 'datetime',
     ];
