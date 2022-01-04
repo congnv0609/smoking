@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Ema5 extends Model
 {
     use HasFactory;
-    
+
     protected $guarded = [];
 
     protected $casts = [
-        'attempt_time' => 'datetime',
-        'submit_time' => 'datetime',
+        'attempt_time' => 'datetime:Y-m-d H:i',
+        'submit_time' => 'datetime:Y-m-d H:i',
+        'popup_time' => 'datetime:Y-m-d H:i',
+        'popup_time1' => 'datetime:Y-m-d H:i',
+        'popup_time2' => 'datetime:Y-m-d H:i',
     ];
 
     // public function setSubmitTimeAttribute($submit_time)
