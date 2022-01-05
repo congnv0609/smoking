@@ -71,7 +71,7 @@ class Ema1Personal implements FromCollection, WithHeadings, WithTitle, WithColum
                 }
                 if ($key == "time_taken") {
                     $min = floor($col / 60);
-                    $sec = ($col % 60) * 60;
+                    $sec = $col % 60;
                     $i->{$key} = sprintf('%s:%s', $min, $sec);
                 }
             }
