@@ -57,12 +57,15 @@ class Ema5 extends DefaultValueBinder implements FromCollection, WithHeadings, W
                 if ($key == "popup_time") {
                     $i->{$key} = date_format(date_create($col), 'H:i');
                 }
+                if ($key == "attempt_time") {
+                    $i->{$key} = date_format(date_create($col), 'H:i');
+                }
                 if ($key == "submit_time") {
                     $i->{$key} = date_format(date_create($col), 'H:i');
                 }
                 if ($key == "time_taken") {
-                    $min = $col / 60;
-                    $sec = $col % 60;
+                    $min = floor($col / 60);
+                    $sec = ($col % 60) * 60;
                     $i->{$key} = sprintf('%s:%s', $min, $sec);
                 }
             }
