@@ -46,6 +46,18 @@ class Incentive implements FromCollection, WithHeadings, WithTitle, ShouldAutoSi
         ->join('incentives', 'smokers.id', '=', 'incentives.account_id')
         ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as account'), 'incentives.date', 'incentives.ema_1', 'incentives.ema_2', 'incentives.ema_3', 'incentives.ema_4', 'incentives.ema_5', 'incentives.valid_ema', 'incentives.incentive')
         ->get();
+        $list->transform(function ($i) {
+            foreach ($i as $key => $col) {
+                // if (in_array($key, $this->_withoutColumns)) {
+                //     unset($i->$key);
+                // }
+                //
+                if ($key == "date") {
+                    $i->{$key} = date_format(date_create($col), 'd/m/Y');
+                }
+            }
+            return $i;
+        });
         return $list;
     }
 
@@ -53,6 +65,7 @@ class Incentive implements FromCollection, WithHeadings, WithTitle, ShouldAutoSi
     {
         return [
             'A' => NumberFormat::FORMAT_TEXT,
+            'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
         ];
     }
 }

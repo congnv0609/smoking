@@ -38,7 +38,7 @@ class MakeReport implements ShouldQueue
         //
         $data = $this->getOverviewData($this->_accountId);
         if(!empty($data)) {
-            Cache::put("report:$this->_accountId", $data, 3600 * 72);
+            Cache::put("report:$this->_accountId", $data, 3600 * 168);
         }
     }
 }

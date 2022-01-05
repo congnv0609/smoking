@@ -54,8 +54,8 @@ class User extends DefaultValueBinder implements FromCollection, WithHeadings, W
     {
         return [
             'A'=> NumberFormat::FORMAT_TEXT,
-            'B' => NumberFormat::FORMAT_DATE_YYYYMMDD,
-            'C' => NumberFormat::FORMAT_DATE_YYYYMMDD,
+            'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
+            'C' => NumberFormat::FORMAT_DATE_DDMMYYYY,
             'D'=>NumberFormat::FORMAT_NUMBER,
             'E'=>NumberFormat::FORMAT_NUMBER,
             'F'=>NumberFormat::FORMAT_NUMBER,

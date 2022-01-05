@@ -50,6 +50,21 @@ class Ema3 extends DefaultValueBinder implements FromCollection, WithHeadings, W
                 if (in_array($key, $this->_withoutColumns)) {
                     unset($i->$key);
                 }
+                //
+                if ($key == "date") {
+                    $i->{$key} = date_format(date_create($col), 'd/m/Y');
+                }
+                if ($key == "popup_time") {
+                    $i->{$key} = date_format(date_create($col), 'H:i');
+                }
+                if ($key == "submit_time") {
+                    $i->{$key} = date_format(date_create($col), 'H:i');
+                }
+                if ($key == "time_taken") {
+                    $min = $col / 60;
+                    $sec = $col % 60;
+                    $i->{$key} = sprintf('%s:%s', $min, $sec);
+                }
             }
             return $i;
         });
@@ -67,6 +82,8 @@ class Ema3 extends DefaultValueBinder implements FromCollection, WithHeadings, W
             foreach ($cols as $key => $col) {
                 if (in_array($col, $this->_withoutColumns)) {
                     unset($cols[$key]);
+                } else {
+                    $cols[$key] = ucfirst($col);
                 }
             }
             $this->_headings = $cols;

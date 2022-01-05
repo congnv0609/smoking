@@ -11,6 +11,10 @@ use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
 class Ema1 extends DefaultValueBinder implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, WithCustomValueBinder
 {
@@ -48,6 +52,21 @@ class Ema1 extends DefaultValueBinder implements FromCollection, WithHeadings, W
                 if (in_array($key, $this->_withoutColumns)) {
                     unset($i->$key);
                 }
+                //
+                if($key=="date") {
+                    $i->{$key} = date_format(date_create($col),'d/m/Y');
+                }
+                if ($key == "popup_time") {
+                    $i->{$key} = date_format(date_create($col), 'H:i');
+                }
+                if ($key == "submit_time") {
+                    $i->{$key} = date_format(date_create($col), 'H:i');
+                }
+                if ($key == "time_taken") {
+                    $min = $col/60;
+                    $sec = $col%60;
+                    $i->{$key} = sprintf('%s:%s', $min, $sec);
+                }
             }
             return $i;
         });
@@ -65,6 +84,8 @@ class Ema1 extends DefaultValueBinder implements FromCollection, WithHeadings, W
             foreach($cols as $key => $col) {
                 if(in_array($col, $this->_withoutColumns)) {
                     unset($cols[$key]);
+                } else {
+                    $cols[$key] = ucfirst($col);
                 }
             }
             $this->_headings = $cols;
@@ -75,7 +96,25 @@ class Ema1 extends DefaultValueBinder implements FromCollection, WithHeadings, W
     // {
     //     return [
     //         'A' => NumberFormat::FORMAT_TEXT,
+    //         'B' => NumberFormat::FORMAT_DATE_DDMMYYYY,
     //     ];
+    // }
+
+    // public function map($ema): array
+    // {
+    //     return [
+    //         $ema->user_id,
+    //         Date::dateTimeToExcel(date_create($ema->date)),
+    //     ];
+    // }
+
+    // public function prepareRows($rows)
+    // {
+    //     return $rows->transform(function ($ema) {
+    //         $ema->date = Date::dateTimeToExcel(date_create($ema->date));
+
+    //         return $ema;
+    //     });
     // }
 
     public function bindValue(Cell $cell, $value)
@@ -84,7 +123,6 @@ class Ema1 extends DefaultValueBinder implements FromCollection, WithHeadings, W
             $cell->setValueExplicit($value, DataType::TYPE_STRING);
             return true;
         }
-
         // else return default behavior
         return parent::bindValue($cell, $value);
     }
