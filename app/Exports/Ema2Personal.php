@@ -63,18 +63,18 @@ class Ema2Personal implements FromCollection, WithHeadings, WithTitle, WithColum
                     $i->{$key} = date_format(date_create($col), 'd/m/Y');
                 }
                 if ($key == "popup_time") {
-                    $i->{$key} = date_format(date_create($col), 'H:i');
+                    $i->{$key} = date_format(date_create($col), 'H:i:s');
                 }
                 if ($key == "attempt_time") {
-                    $i->{$key} = date_format(date_create($col), 'H:i');
+                    $i->{$key} = date_format(date_create($col), 'H:i:s');
                 }
                 if ($key == "submit_time") {
-                    $i->{$key} = date_format(date_create($col), 'H:i');
+                    $i->{$key} = date_format(date_create($col), 'H:i:s');
                 }
                 if ($key == "time_taken") {
                     $min = floor($col / 60);
                     $sec = $col % 60;
-                    $i->{$key} = sprintf('%s:%s', $min, $sec);
+                    $i->{$key} = sprintf('00:%02d:%02d', $min, $sec);
                 }
             }
             return $i;

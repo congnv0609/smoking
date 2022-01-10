@@ -60,13 +60,13 @@ class Waketime implements FromCollection, WithHeadings, WithTitle, ShouldAutoSiz
                     $i->{$key} = date_format(date_create($col), 'd/m/Y');
                 }
                 if ($key == "updated_at") {
-                    $i->{$key} = date_format(date_create($col), 'H:i');
+                    $i->{$key} = date_format(date_create($col), 'H:i:s');
                 }
                 if ($key == "old_wake") {
-                    $i->{$key} = date_format(date_create($col), 'H:i');
+                    $i->{$key} = date_format(date_create($col), 'H:i:s');
                 }
                 if ($key == "new_wake") {
-                    $i->{$key} = date_format(date_create($col), 'H:i');
+                    $i->{$key} = date_format(date_create($col), 'H:i:s');
                 }
             }
             return $i;
