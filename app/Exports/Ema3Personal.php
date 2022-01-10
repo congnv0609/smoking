@@ -9,8 +9,9 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class Ema3Personal implements FromCollection, WithHeadings, WithTitle, WithColumnFormatting, ShouldAutoSize
+class Ema3Personal implements FromCollection, WithHeadings, WithTitle, WithColumnFormatting, ShouldAutoSize, WithStrictNullComparison
 {
 
     private $_headings = [];

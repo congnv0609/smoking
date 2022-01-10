@@ -8,9 +8,9 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
-use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class Incentive implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, WithColumnFormatting
+class Incentive implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, WithStrictNullComparison
 {
 
     public function headings(): array

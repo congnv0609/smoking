@@ -13,8 +13,9 @@ use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Cell\DefaultValueBinder;
 use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use Maatwebsite\Excel\Concerns\WithStrictNullComparison;
 
-class Ema2 extends DefaultValueBinder implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, WithColumnFormatting, WithCustomValueBinder
+class Ema2 extends DefaultValueBinder implements FromCollection, WithHeadings, WithTitle, ShouldAutoSize, WithColumnFormatting, WithCustomValueBinder, WithStrictNullComparison
 {
 
     private $_headings = [];
