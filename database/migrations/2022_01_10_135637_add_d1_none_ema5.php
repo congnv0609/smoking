@@ -16,8 +16,7 @@ class AddD1NoneEma5 extends Migration
         //
         Schema::table('ema5s', function (Blueprint $table) {
             $table->after('d1c_range', function ($table) {
-                $table->integer('d1_d')->nullable();
-                $table->integer('d1_none')->default(0);
+                $table->integer('d1_d')->default(0);
             });
         });
         
@@ -34,7 +33,6 @@ class AddD1NoneEma5 extends Migration
             'ema5s',
             function (Blueprint $table) {
                 $table->dropColumn('d1_d');
-                $table->dropColumn('d1_none');
             }
         );
     }
