@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Smoker;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
@@ -46,7 +47,7 @@ class User extends DefaultValueBinder implements FromCollection, WithHeadings, W
     */
     public function collection()
     {
-        $list = Smoker::select('account', 'startDate', 'endDate', 'prompt_ema', 'response_ema', 'non_response_ema', 'future_ema', 'response_rate')->get();
+        $list = Smoker::select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'startDate', 'endDate', 'prompt_ema', 'response_ema', 'non_response_ema', 'future_ema', 'response_rate')->get();
         return $list;
     }
 
@@ -67,7 +68,7 @@ class User extends DefaultValueBinder implements FromCollection, WithHeadings, W
     public function map($smoker): array
     {
         return [
-            $smoker->account,
+            $smoker->user_id,
             Date::dateTimeToExcel(date_create($smoker->startDate)),
             Date::dateTimeToExcel(date_create($smoker->endDate)),
             $smoker->prompt_ema,

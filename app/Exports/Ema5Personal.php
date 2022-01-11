@@ -59,19 +59,19 @@ class Ema5Personal implements FromCollection, WithHeadings, WithTitle, WithColum
                     unset($i->$key);
                 }
                 //
-                if ($key == "date") {
+                if ($key =="date" && !empty($col)) {
                     $i->{$key} = date_format(date_create($col), 'd/m/Y');
                 }
-                if ($key == "popup_time") {
+                if ($key =="popup_time" && !empty($col)) {
                     $i->{$key} = date_format(date_create($col), 'H:i:s');
                 }
-                if ($key == "attempt_time") {
+                if ($key =="attempt_time" && !empty($col)) {
                     $i->{$key} = date_format(date_create($col), 'H:i:s');
                 }
-                if ($key == "submit_time") {
+                if ($key =="submit_time" && !empty($col)) {
                     $i->{$key} = date_format(date_create($col), 'H:i:s');
                 }
-                if ($key == "time_taken") {
+                if ($key =="time_taken" && !empty($col)) {
                     $min = floor($col / 60);
                     $sec = $col % 60;
                     $i->{$key} = sprintf('00:%02d:%02d', $min, $sec);

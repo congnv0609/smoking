@@ -52,7 +52,7 @@ class Incentive implements FromCollection, WithHeadings, WithTitle, ShouldAutoSi
                 //     unset($i->$key);
                 // }
                 //
-                if ($key == "date") {
+                if ($key =="date" && !empty($col)) {
                     $i->{$key} = date_format(date_create($col), 'd/m/Y');
                 }
             }
