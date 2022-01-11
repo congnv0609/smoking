@@ -13,7 +13,6 @@ class SetDefaultEma1 extends Migration
      */
     public function up()
     {
-        //
         Schema::table('ema1s', function (Blueprint $table) {
 
             $table->integer('s1')->nullable()->change();
