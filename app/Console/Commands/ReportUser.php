@@ -17,7 +17,7 @@ class ReportUser extends Command
      *
      * @var string
      */
-    protected $signature = 'smokers:report';
+    protected $signature = 'smokers:report {account_id : account id}';
 
     /**
      * The console command description.
@@ -43,25 +43,19 @@ class ReportUser extends Command
      */
     public function handle()
     {
-        $date = date('Y-m-d');
-        $smokerList = Smoker::whereDate('startDate', '<=', $date)
-        ->whereDate('endDate', '>=', $date)
-        ->get();
-        if(!empty($smokerList)) {
-            foreach($smokerList as $smoker) {
-                $data = [];
-                $data = $this->UpdateSmoker($smoker->id);
-                if(!empty($data)) {
-                    $smoker->prompt_ema = $data['prompt_ema'];
-                    $smoker->response_ema = $data['response_ema'];
-                    $smoker->non_response_ema = $data['non_response_ema'];
-                    $smoker->future_ema = $data['future_ema'];
-                    $smoker->response_rate = $data['response_rate'];
-                    $smoker->save();
-                    // $smoker->update($data);
-                }
-            }
+        
+        $account_id = $this->argument('account_id');
+        $smoker = Smoker::find($account_id);
+        $data = $this->UpdateSmoker($smoker->id);
+        if (!empty($data)) {
+            $smoker->prompt_ema = $data['prompt_ema'];
+            $smoker->response_ema = $data['response_ema'];
+            $smoker->non_response_ema = $data['non_response_ema'];
+            $smoker->future_ema = $data['future_ema'];
+            $smoker->response_rate = $data['response_rate'];
+            $smoker->save();
         }
+
         return 0;
     }
 
@@ -72,7 +66,7 @@ class ReportUser extends Command
         $data['response_ema'] = $this->countEmaByCompleted($accountId);
         $data['non_response_ema'] = $data['prompt_ema'] - $data['response_ema'];
         $data['future_ema'] = 35 - $data['prompt_ema'];
-        $data['response_rate'] = $data['prompt_ema'] > 0 ? $data['response_ema']/$data['prompt_ema']*100 : 0;
+        $data['response_rate'] = $data['prompt_ema'] > 0 ? $data['response_ema'] / $data['prompt_ema'] * 100 : 0;
         return $data;
     }
 

@@ -86,6 +86,7 @@ class EmaController extends Controller
         Artisan::call('ema:schedule-get');
         $this->updateIncentive($id, $data);
         Artisan::call('smoker:update-info', ['account_id'=>$this->accountId]);
+        Artisan::call('smoker:report', ['account_id'=>$this->accountId]);
         MakeReport::dispatch($this->accountId);
         return response()->json($ema, 200);
     }
