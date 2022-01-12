@@ -17,7 +17,7 @@ class ReportUser extends Command
      *
      * @var string
      */
-    protected $signature = 'smokers:report {account_id : account id}';
+    protected $signature = 'smoker:report {account_id : account id}';
 
     /**
      * The console command description.
