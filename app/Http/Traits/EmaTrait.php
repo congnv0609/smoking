@@ -153,7 +153,7 @@ trait EmaTrait
 
     public function updateCountPush(&$data)
     {
-        unset($data['current_ema']);
+        unset($data['current_ema'], $data['id']);
         $ema = $this->getEma($data['nth_ema'], $data);
         $ema->update($data);
     }
