@@ -108,6 +108,7 @@ class EmaController extends Controller
         if (!empty($ema)) {
             $ema->update($data);
         }
+        Artisan::call('ema:schedule-get');
         return response()->json($ema, 200);
     }
 
