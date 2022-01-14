@@ -61,7 +61,7 @@ class User extends DefaultValueBinder implements FromCollection, WithHeadings, W
             'E'=>NumberFormat::FORMAT_NUMBER,
             'F'=>NumberFormat::FORMAT_NUMBER,
             'G'=>NumberFormat::FORMAT_NUMBER,
-            'H'=>NumberFormat::FORMAT_NUMBER_00,
+            'H'=>NumberFormat::FORMAT_GENERAL,
         ];
     }
 
