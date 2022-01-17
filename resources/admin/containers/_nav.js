@@ -24,18 +24,18 @@ export default [
         to: '/export',
         icon: 'cil-file'
       },
-      {
-        _name: 'CSidebarNavItem',
-        name: 'Ema',
-        to: '/ema',
-        icon: 'cil-align-left'
-      },
-      {
-        _name: 'CSidebarNavItem',
-        name: 'Incentives',
-        to: '/incentives',
-        icon: 'cil-align-left'
-      },
+      // {
+      //   _name: 'CSidebarNavItem',
+      //   name: 'Ema',
+      //   to: '/ema',
+      //   icon: 'cil-align-left'
+      // },
+      // {
+      //   _name: 'CSidebarNavItem',
+      //   name: 'Incentives',
+      //   to: '/incentives',
+      //   icon: 'cil-align-left'
+      // },
       // {
       //   _name: 'CSidebarNavTitle',
       //   _children: ['Theme']
