@@ -59,6 +59,9 @@ class SendNotification implements ShouldQueue
         ];
         $this->updateCountPush($ema);
         Artisan::call('ema:schedule-get');
+        //make report
+        Artisan::call('smoker:report', ['account_id' => $smoker->id]);
+
         $RESPONSE = json_encode($data);
 
         $headers = [
