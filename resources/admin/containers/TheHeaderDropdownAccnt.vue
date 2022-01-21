@@ -19,10 +19,10 @@
       <CIcon name="cil-bell" /> Updates
       <CBadge color="info" class="mfs-auto">{{ itemsCount }}</CBadge>
     </CDropdownItem> -->
-    <CDropdownItem>
+    <!-- <CDropdownItem>
       <CIcon name="cil-envelope-open" /> Messages
       <CBadge color="success" class="mfs-auto">{{ itemsCount }}</CBadge>
-    </CDropdownItem>
+    </CDropdownItem> -->
     <!-- <CDropdownItem>
       <CIcon name="cil-task" /> Tasks
       <CBadge color="danger" class="mfs-auto">{{ itemsCount }}</CBadge>
