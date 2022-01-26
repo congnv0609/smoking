@@ -62,7 +62,7 @@ class Ema2Personal implements FromCollection, WithHeadings, WithTitle, WithColum
                 if ($key =="date" && !empty($col)) {
                     $i->{$key} = date_format(date_create($col), 'd/m/Y');
                 }
-                if ($key =="popup_time" && !empty($col)) {
+                if ($key == "delay_time1" && !empty($col)) {
                     $i->{$key} = date_format(date_create($col), 'H:i:s');
                 }
                 if ($key =="attempt_time" && !empty($col)) {
