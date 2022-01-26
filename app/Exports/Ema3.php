@@ -20,7 +20,7 @@ class Ema3 extends DefaultValueBinder implements FromCollection, WithHeadings, W
 
     private $_headings = [];
 
-    private $_withoutColumns = ['id', 'account_id', 'nth_popup', 'popup_time1', 'popup_time2', 'created_at', 'updated_at'];
+    private $_withoutColumns = ['id', 'account_id', 'nth_popup', 'popup_time', 'popup_time1', 'popup_time2', 'delay_time2', 'delay_time3', 'created_at', 'updated_at'];
 
     /**
      * @return string
@@ -87,6 +87,9 @@ class Ema3 extends DefaultValueBinder implements FromCollection, WithHeadings, W
                 if (in_array($col, $this->_withoutColumns)) {
                     unset($cols[$key]);
                 } else {
+                    if ($col == 'delay_time1') {
+                        $col = 'popup_time';
+                    }
                     $cols[$key] = ucfirst($col);
                 }
             }
