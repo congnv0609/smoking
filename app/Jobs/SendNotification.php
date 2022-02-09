@@ -38,6 +38,7 @@ class SendNotification implements ShouldQueue
         $smoker = Smoker::whereNotNull('device_token')->where('id', $this->_ema['account_id'])->first();
         if (!empty($smoker)) {
             $this->push($smoker);
+            UpdateSmokerReport::dispatch($smoker);
         }
     }
 
@@ -57,10 +58,12 @@ class SendNotification implements ShouldQueue
             ],
             "data" => ["current_ema" => $ema['current_ema'], "ema" => $ema['nth_ema'], "nth_popup" => $ema['nth_popup'], 'nth_day'=>$ema['nth_day'], "postponded_1" => $ema['postponded_1'], "postponded_2" => $ema['postponded_2'], "postponded_3" => $ema['postponded_3']],
         ];
-        $this->updateCountPush($ema);
-        Artisan::call('ema:schedule-get');
+        //update count push
+        // $this->updateCountPush($ema);
+        // Artisan::call('ema:schedule-get');
+        UpdateCountPush::dispatch($ema);
         //make report
-        Artisan::call('smoker:report', ['account_id' => $smoker->id]);
+        // Artisan::call('smoker:report', ['account_id' => $smoker->id]);
 
         $RESPONSE = json_encode($data);
 
