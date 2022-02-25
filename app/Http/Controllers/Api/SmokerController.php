@@ -155,7 +155,7 @@ class SmokerController extends Controller
     {
         $data = [
             'account_id' => $old->id,
-            'data_of_change' => !empty($new["startDate"]) ? date_format(date_create($new["startDate"]), "Y-m-d") : null,
+            'data_of_change' => date_format(new DateTime('now'), "Y-m-d"),
             'old_wake' => !empty($old->startDate) ? date_format(date_create($old->startDate), "H:i") : null,
             'new_wake' => date_format(date_create($new["startDate"]), "H:i"),
         ];
