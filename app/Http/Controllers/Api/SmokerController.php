@@ -25,7 +25,7 @@ class SmokerController extends Controller
 
     private $accountId;
 
-    const PERIOD_TIME = 1;
+    const PERIOD_TIME = 3;
 
     public function __construct()
     {
