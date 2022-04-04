@@ -45,6 +45,7 @@ class Incentive implements FromCollection, WithHeadings, WithTitle, ShouldAutoSi
         $list = DB::Table('smokers')
             ->join('incentives', 'smokers.id', '=', 'incentives.account_id')
             ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as account'), 'incentives.date', 'incentives.ema_1', 'incentives.ema_2', 'incentives.ema_3', 'incentives.ema_4', 'incentives.ema_5', 'incentives.valid_ema', 'incentives.incentive')
+            ->whereNotNull('smokers.startDate')
             ->get();
         $list->transform(function ($i) {
             foreach ($i as $key => $col) {

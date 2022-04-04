@@ -42,7 +42,7 @@ class Ema5 extends DefaultValueBinder implements FromCollection, WithHeadings, W
      */
     public function collection()
     {
-        $list = DB::Table('smokers')
+        $list = DB::Table('smokers')->whereNotNull('smokers.startDate')
             ->join('ema5s', 'smokers.id', '=', 'ema5s.account_id')
             ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema5s.*')
             ->get();
@@ -77,7 +77,7 @@ class Ema5 extends DefaultValueBinder implements FromCollection, WithHeadings, W
 
     private function getFirst()
     {
-        $row = DB::Table('smokers')
+        $row = DB::Table('smokers')->whereNotNull('smokers.startDate')
             ->join('ema5s', 'smokers.id', '=', 'ema5s.account_id')
             ->select(DB::raw('if(smokers.term > 1, concat(smokers.account,"-",smokers.term), smokers.account) as user_id'), 'ema5s.*')
             ->first();
