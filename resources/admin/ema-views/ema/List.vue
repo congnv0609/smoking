@@ -122,7 +122,7 @@ export default {
       emaList(this.query)
         .then((res) => {
           var fieldList = Object.keys(res.data[0]);
-          var removeList = ["id", "device_token","created_at", "updated_at"];
+          var removeList = ["id","created_at", "updated_at"];
           this.fields = fieldList.filter(item => !removeList.includes(item));
           this.items = res.data;
           this.last_page = res.last_page;
