@@ -529,7 +529,11 @@ trait EmaTrait
 
     public function saveSurvey($data)
     {
-        if (!empty($data)) {
+        $accountId = reset($data)['account_id'];
+        if(!empty($accountId)) {
+            $first = Survey::where('account_id', $accountId)->first();
+        }
+        if (!empty($data) && empty($first)) {
             foreach ($data as $item) {
                 Survey::create($item);
             }
